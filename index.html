@@ -10,14 +10,16 @@
 
 </head>
 <body>
-   
+     
     <div class="header">
         <div class="topnav">
             <a class="active" href="./index.html">Home page</a>
             <a class="active" href="./Game page.html">Game page</a>
-          <a class="active" href="./Help.html">Help page</a>
+            <a class="active" href="./Help.html">Help page</a>
         </div>
-
+        <button onclick="scrollToTop()" id="backToTop" style="display: none;">Back To The Top</button>
+        <div class="move">
+      
          <h1>What i use / piracy stuff </h1>
     </div>
     <div class="move">
@@ -102,7 +104,7 @@
 
 <h1>Minecraft Server</h1>
 
-<h2><li><img src="./minecraft.png" sizes="50" width="50"><a href="https://www.auto-mcs.com">(here)</a></li></h2>
+<h2><li><img src="./minecraft.png" sizes="50" width="50"><a href="https://www.auto-mcs.comhttps://www.auto-mcs.comhttps://www.auto-mcs.comhttps://www.auto-mcs.comhttps://www.auto-mcs.com">(here)</a></li></h2>
 <h2><li>easy to set up copy and paste ip into mc sever list and play</li></h2>
 
 <br>
@@ -110,6 +112,19 @@
 <h1>Password manager</h1>
 
 <h2><li>last pass easier to make long stronger passwords that save accross pcs<img src="./lastpass.png" sizes="50" width="50"><a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd?hl=en">(here)</a> </li></h2>
-</div>
+
+<button onclick="scrollToTop()" id="backToTop" style="display: none;">Back To The Top</button>
+<div class="move">
+<script>
+    window.onscroll = function() {
+        document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
+    };
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+
+
 </body>
 </html>
