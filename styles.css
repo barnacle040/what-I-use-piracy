@@ -65,9 +65,8 @@ text-align: right;
       font-size: 17px;
   }
   
- .topnav a:hover {
+  .topnav a:hover {
       background-color: #3d3c3c; /* Fully opaque light gray */
       color: white; /* White text on hover */
   }
-  
   
