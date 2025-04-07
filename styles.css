@@ -33,7 +33,10 @@ body {
      height: 90px;
      background: #555;
    }
-   
+      img:hover {
+    box-shadow: 0 0 15px 5px white;
+    transition: box-shadow 0.3s ease-in-out;
+}
    .right{
 text-align: right;
 
