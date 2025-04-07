@@ -29,12 +29,6 @@ body {
     transition: box-shadow 0.3s ease-in-out;
 }
 
-   .header img {
-     float: left;
-     width: 90px;
-     height: 90px;
-     background: #555;
-   }
    
    .right{
 text-align: right;
@@ -48,25 +42,127 @@ text-align: right;
        color: white;
        font-size: 18px;
      }
-     .topnav {
-      overflow: hidden;
-      background-color: #000000;
-      display: flex; /* Use flexbox for better alignment */
+ .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #000000;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+.topnav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.topnav a:hover {
+    background-color: #555;
+}
+  @media (max-width: 768px) {
+    .topnav {
+        flex-direction: column; /* Stack navigation links vertically */
+    }
+    .topnav a {
+        text-align: center;
+        padding: 10px;
+    }
+}
+.move h1 {
+  animation: fadeIn 2s ease-in-out;
+}
+@keyframes fadeIn {
+  from {
+      opacity: 0;
   }
-  
-  .topnav a {
-      display: inline-block;
-      padding: 10px 15px;
-      text-decoration: none;
-      border-radius: 15px; /* Makes the links rounded */
-      background-color: #000000; /* Default background color */
-      color: rgb(245, 245, 245); /* Default text color */
-      transition: background-color 0.3s ease, color 0.3s ease;
-      font-size: 17px;
+  to {
+      opacity: 1;
   }
-  
-  .topnav a:hover {
-      background-color: #3d3c3c; /* Fully opaque light gray */
-      color: white; /* White text on hover */
+}
+.move h2 {
+  animation: fadeIn 2s ease-in-out;
+}
+@keyframes fadeIn {
+  from {
+      opacity: 0;
   }
-  
+  to {
+      opacity: 1;
+  }
+}
+/* Place the Back to Top button at the bottom of the page */
+#backToTop {
+  margin: 20px auto; /* Center horizontally */
+  display: block; /* Ensure it's visible */
+  padding: 10px 20px;
+  background-color: #3d3c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  width: fit-content; /* Adjust width to fit the content */
+}
+
+#backToTop:hover {
+  background-color: #555;
+}
+
+img {
+  display: inline-block; /* Ensures the image stays inline with text */
+  vertical-align: middle; /* Aligns the image vertically with the text */
+  margin-right: 10px; /* Adds spacing between the image and the text */
+}
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 images per row */
+  gap: 20px; /* Space between images */
+  justify-items: center; /* Center images horizontally */
+  align-items: center; /* Center images vertically */
+  margin: 20px auto; /* Add spacing around the grid */
+}
+
+.image-grid img {
+  width: 100%; /* Ensure images scale properly */
+  max-width: 150px; /* Set a maximum width for images */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px; /* Optional: Add rounded corners */
+  transition: transform 0.3s ease; /* Optional: Add hover effect */
+}
+
+.image-grid img:hover {
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+@media (max-width: 768px) {
+  .image-grid {
+      grid-template-columns: repeat(3, 1fr); /* 3 images per row on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .image-grid {
+      grid-template-columns: repeat(2, 1fr); /* 2 images per row on very small screens */
+  }
+}
+/* Add fade-in animation for images */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px); /* Optional: Slight upward movement */
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.image-grid img {
+  animation: fadeIn 1s ease-in-out; /* Apply the fade-in animation */
+  animation-delay: calc(var(--order) * 0.1s); /* Staggered animation for each image */
+  opacity: 0; /* Ensure images are initially hidden */
+  animation-fill-mode: forwards; /* Keep the final state after animation */
+}
