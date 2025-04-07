@@ -6,8 +6,6 @@ body {
 
    .move{
     text-align: center;
-
-
    }
    h1 {
      color: rgb(255, 255, 255);
@@ -26,6 +24,10 @@ body {
      color:  rgb(255, 255, 255);
    }
 
+   img:hover {
+    box-shadow: 0 0 15px 5px white;
+    transition: box-shadow 0.3s ease-in-out;
+}
 
    .header img {
      float: left;
@@ -33,10 +35,7 @@ body {
      height: 90px;
      background: #555;
    }
-      img:hover {
-    box-shadow: 0 0 15px 5px white;
-    transition: box-shadow 0.3s ease-in-out;
-}
+   
    .right{
 text-align: right;
 
@@ -49,7 +48,7 @@ text-align: right;
        color: white;
        font-size: 18px;
      }
-   .topnav {
+     .topnav {
       overflow: hidden;
       background-color: #000000;
       display: flex; /* Use flexbox for better alignment */
@@ -67,7 +66,7 @@ text-align: right;
   }
   
   .topnav a:hover {
-      background-color: #e7e1e17c; /* Fully opaque light gray */
+      background-color: #e7e1e1; /* Fully opaque light gray */
       color: white; /* White text on hover */
   }
   
