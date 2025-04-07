@@ -166,3 +166,84 @@ img {
   opacity: 0; /* Ensure images are initially hidden */
   animation-fill-mode: forwards; /* Keep the final state after animation */
 }
+video {
+  display: block;
+  margin: 20px auto; /* Center the video */
+  max-width: 100%; /* Make it responsive */
+  border: 2px solid #555; /* Add a border */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effect */
+}
+
+video:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Enhance shadow on hover */
+}
+.video-container {
+  display: flex; /* Use flexbox for horizontal alignment */
+  justify-content: center; /* Center the videos horizontally */
+  gap: 20px; /* Add space between the videos */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  margin: 20px auto; /* Center the container */
+}
+
+.video-container video {
+  max-width: 100%; /* Ensure videos are responsive */
+  flex: 1 1 400px; /* Allow videos to shrink or grow */
+  border: 2px solid #555; /* Add a border */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effect */
+}
+
+.video-container video:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Enhance shadow on hover */
+}.video-container {
+  display: flex; /* Use flexbox for horizontal alignment */
+  justify-content: center; /* Center the videos horizontally */
+  gap: 20px; /* Add space between the videos */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  margin: 20px auto; /* Center the container */
+}
+
+.video-container video {
+  max-width: 100%; /* Ensure videos are responsive */
+  flex: 1 1 400px; /* Allow videos to shrink or grow */
+  border: 2px solid #555; /* Add a border */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effect */
+}
+
+.video-container video:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Enhance shadow on hover */
+}
+@media (max-width: 768px) {
+  .video-container {
+      flex-direction: column; /* Stack videos vertically */
+      align-items: center; /* Center videos */
+  }
+
+  .video-container video {
+      max-width: 90%; /* Reduce video width on smaller screens */
+  }
+}
+body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.video-container {
+  overflow: hidden; /* Prevent content from overflowing the container */
+}
+.video-item {
+  text-align: center; /* Center the heading and video */
+}
+
+.video-item h2 {
+  margin-bottom: 10px; /* Add spacing between the heading and the video */
+  color: white; /* Match the text color with your theme */
+  font-size: 18px; /* Adjust the font size */
+}
