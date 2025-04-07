@@ -404,3 +404,20 @@ a:hover {
   font-size: 1rem;
   color: white;
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Optional: Slight upward movement */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.video-container video {
+  animation: fadeIn 1.5s ease-in-out; /* Apply fade-in animation */
+  opacity: 0; /* Ensure videos are initially hidden */
+  animation-fill-mode: forwards; /* Keep the final state after animation */
+  animation-delay: calc(var(--order) * 0.2s); /* Optional: Staggered animation */
+}
