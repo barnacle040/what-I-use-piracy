@@ -247,3 +247,87 @@ body {
   color: white; /* Match the text color with your theme */
   font-size: 18px; /* Adjust the font size */
 }
+body {
+  font-family: 'Roboto', Arial, sans-serif; /* Use a clean font */
+  line-height: 1.6; /* Improve readability */
+  color: #f0f0f0; /* Light text color for better contrast */
+  background-color: #000000; /* Keep the dark background */
+  margin: 0;
+  padding: 0;
+}
+h1, h2 {
+  margin: 20px 0; /* Add spacing above and below headings */
+  text-align: center; /* Center-align headings */
+}
+
+h1 {
+  font-size: 2.5rem; /* Larger font size for main headings */
+  color: #ffffff; /* White color for headings */
+}
+
+h2 {
+  font-size: 1.5rem; /* Slightly smaller font size for subheadings */
+  color: #cccccc; /* Light gray for subheadings */
+}
+
+li {
+  margin: 10px 0; /* Add spacing between list items */
+  font-size: 1.2rem; /* Increase font size for better readability */
+  line-height: 1.8; /* Add line spacing for better readability */
+}
+a {
+  color: #00bcd4; /* Bright color for links */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold; /* Make links bold */
+}
+
+a:hover {
+  text-decoration: underline; /* Add underline on hover */
+  color: #ffffff; /* Change color on hover */
+}
+section {
+  background-color: #1a1a1a; /* Dark gray background for sections */
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  max-width: 800px; /* Limit the width of sections */
+}
+
+section h1, section h2 {
+  text-align: left; /* Align headings to the left inside sections */
+  margin-left: 10px;
+}
+section {
+  background-color: #1a1a1a; /* Dark gray background for sections */
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  max-width: 800px; /* Limit the width of sections */
+}
+
+section h1, section h2 {
+  text-align: left; /* Align headings to the left inside sections */
+  margin-left: 10px;
+}
+li {
+  margin: 10px 0; /* Add spacing between list items */
+  font-size: 1.2rem; /* Increase font size for better readability */
+  line-height: 1.8; /* Add line spacing for better readability */
+}
+
+li:hover {
+  color: #00bcd4; /* Change color on hover */
+  cursor: pointer; /* Add pointer cursor */
+}
+a {
+  color: #00bcd4; /* Bright color for links */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold; /* Make links bold */
+}
+
+a:hover {
+  text-decoration: underline; /* Add underline on hover */
+  color: #ffffff; /* Change color on hover */
+}
