@@ -20,9 +20,7 @@
 
          <h1>Help</h1>
     </div>
-   
-    
-    <div class="move">
+   <div class="move">
     <h1><li>How to use IDM and how to make an Exclusion folder</li></h1>
     
     <video width="400" height="400" controls>
@@ -39,10 +37,27 @@
     </div>
 
 
+    <div id="progressBar"></div>
+    <script>
+        window.onscroll = function () {
+            const progressBar = document.getElementById('progressBar');
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = progress + '%';
+        };
+    </script>
 
-
-
-
+<button onclick="scrollToTop()" id="backToTop" style="display: none;">Back To The Top</button>
+<div class="move">
+<script>
+    window.onscroll = function() {
+        document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
+    };
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
 
 </body>
 </html>
