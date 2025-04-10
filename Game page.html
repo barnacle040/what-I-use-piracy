@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
-    <title> What i use / piracy </title>
+    <title> Game Page </title>
     <link rel="icon" href="./pirate ship.png">
 
 </head>
 <body>
-           <div class="topnav">
-            <a class="active" href="./index.html">Home page</a>
+    <div class="topnav">
+        <a class="active" href="./index.html">Home page</a>
+        <div class="dropdown">
             <a class="active" href="./Game page.html">Game page</a>
-            <a class="active" href="./Help.html">Help page</a>
+            <div class="dropdown-content">
+                <a href="./Game page.html">Direct Downloads</a>
+                <a href="./torrent 1.html">Torrents</a>
+            </div>
         </div>
+        <a class="active" href="./Help.html">Help page</a>
+    </div>
+        
     <div class="move" >
         <div class="hero">
             <h1>Direct Links to Games</h1>
@@ -97,7 +104,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 </script>
- <div class="button-container">
+<div class="button-container">
     <button onclick="scrollToTop()" id="backToTop" style="display: none;">Back To The Top</button>
     <a href="./Game page 2.html" id="nextPage">Next Page</a>
 </div>
