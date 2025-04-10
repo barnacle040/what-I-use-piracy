@@ -558,3 +558,91 @@ footer a:hover {
   background-color: #555;
   transform: scale(1.1);
 }
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none; /* Hide the dropdown by default */
+  position: absolute;
+  background-color: #1a1a1a; /* Dark gray background */
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+  z-index: 1;
+  border-radius: 5px; /* Rounded corners */
+  min-width: 200px; /* Set a minimum width */
+  opacity: 0; /* Start hidden */
+  transform: translateY(10px); /* Slightly move down */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth animation */
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  text-align: left; /* Align text to the left */
+  background-color: #333; /* Background for links */
+  border-radius: 5px; /* Rounded corners */
+  display: block; /* Make links block-level for better spacing */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for dropdown links */
+.dropdown-content a:hover {
+  background-color: #555; /* Darker gray on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
+  display: block; /* Show the dropdown */
+  opacity: 1; /* Fully visible */
+  transform: translateY(0); /* Reset position */
+}
+.button-container {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center the buttons horizontally */
+  align-items: center; /* Align buttons vertically */
+  gap: 20px; /* Add space between the buttons */
+  margin: 20px auto; /* Center the container and add spacing */
+}
+
+#backToTop, #previousPage {
+  padding: 10px 20px;
+  background-color: #3d3c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none; /* Remove underline for links */
+  display: inline-block;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#backToTop:hover, #previousPage:hover {
+  background-color: #555;
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+.move p {
+  animation: fadeIn 2s ease-in-out; /* Apply the fade-in animation */
+  opacity: 0; /* Ensure the paragraph is initially hidden */
+  animation-fill-mode: forwards; /* Keep the final state after animation */
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px); /* Optional: Slight upward movement */
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
