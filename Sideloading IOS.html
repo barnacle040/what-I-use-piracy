@@ -1,103 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Guide to sideload iOS apps using AltStore.">
+    <meta name="keywords" content="sideloading, iOS, AltStore, apps, guide">
+    <meta property="og:title" content="Sideloading iOS Apps">
+    <meta property="og:image" content="./pirate_ship.png">
+    <meta property="og:description" content="Step-by-step guide to sideload iOS apps with AltStore.">
+    <link rel="preload" href="./pirate_ship.png" as="image">
+    <title>Sideloading iOS - Home Page</title>
+    <link rel="icon" href="./pirate_ship.png" sizes="32x32" type="image/png">
     <link rel="stylesheet" href="styles.css">
-    <title>Sideloading iOS</title>
-    <link rel="icon" href="./pirate ship.png">
 </head>
-
 <body>
-
-    <div class="header">
-        <div class="topnav">
-            <a class="active" href="./index.html">Home Page</a>
+    <header class="header">
+        <nav class="topnav" role="navigation">
+            <a href="./index.html" aria-current="page">Home Page</a>
             <div class="dropdown">
-                <a class="active" href="./Game page.html">Game Page</a>
+                <a href="./Game page.html" tabindex="0">Game Page</a>
                 <div class="dropdown-content">
                     <a href="./Game page.html">Direct Downloads</a>
                     <a href="./torrent 1.html">Torrents</a>
                 </div>
             </div>
-            <a class="active" href="./Help.html">Help Page</a>
-            <a class="active" href="./Sideloading IOS.html">Sideloading</a>
+            <a href="./Help.html">Help Page</a>
+            <a href="./Sideloading IOS.html">Sideloading</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="move">
+            <h1>How to Sideload iOS Apps</h1>
+            <p>Follow these steps to sideload iOS apps:</p>
+            <p><strong>Note: You will have to connect to a PC and refresh the app and App Store using AltServer every week to continue using them.</strong></p>
+            <button id="themeToggle">Toggle Theme</button>
+            <input type="text" id="searchInput" placeholder="Search steps..." aria-label="Search steps">
         </div>
-    </div>
 
-    <div class="move">
-        <h1>How to Sideload iOS Apps</h1>
-        <p>Follow these steps to sideload iOS apps:</p>
-        <p>Note: You will have to connect to a pc and refresh the App and appstore using Altserver every week to continue using them .</p>
-        <section>
-            <h2>Before Installing AltStore</h2>
-            <p>Download and install the latest version of iTunes and iCloud directly from Apple (not the Microsoft Store).</p>
+        <aside class="sidebar">
+            <h2>Quick Links</h2>
             <ul>
-                <li><strong>iTunes Direct Download Links:</strong></li>
-                <ul>
-                    <li><a href="https://www.apple.com/itunes/download/win64" target="_blank">Windows 64-bit</a></li>
-                    <li><a href="https://www.apple.com/itunes/download/win32" target="_blank">Windows 32-bit</a></li>
-                </ul>
-                <li><strong>iCloud Direct Download Link:</strong></li>
-                <ul>
-                    <li><a href="https://updates.cdn-apple.com/2020/windows/001-39935-20200911-1A70AA56-F448-11EA-8CC0-99D41950005E/iCloudSetup.exe" target="_blank">Windows 32-bit and 64-bit</a></li>
-                </ul>
+                <li><a href="#before-installing">Before Installing AltStore</a></li>
+                <li><a href="#installing-altstore">Installing AltStore</a></li>
+                <li><a href="#developer-mode">Enable Developer Mode</a></li>
+                <li><a href="#sources">Sources for AltStore</a></li>
             </ul>
-        </section>
+        </aside>
 
-        <section>
-            <h2>Installing AltStore</h2>
-            <ol>
-                <li>Download <a href="https://cdn.altstore.io/file/altstore/altinstaller.zip
-                    ">AltServer for Windows</a>.</li>
-                <li>Extract <code>AltInstaller.zip</code> and run <code>Setup.exe</code>.</li>
-                <li>Search for "AltServer" in your Windows taskbar and click "Run as administrator." Allow access to private networks if prompted. AltStore will appear as an icon in the taskbar.</li>
-                <li>Connect your iOS device to your computer and make sure it is unlocked. Trust your device with your computer if needed.</li>
-                <li>Open iTunes and enable "Wi-Fi sync" on your device.</li>
-                <li>Click the AltServer icon in the bottom-right taskbar. Then go to “Install AltStore” and choose your iOS device.</li>
-                <li>Enter your Apple ID email address and password. This will allow AltServer to authenticate with Apple and configure your account to support sideloading apps.</li>
-                <li>Wait a few seconds. An AltServer notification should appear saying AltStore has been successfully installed onto your device.</li>
-                <li>Restart your device if AltStore does not appear on your Home Screen.</li>
-                <li>On your iOS device, go to <strong>Settings → General → Profiles & Device Management</strong>. Tap “Trust [Your Apple ID],” then tap “Trust” again to confirm.</li>
-            </ol>
-        </section>
+        <article id="before-installing">
+            <h1> Before Installing AltStore <button class="toggle-btn" onclick="toggleSection('before-installing')">Toggle</button></h1>
+            <div class="section-content">
+                <p>Download and install the latest version of iTunes and iCloud directly from Apple (not the Microsoft Store).</p>
+                <ul>
+                    <li><strong>iTunes Direct Download Links:</strong>
+                        <ul>
+                            <li><a href="https://www.apple.com/itunes/download/win64" target="_blank" rel="noopener">Windows 64-bit</a></li>
+                            <li><a href="https://www.apple.com/itunes/download/win32" target="_blank" rel="noopener">Windows 32-bit</a></li>
+                        </ul>
+                    </li>
+                    <li><strong>iCloud Direct Download Link:</strong>
+                        <ul>
+                            <li><a href="https://support.apple.com/en-us/HT204283" target="_blank" rel="noopener">Windows 32-bit and 64-bit</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </article>
 
-        <section>
-            <h2>Enable Developer Mode (iOS 16+)</h2>
-            <p>To use AltStore on iOS 16 or later, you need to enable Developer Mode on your device:</p>
-            <ol>
-                <li>Go to <strong>Settings → Privacy and Security → Developer Mode</strong>.</li>
-                <li>Enable Developer Mode and restart your device if prompted.</li>
-            </ol>
-            <p>You are now ready to sideload apps using AltStore!</p>
-        </section>
-        <section>
-   <h2> Sources for Altstore</h2>
-    <p>Here are some sources to download some apps from AltStore:</p>
-    <ul>
-        <li><p> copy and paste these link into the altstore sources list </p></li>
-            <li><p> https://bit.ly/wuxuslibraryplus</p></li>
-            <li><p> my personal favourite ↑ </p></li>
-            <li><p> https://bit.ly/Quantumsource-plus </p></li>
-            <li><p>https://bit.ly/Quantumsource </p></li>
-            <li><p>https://ipa.cypwn.xyz/cypwn.json </p></li>
+        <article id="installing-altstore">
+            <h1> Installing AltStore <button class="toggle-btn" onclick="toggleSection('installing-altstore')">Toggle</button></h1>
+            <div class="section-content">
+                <ol>
+                    <li>Download AltServer for Windows.</li>
+                    <li>Extract AltInstaller.zip and run Setup.exe.</li>
+                    <li>Search for "AltServer" in your Windows taskbar and click "Run as administrator." Allow access to private networks if prompted. AltStore will appear as an icon in the taskbar.</li>
+                    <li>Connect your iOS device to your computer and make sure it is unlocked. Trust your device with your computer if needed.</li>
+                    <li>Open iTunes and enable "Wi-Fi sync" on your device.</li>
+                    <li>Click the AltServer icon in the bottom-right taskbar. Then go to “Install AltStore” and choose your iOS device.</li>
+                    <li>Enter your Apple ID email address and password. This will allow AltServer to authenticate with Apple and configure your account to support sideloading apps.</li>
+                    <li>Wait a few seconds. An AltServer notification should appear saying AltStore has been successfully installed onto your device.</li>
+                    <li>Restart your device if AltStore does not appear on your Home Screen.</li>
+                    <li>On your iOS device, go to Settings → General → Profiles & Device Management. Tap “Trust [Your Apple ID],” then tap “Trust” again to confirm.</li>
+                </ol>
+            </div>
+        </article>
 
-</ul>
-</section>
-   
-   
-   
-   
-   
-    </div>
+        <article id="developer-mode">
+            <h1> Enable Developer Mode (iOS 16+) <button class="toggle-btn" onclick="toggleSection('developer-mode')">Toggle</button></h1>
+            <div class="section-content">
+                <p>To use AltStore on iOS 16 or later, you need to enable Developer Mode on your device:</p>
+                <ol>
+                    <li>Go to Settings → Privacy and Security → Developer Mode.</li>
+                    <li>Enable Developer Mode and restart your device if prompted.</li>
+                </ol>
+                <p>You are now ready to sideload apps using AltStore!</p>
+            </div>
+        </article>
+
+        <article id="sources">
+            <h1> Sources for AltStore <button class="toggle-btn" onclick="toggleSection('sources')">Toggle</button></h1>
+            <div class="section-content">
+                <p>Here are some sources to download some apps from AltStore:</p>
+                <p>Copy and paste these links into the AltStore sources list:</p>
+                <ul>
+                    <li><a href="https://bit.ly/wuxuslibraryplus" target="_blank" rel="noopener">https://bit.ly/wuxuslibraryplus</a> (my personal favorite )</li>
+                    <li><a href="https://bit.ly/Quantumsource-plus" target="_blank" rel="noopener">https://bit.ly/Quantumsource-plus</a></li>
+                    <li><a href="https://bit.ly/Quantumsource" target="_blank" rel="noopener">https://bit.ly/Quantumsource</a></li>
+                    <li><a href="https://ipa.cypwn.xyz/cypwn.json" target="_blank" rel="noopener">https://ipa.cypwn.xyz/cypwn.json</a></li>
+                </ul>
+            </div>
+        </article>
+
+        <div class="button-container">
+            <button onclick="scrollToTop()" id="backToTop" style="display: none;">Back To Top</button>
+        </div>
+    </main>
 
     <footer>
         <p>&copy; Barnacle. All rights reserved.</p>
         <div class="social-links">
-            <a href="https://x.com/barnbarn44" target="_blank">Twitter</a> |
-            <a href="https://github.com/barnacle040?tab=repositories" target="_blank">GitHub</a>
+            <a href="https://x.com/BJ0RN9" target="_blank" rel="noopener">Twitter</a> |
+            <a href="https://github.com/barnacle040?tab=repositories" target="_blank" rel="noopener">GitHub</a>
         </div>
     </footer>
+
+    <script>
+        window.onscroll = function() {
+            document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function searchResources() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const sections = document.querySelectorAll('article');
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                section.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function toggleSection(id) {
+            const content = document.querySelector(`#${id} .section-content`);
+            content.classList.toggle('hidden');
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelector('.dropdown-content').style.display = 'none';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('searchInput').addEventListener('keyup', searchResources);
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('light');
+                localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+            });
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light');
+            }
+        });
+    </script>
 </body>
 </html>
