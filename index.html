@@ -1,152 +1,283 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Curated piracy tools and resources for safe downloading.">
+    <meta name="keywords" content="piracy, torrents, repacks, adblock, VPN, software">
+    <meta property="og:title" content="Piracy Resources">
+    <meta property="og:image" content="./pirate_ship.png">
+    <meta property="og:description" content="A collection of tools and resources for piracy, including adblockers, VPNs, software, and more.">
+    <link rel="preload" href="./pirate_ship.png" as="image">
+    <link rel="preload" href="./ublock.png" as="image">
+    <title>Piracy Resources - Home Page</title>
+    <link rel="icon" href="./pirate_ship.png" sizes="32x32" type="image/png">
     <link rel="stylesheet" href="styles.css">
-    <title>Home Page</title>
-    <link rel="icon" href="./pirate ship.png">
 </head>
-
 <body>
-    <div class="header">
-        <div class="topnav">
-            <a class="active" href="./index.html">Home page</a>
+    <header class="header">
+        <nav class="topnav" role="navigation">
+            <a href="./index.html" aria-current="page">Home page</a>
             <div class="dropdown">
-                <a class="active" href="./Game page.html">Game page</a>
+                <a href="./Game page.html" tabindex="0">Game page</a>
                 <div class="dropdown-content">
                     <a href="./Game page.html">Direct Downloads</a>
                     <a href="./torrent 1.html">Torrents</a>
                 </div>
             </div>
-            <a class="active" href="./Help.html">Help page</a>
-            <a class="active" href="./Sideloading IOS.html">Sideloading</a>
+            <a href="./Help.html">Help page</a>
+            <a href="./Sideloading IOS.html">Sideloading</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="move">
+            <h1>What I Use / Piracy Stuff</h1>
+            <p>A collection of useful resources and tools. <strong>Use at your own risk—VPN recommended for all downloads.</strong></p>
+            <button id="themeToggle">Toggle Theme</button>
+            <input type="text" id="searchInput" placeholder="Search resources..." aria-label="Search resources">
         </div>
-    </div>
 
-    <div class="move">
-        <h1>What I Use / Piracy Stuff</h1>
-    </div>
+        <aside class="sidebar">
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="#basics">Basics</a></li>
+                <li><a href="#virus-protection">Virus Protection</a></li>
+                <li><a href="#anime">Anime</a></li>
+                <li><a href="#gaming">Gaming</a></li>
+                <li><a href="#tv-movies">TV Shows & Movies</a></li>
+                <li><a href="#pc-cleaning">Clearing Space</a></li>
+                <li><a href="#tweaks">Tweaks</a></li>
+                <li><a href="#music">Music</a></li>
+                <li><a href="#browsers">Browsers</a></li>
+                <li><a href="#wallpapers">Wallpapers</a></li>
+                <li><a href="#windows-keys">OS</a></li>
+                <li><a href="#minecraft-server">Minecraft Server</a></li>
+                <li><a href="#password-manager">Password Manager</a></li>
+            </ul>
+        </aside>
 
-    <div class="move">
-        <section id="basics">
-            <h1>Basics</h1>
-            <h2><li>An ad blocker uBlock Origin<img src="./ublock.PNG" sizes="50" width="50"><a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search">(here)</a></li></h2>
-            <h2><li>VPN if torrenting , you will need to bind your vpn to your torrent</li></h2>
-            <h2><li>IDM if downloading large games <img src="./IDM.PNG" sizes="50" width="50"><a href="https://steamrip.com/idm-internet-download-manager-free-download-1a/">(here)</a></li></h2>
-            <h2><li>Bittorrent (qBittorrent)<img src="./torrent.png" sizes="50" width="50"><a href="https://www.qbittorrent.org/download">(here)</a></li></h2>
-            <h2><li>Windows Defender exclusion folder</li></h2>
-            <h2><li>WinRaR<img src="./winrar.png" sizes="50" width="50"><a href="https://www.win-rar.com/start.html?&L=0">(here)</a></li></h2>
-        </section>
-
-        <section id="virus-protection">
-            <h1>Virus Protection</h1>
-            <h2><li>Malwarebytes<img src="./malwarebytes-logo-1-3657666643.png" sizes="50" width="50"><a href="https://www.malwarebytes.com">(here)</a></li></h2>
-            <h2>Data Protection</h2>
-            <h2><li>HaveIBeenPwned<img src="./pwned.png" sizes="50" width="50"><a href="https://haveibeenpwned.com/">(here)</a></li></h2> 
-        </section>
-
-        <section id="anime">
-            <h1>Anime</h1>
-            <h2><li>HiAnime <img src="./hianime.png" sizes="50" width="50"><a href="https://hianime.pe">(here)</a></li></h2>
-        </section>
-
-        <section id="gaming">
-            <h1>Gaming</h1>
-            <h2><li>FitGirl Repacks <img src="./repacks.png" sizes="50" width="50"><a href="https://fitgirl-repacks.site">(here)</a> torrent and VPN needed</li></h2>
-            <h2><li>SteamRip <img src="./steamrip.png" sizes="50" width="50"><a href="https://steamrip.com">(here)</a> use IDM</li></h2>
-            <h2>Retro</h2>
-            <h2><li>Vims Lair<img src="./vims lair.jpg"sizes="50" width="50"><a href="https://vimm.net/vault">(here)</a></li></h2>
-            <h2>Emulation</h2>
-            <h2><li>Retro arch <img src="./retro arch.png" sizes="50" width="50"><a href="https://www.retroarch.com/">(here)</a></li></h2>
-        </section>
-        
-
-        <section id="tv-movies">
-            <h1>TV Shows & Movies</h1>
-            <h2><li>1337x<img src="./1337x.png"sizes="50" width="50"><a href="https://1337x.to/movie-library/1/">(here)</a> </li></h2>
-            <h2><li>RiveStream <img src="./rive.png" sizes="50" width="50"><a href="https://rivestream.org">(here)</a></li></h2>
-            <h2><li>Cineby <img src="./cineby.PNG" sizes="50" width="50"><a href="https://www.cineby.app">(here)</a></li></h2>
-            <h2><li>LookMovie <img src="./lookmovie.png" sizes="50" width="50"><a href="https://www.lookmovie2.to">(here)</a></li></h2>
-        </section>
-
-        <section id="pc-cleaning">
-            <h1>Clearing Space on PC</h1>
-            <h2><li>basic clean <img src="./ccleaner.png" sizes="50" width="50"><a href="https://www.ccleaner.com/ccleaner/download">(here)</a></li></h2>
-            <h2><li>very deep clean <img src="./bleachbit.png" sizes="50" width="50"><a href="https://www.bleachbit.org">(here)</a></li></h2>
-            <h2><li>find large files <img src="./wiztree.png" sizes="50" width="50"><a href="https://diskanalyzer.com/download">(here)</a></li></h2>
-            <h2><li> better file searcher <img src="./wizfile.png" sizes="50" width="50"><a href="https://antibody-software.com/wizfile/download">(here)</a></li></h2>
-        </section>
-
-        <section id="tweaks">
-            <h1>Tweaks Using PowerShell<img src="./powershell.png" sizes="50" width="50""</h1>
-            <h2><li>Paste this↓ into cmd/powershell</li></h2>
-            <h2><li>iwr -useb https://christitus.com/win | iex</li></h2>
-            <h2><li>Choose the tweaks you'd like to perform</li></h2>
-        </section>
-
-        <section id="music">
-            <h1>Music</h1>
-            <h2><li>SpotX for ad free Spotify<a href="https://github.com/SpotX-Official/SpotX">(here)</a></li></h2>
-            <h2><li><img src="./shazam.png" sizes="50" width="50"><a href="https://chromewebstore.google.com/detail/shazam-find-song-names-fr/mmioliijnhnoblpgimnlajmefafdfilb">(here)</a></li></h2>
-        </section>
-
-        <section id="browsers">
-            <h1>Browsers</h1>
-            <h2><li>Firefox <a href="https://www.firefox.com/en-US/browsers/desktop/windows/?redirect_source=mozilla-org">(here)</a></</h2>
-            <h2><li>Google Chrome, no</li></h2>
-            <h2><li>TOR <img src="./tor.png" sizes="50" width="50"><a href="https://www.torproject.org/download/">(here)</a></li></h2>
-
-        </section>
-
-        <section id="wallpapers">
-            <h1>Wallpapers</h1>
-            <h2><li><img src="./wallpaper.png" sizes="50" width="50">Wallhaven <a href="https://wallhaven.cc">(here)</a></li></h2>
-        </section>
-
-        <section id="windows-keys">
-            <h1>OS</h1>
-            <h2>Windows keys<li><img src="./windows.png" sizes="50" width="50"><a href="https://gist.github.com/rvrsh3ll/0810c6ed60e44cf7932e4fbae25880df">(here)</a></li></h2>
-            <h2>Linux </h2>
-            <h2><li><img src="./arch.png"sizes="50" width="50"><a href="https://archlinux.org/download/">(here)</a></li></h2>
-            <h2><li><img src="./mint.png"sizes="50" width="50"><a href="https://www.linuxmint.com/download.php">(here)</a></li></h2>
-            <h2>Rufus</h2>
-            <h2><li><img src="./rufus.png" sizes="50" width="50"><a href="https://rufus.ie/en/">(here)</a></li></h2>
-            <h2><li>To make a bootable usb ↑</li></h2>
-        </section>
-
-        <section id="minecraft-server">
-            <h1>Minecraft Server</h1>
-            <h2><li><img src="./minecraft.png" sizes="50" width="50"><a href="https://www.auto-mcs.com">(here)</a></li></h2>
-            <h2><li>Just copy and paste IP into MC server list</li></h2>
-        </section>
-
-        <section id="password-manager">
-            <h1>Password Manager</h1>
-            <h2><li>LastPass<img src="./lastpass.png" sizes="50" width="50"><a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd?hl=en">(here)</a></li></h2>
-            <h1>Offline Password Manager</h1>
-            <h2><li>KeePass<img src="./keepass.png" sizes="50" width="50"><a href="https://keepass.info/download.html">(here)</a></li></h2>
-        </section>
-
-        <button onclick="scrollToTop()" id="backToTop" style="display: none;">Back To The Top</button>
-        <script>
-            window.onscroll = function() {
-                document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
-            };
-            function scrollToTop() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        </script>
-
-        <footer>
-            <p>&copy; Barnacle. All rights reserved.</p>
-            <div class="social-links">
-                <a href="https://x.com/BJ0RN9" target="_blank">Twitter</a> 
-                <a href="https://github.com/barnacle040?tab=repositories" target="_blank">GitHub</a>
+        <article id="basics">
+            <h1> Basics <button class="toggle-btn" onclick="toggleSection('basics')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li><img src="./ublock.PNG" loading="lazy" alt="uBlock Origin icon" width="48" height="48">uBlock Origin  <a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/" target="_blank" rel="noopener" data-tooltip="Ad-blocker for browsers"> here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li>VPN if torrenting (bind your VPN to your torrent client)</li>
+                    <li><img src="./IDM.PNG" loading="lazy" alt="Internet Download Manager icon" width="48" height="48">IDM for large downloads <a href="https://steamrip.com/idm-internet-download-manager-free-download-1a/" target="_blank" rel="noopener" data-tooltip="Download manager for large files">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./torrent.png" loading="lazy" alt="qBittorrent icon" width="48" height="48">qBittorrent <a href="https://www.qbittorrent.org/download" target="_blank" rel="noopener" data-tooltip="Free torrent client">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li>Windows Defender exclusion folder</li>
+                    <li><img src="./winrar.png" loading="lazy" alt="WinRAR icon" width="48" height="48">WinRAR <a href="https://www.win-rar.com/start.html?&L=0" target="_blank" rel="noopener" data-tooltip="File compression tool">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./jdownloader.jpg" loading="lazy" alt="JDownloader icon" width="48" height="48">JDownloader (alternative to IDM) <a href="https://jdownloader.org/download/index" target="_blank" rel="noopener" data-tooltip="Open-source download manager">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
             </div>
-        </footer>
+        </article>
+
+        <article id="virus-protection">
+            <h1> Virus Protection <button class="toggle-btn" onclick="toggleSection('virus-protection')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li><img src="./malwarebytes-logo-1-3657666643.png" loading="lazy" alt="Malwarebytes icon" width="48" height="48">Malwarebytes <a href="https://www.malwarebytes.com" target="_blank" rel="noopener" data-tooltip="Anti-malware software">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./pwned.png" loading="lazy" alt="HaveIBeenPwned icon" width="48" height="48">HaveIBeenPwned for data protection <a href="https://haveibeenpwned.com/" target="_blank" rel="noopener" data-tooltip="Check for data breaches">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+            </div>
+        </article>
+
+       
+
+        <article id="anime">
+            <h1> Anime <button class="toggle-btn" onclick="toggleSection('anime')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li><img src="./hianime.png" loading="lazy" alt="HiAnime icon" width="48" height="48">HiAnime <a href="https://hianime.pe" target="_blank" rel="noopener" data-tooltip="Anime streaming site">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="gaming">
+            <h1> Gaming <button class="toggle-btn" onclick="toggleSection('gaming')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li><img src="./repacks.png" loading="lazy" alt="FitGirl Repacks icon" width="48" height="48" onerror="this.src='./pirate_ship.png'">FitGirl Repacks <a href="https://fitgirl-repacks.site" target="_blank" rel="noopener" data-tooltip="Compressed game torrents">here</a> (torrent, VPN needed) <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./steamrip.png" loading="lazy" alt="SteamRip icon" width="48" height="48" onerror="this.src='./pirate_ship.png'">SteamRip <a href="https://steamrip.com" target="_blank" rel="noopener" data-tooltip="Direct game downloads">here</a> (use IDM) <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./vims lair.jpg" loading="lazy" alt="Vimms Lair icon" width="48" height="48" onerror="this.src='./pirate_ship.png'">Vimms Lair <a href="https://vimm.net/vault" target="_blank" rel="noopener" data-tooltip="Retro game ROMs">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./retro arch.png" loading="lazy" alt="RetroArch icon" width="48" height="48" onerror="this.src='./pirate_ship.png'">RetroArch <a href="https://www.retroarch.com/" target="_blank" rel="noopener" data-tooltip="Emulator frontend">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="tv-movies">
+    <h1>TV Shows & Movies <button class="toggle-btn" onclick="toggleSection('tv-movies')">Toggle</button></h1>
+    <div class="section-content">
+        <ul>
+            <li><img src="./1337x.png" loading="lazy" alt="1337x icon" width="48" height="48" onerror="this.src='./pirate_ship.png'">1337x <a href="https://1337x.to/movie-library/1/" target="_blank" rel="noopener" data-tooltip="Torrent site for movies">here</a> <span class="status">Last checked: Sep 2025</span></li>
+            <li><img src="./rive.png" loading="lazy" alt="RiveStream icon" width="48" height="48" onerror="this.src='./pirate_ship.png'">RiveStream <a href="https://rivestream.org" target="_blank" rel="noopener" data-tooltip="Streaming platform">here</a> <span class="status">Last checked: Sep 2025</span></li>
+            <li><img src="./cineby.PNG" loading="lazy" alt="Cineby icon" width="48" height="48" onerror="this.src='./pirate_ship.png'">Cineby <a href="https://www.cineby.app" target="_blank" rel="noopener" data-tooltip="Free movie streaming">here</a> <span class="status">Last checked: Sep 2025</span></li>
+            <li><img src="./lookmovie.png" loading="lazy" alt="LookMovie icon" width="48" height="48" onerror="this.src='./pirate_ship.png'">LookMovie <a href="https://www.lookmovie2.to" target="_blank" rel="noopener" data-tooltip="Movies and TV shows">here</a> <span class="status">Last checked: Sep 2025</span></li>
+        </ul>
     </div>
+</article>
+
+        <article id="pc-cleaning">
+            <h1> Clearing Space on PC <button class="toggle-btn" onclick="toggleSection('pc-cleaning')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li><img src="./ccleaner.png" loading="lazy" alt="CCleaner icon" width="48" height="48">CCleaner for basic clean <a href="https://www.ccleaner.com/ccleaner/download" target="_blank" rel="noopener" data-tooltip="System cleanup tool">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./bleachbit.png" loading="lazy" alt="BleachBit icon" width="48" height="48">BleachBit for deep clean <a href="https://www.bleachbit.org" target="_blank" rel="noopener" data-tooltip="Advanced system cleaner">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./wiztree.png" loading="lazy" alt="WizTree icon" width="48" height="48">WizTree to find large files <a href="https://diskanalyzer.com/download" target="_blank" rel="noopener" data-tooltip="Disk space analyzer">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./wizfile.png" loading="lazy" alt="WizFile icon" width="48" height="48">WizFile for better file searching <a href="https://antibody-software.com/wizfile/download" target="_blank" rel="noopener" data-tooltip="Fast file finder">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="tweaks">
+            <h1><img src="./powershell.png" alt="PowerShell icon" width="32" height="32"> Tweaks Using PowerShell <button class="toggle-btn" onclick="toggleSection('tweaks')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li>Paste this command into PowerShell:</li>
+                    <li><code>iwr -useb https://christitus.com/win | iex</code></li>
+                    <li>Choose the tweaks you'd like to perform</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="music">
+            <h1> Music <button class="toggle-btn" onclick="toggleSection('music')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li>SpotX for ad-free Spotify <a href="https://github.com/SpotX-Official/SpotX" target="_blank" rel="noopener" data-tooltip="Ad-free Spotify mod">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./shazam.png" loading="lazy" alt="Shazam icon" width="48" height="48">Shazam browser extension <a href="https://chromewebstore.google.com/detail/shazam-find-song-names-fr/mmioliijnhnoblpgimnlajmefafdfilb" target="_blank" rel="noopener" data-tooltip="Song identifier">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="browsers">
+            <h1> Browsers <button class="toggle-btn" onclick="toggleSection('browsers')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li><img src="./firefox.png" loading="lazy" alt="Firefox icon" width="48" height="48">Firefox <a href="https://www.firefox.com/en-US/browsers/desktop/windows/" target="_blank" rel="noopener" data-tooltip="Privacy-focused browser">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./circle.png" loading="lazy" alt="Google" width="48" height="48">Google Chrome (not recommended for privacy)</li>
+                    <li><img src="./tor.png" loading="lazy" alt="Tor Browser icon" width="48" height="48">TOR Browser <a href="https://www.torproject.org/download/" target="_blank" rel="noopener" data-tooltip="Anonymous browsing">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="wallpapers">
+            <h1> Wallpapers <button class="toggle-btn" onclick="toggleSection('wallpapers')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li><img src="./wallpaper.png" loading="lazy" alt="Wallhaven icon" width="48" height="48">Wallhaven <a href="https://wallhaven.cc" target="_blank" rel="noopener" data-tooltip="High-quality wallpapers">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="windows-keys">
+            <h1> OS <button class="toggle-btn" onclick="toggleSection('windows-keys')">Toggle</button></h1>
+            <div class="section-content">
+                <h2>Windows Keys</h2>
+                <ul>
+                    <li><img src="./windows.png" loading="lazy" alt="Windows icon" width="48" height="48">Windows activation keys <a href="https://gist.github.com/rvrsh3ll/0810c6ed60e44cf7932e4fbae25880df" target="_blank" rel="noopener" data-tooltip="Windows activation keys">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+                <h2>Linux Distributions</h2>
+                <ul>
+                    <li><img src="./arch.png" loading="lazy" alt="Arch Linux icon" width="48" height="48">Arch Linux <a href="https://archlinux.org/download/" target="_blank" rel="noopener" data-tooltip="Lightweight Linux distro">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li><img src="./mint.png" loading="lazy" alt="Linux Mint icon" width="48" height="48">Linux Mint <a href="https://www.linuxmint.com/download.php" target="_blank" rel="noopener" data-tooltip="User-friendly Linux distro">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+                <h2>Tools</h2>
+                <ul>
+                    <li><img src="./rufus.png" loading="lazy" alt="Rufus icon" width="48" height="48">Rufus for creating bootable USB drives <a href="https://rufus.ie/en/" target="_blank" rel="noopener" data-tooltip="Bootable USB creator">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="minecraft-server">
+            <h1> Minecraft Server <button class="toggle-btn" onclick="toggleSection('minecraft-server')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li><img src="./minecraft.png" loading="lazy" alt="Minecraft icon" width="48" height="48">Auto-MCS for Minecraft servers <a href="https://www.auto-mcs.com" target="_blank" rel="noopener" data-tooltip="Minecraft server setup">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                    <li>Copy and paste IP into MC server list</li>
+                </ul>
+            </div>
+        </article>
+
+        <article id="password-manager">
+            <h1> Password Manager <button class="toggle-btn" onclick="toggleSection('password-manager')">Toggle</button></h1>
+            <div class="section-content">
+                <ul>
+                    <li><img src="./lastpass.png" loading="lazy" alt="LastPass icon" width="48" height="48">LastPass <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank" rel="noopener" data-tooltip="Cloud-based password manager">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+                <h2>Offline Password Manager</h2>
+                <ul>
+                    <li><img src="./keepass.png" loading="lazy" alt="KeePass icon" width="48" height="48">KeePass <a href="https://keepass.info/download.html" target="_blank" rel="noopener" data-tooltip="Offline password manager">here</a> <span class="status">Last checked: Sep 2025</span></li>
+                </ul>
+            </div>
+        </article>
+
+
+
+        <div class="button-container">
+            <button onclick="scrollToTop()" id="backToTop" style="display: none;">Back To Top</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; Barnacle. All rights reserved. Last updated: September 2025. Icons by <a href="https://flaticon.com" target="_blank" rel="noopener">Flaticon</a>.</p>
+        <div class="social-links">
+            <a href="https://x.com/BJ0RN9" target="_blank" rel="noopener">Twitter</a>
+            <a href="https://github.com/barnacle040?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </div>
+    </footer>
+
+    <script>
+        window.onscroll = function() {
+            document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function searchResources() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const sections = document.querySelectorAll('article');
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                section.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function toggleSection(id) {
+            const content = document.querySelector(`#${id} .section-content`);
+            content.classList.toggle('hidden');
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelector('.dropdown-content').style.display = 'none';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('li, .image-item');
+            items.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+            });
+
+            const sections = document.querySelectorAll('article');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${0.5 + index * 0.2}s`;
+            });
+
+            document.getElementById('searchInput').addEventListener('keyup', searchResources);
+
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('light');
+                localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+            });
+
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light');
+            }
+        });
+    </script>
 </body>
 </html>
-
