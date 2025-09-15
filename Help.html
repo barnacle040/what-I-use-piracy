@@ -1,82 +1,121 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Help guide for using piracy tools and resources.">
+    <meta name="keywords" content="help, IDM, exclusion folder, guide">
+    <meta property="og:title" content="Help Guide">
+    <meta property="og:image" content="./pirate_ship.png">
+    <meta property="og:description" content="Helpful tutorials for IDM and exclusion folders.">
+    <link rel="preload" href="./pirate_ship.png" as="image">
+    <title>Help - Home Page</title>
+    <link rel="icon" href="./pirate_ship.png" sizes="32x32" type="image/png">
     <link rel="stylesheet" href="styles.css">
-    <title>Help Page</title>
-    <link rel="icon" href="./pirate ship.png">
 </head>
-
 <body>
-    <div class="header">
-        <div class="topnav">
-            <a class="active" href="./index.html">Home page</a>
+    <header class="header">
+        <nav class="topnav" role="navigation">
+            <a href="./index.html">Home page</a>
             <div class="dropdown">
-                <a class="active" href="./Game page.html">Game page</a>
+                <a href="./Game page.html" tabindex="0">Game page</a>
                 <div class="dropdown-content">
                     <a href="./Game page.html">Direct Downloads</a>
                     <a href="./torrent 1.html">Torrents</a>
                 </div>
             </div>
-            <a class="active" href="./Help.html">Help page</a>
-            <a class="active" href="./Sideloading IOS.html">Sideloading</a>
+            <a href="./Help.html" aria-current="page">Help page</a>
+            <a href="./Sideloading IOS.html">Sideloading</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="move">
+            <h1>Help</h1>
+            <button id="themeToggle">Toggle Theme</button>
+            <input type="text" id="searchInput" placeholder="Search help..." aria-label="Search help">
         </div>
-    </div>
 
-    <div class="move">
-     
-    </div>
-        <h1>Help</h1>
-    </div>
+        <aside class="sidebar">
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="#idm-guide">How to Use IDM</a></li>
+                <li><a href="#exclusion-guide">How to Make an Exclusion Folder</a></li>
+            </ul>
+        </aside>
 
-    <div class="video-container">
-        <div class="video-item">
-            <h2><li>How to Use IDM</li></h2>
-            <video width="400" height="400" controls style="--order: 1;">
-                <source src="./How To Download Files using IDM (Internet Download Manager).mp4" type="video/mp4">
-                <source src="./How To Download Files using IDM (Internet Download Manager).mp4" type="video/ogg">
-                Your browser does not support the video tag.
-            </video>
+        <article id="idm-guide">
+            <h1>How to Use IDM <button class="toggle-btn" onclick="toggleSection('idm-guide')">Toggle</button></h1>
+            <div class="section-content">
+                <video controls width="100%" max-width="800px" style="display: block; margin: 0 auto;">
+                    <source src="./How To Download Files using IDM (Internet Download Manager).mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </article>
+
+        <article id="exclusion-guide">
+            <h1> How to Make an Exclusion Folder <button class="toggle-btn" onclick="toggleSection('exclusion-guide')">Toggle</button></h1>
+            <div class="section-content">
+                <video controls width="100%" max-width="800px" style="display: block; margin: 0 auto;">
+                    <source src="./Add Exclusions for Windows Defender in Windows 10.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </article>
+
+        <div class="button-container">
+            <button onclick="scrollToTop()" id="backToTop" style="display: none;">Back To Top</button>
         </div>
-        <div class="video-item">
-            <h2><li>How to Make an Exclusion Folder</li></h2>
-            <video width="400" height="400" controls style="--order: 2;">
-                <source src="./Add Exclusions for Windows Defender in Windows 10.mp4" type="video/mp4">
-                <source src="./Add Exclusions for Windows Defender in Windows 10.mp4" type="video/ogg">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </div>
-
-    <div id="progressBar"></div>
-    <script>
-        window.onscroll = function () {
-            const progressBar = document.getElementById('progressBar');
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const progress = (scrollTop / scrollHeight) * 100;
-            progressBar.style.width = progress + '%';
-        };
-    </script>
-
-    <button onclick="scrollToTop()" id="backToTop" style="display: none;">Back To The Top</button>
-    <script>
-        window.onscroll = function() {
-            document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
-        };
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
+    </main>
 
     <footer>
         <p>&copy; Barnacle. All rights reserved.</p>
         <div class="social-links">
-            <a href="https://x.com/barnbarn44" target="_blank">Twitter</a> |
-            <a href="https://github.com/barnacle040?tab=repositories" target="_blank">GitHub</a>
+            <a href="https://x.com/BJ0RN9" target="_blank" rel="noopener">Twitter</a> |
+            <a href="https://github.com/barnacle040?tab=repositories" target="_blank" rel="noopener">GitHub</a>
         </div>
     </footer>
+
+    <script>
+        window.onscroll = function() {
+            document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function searchResources() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const sections = document.querySelectorAll('article');
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                section.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function toggleSection(id) {
+            const content = document.querySelector(`#${id} .section-content`);
+            content.classList.toggle('hidden');
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelector('.dropdown-content').style.display = 'none';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('searchInput').addEventListener('keyup', searchResources);
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('light');
+                localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+            });
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light');
+            }
+        });
+    </script>
 </body>
 </html>
