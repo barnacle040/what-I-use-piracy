@@ -153,6 +153,18 @@
             cursor: pointer;
         }
 
+        .category-header {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 1rem 0;
+            margin: 1rem 0;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
         .software-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -190,6 +202,13 @@
             margin-right: 15px;
             color: white;
             font-size: 1.5rem;
+            overflow: hidden;
+        }
+
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .app-info {
@@ -364,6 +383,7 @@
         </div>
 
         <div class="software-grid" id="softwareGrid">
+            <div class="category-header">System Utilities</div>
             <!-- System Utilities -->
             <div class="software-card" data-category="system">
                 <div class="card-header">
@@ -433,7 +453,7 @@
             <div class="software-card" data-category="system">
                 <div class="card-header">
                     <div class="app-icon">
-                        <i class="fas fa-usb"></i>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Etcher-icon.png" alt="BalenaEtcher Logo">
                     </div>
                     <div class="app-info">
                         <h3>BalenaEtcher</h3>
@@ -474,6 +494,70 @@
                 </div>
             </div>
 
+            <div class="software-card" data-category="system">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>Everything</h3>
+                        <span class="category">System Utilities</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">Ultra-fast file search tool that indexes your entire drive for instant results, far quicker than Windows search.</p>
+                    <div class="app-links">
+                        <a href="https://www.voidtools.com/" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="software-card" data-category="system">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>ShareX</h3>
+                        <span class="category">System Utilities</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">Advanced screenshot and screen recording tool with annotation, sharing, and automation features.</p>
+                    <div class="app-links">
+                        <a href="https://getsharex.com/downloads" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="software-card" data-category="system">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>Rufus</h3>
+                        <span class="category">System Utilities</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">Simple utility for creating bootable USB drives from ISO files, with support for various formats.</p>
+                    <div class="app-links">
+                        <a href="https://rufus.ie/" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-header">Media & Creative</div>
             <!-- Media & Creative -->
             <div class="software-card" data-category="media">
                 <div class="card-header">
@@ -567,6 +651,145 @@
                 </div>
             </div>
 
+            <div class="software-card" data-category="media">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>Audacity</h3>
+                        <span class="category">Media & Creative</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                            <div class="platform-icon mac">🍎</div>
+                            <div class="platform-icon linux">🐧</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">Open-source audio editor for recording, mixing, and applying effects to sound files or podcasts.</p>
+                    <div class="app-links">
+                        <a href="https://www.audacityteam.org/download/" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="software-card" data-category="media">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>Shotcut</h3>
+                        <span class="category">Media & Creative</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                            <div class="platform-icon mac">🍎</div>
+                            <div class="platform-icon linux">🐧</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">Feature-rich video editor supporting a wide range of formats, filters, and non-destructive editing.</p>
+                    <div class="app-links">
+                        <a href="https://www.shotcut.org/download/" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="software-card" data-category="media">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>Blender</h3>
+                        <span class="category">Media & Creative</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                            <div class="platform-icon mac">🍎</div>
+                            <div class="platform-icon linux">🐧</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">Comprehensive 3D creation suite for modeling, animation, rendering, and game development.</p>
+                    <div class="app-links">
+                        <a href="https://www.blender.org/download/" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="software-card" data-category="media">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-vector-square"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>Inkscape</h3>
+                        <span class="category">Media & Creative</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                            <div class="platform-icon mac">🍎</div>
+                            <div class="platform-icon linux">🐧</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">Vector graphics editor for creating scalable illustrations, logos, and diagrams.</p>
+                    <div class="app-links">
+                        <a href="https://inkscape.org/" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="software-card" data-category="media">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-compress-arrows-alt"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>HandBrake</h3>
+                        <span class="category">Media & Creative</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                            <div class="platform-icon mac">🍎</div>
+                            <div class="platform-icon linux">🐧</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">Video transcoder for converting and compressing media files while preserving quality.</p>
+                    <div class="app-links">
+                        <a href="https://handbrake.fr/downloads.php" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="software-card" data-category="media">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>Krita</h3>
+                        <span class="category">Media & Creative</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                            <div class="platform-icon mac">🍎</div>
+                            <div class="platform-icon linux">🐧</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">Digital painting app with brushes, layers, and tools tailored for artists and illustrators.</p>
+                    <div class="app-links">
+                        <a href="https://krita.org/en/download/" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-header">Productivity</div>
             <!-- Productivity -->
             <div class="software-card" data-category="productivity">
                 <div class="card-header">
@@ -658,6 +881,52 @@
                 </div>
             </div>
 
+            <div class="software-card" data-category="productivity">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>PDFgear</h3>
+                        <span class="category">Productivity</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                            <div class="platform-icon mac">🍎</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">All-in-one PDF editor for viewing, annotating, converting, and merging documents with AI-assisted features.</p>
+                    <div class="app-links">
+                        <a href="https://www.pdfgear.com/" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="software-card" data-category="productivity">
+                <div class="card-header">
+                    <div class="app-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="app-info">
+                        <h3>Scribus</h3>
+                        <span class="category">Productivity</span>
+                        <div class="platform-icons">
+                            <div class="platform-icon windows">🪟</div>
+                            <div class="platform-icon mac">🍎</div>
+                            <div class="platform-icon linux">🐧</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="app-description">Desktop publishing software for creating professional layouts like brochures, newsletters, and books.</p>
+                    <div class="app-links">
+                        <a href="https://www.scribus.net/downloads/" class="btn btn-primary">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-header">Security & Privacy</div>
             <!-- Security & Privacy -->
             <div class="software-card" data-category="security">
                 <div class="card-header">
@@ -819,6 +1088,7 @@
                 </div>
             </div>
 
+            <div class="category-header">Internet & Networking</div>
             <!-- Internet & Networking -->
             <div class="software-card" data-category="internet">
                 <div class="card-header">
@@ -866,6 +1136,7 @@
                 </div>
             </div>
 
+            <div class="category-header">Development Tools</div>
             <!-- Development Tools -->
             <div class="software-card" data-category="development">
                 <div class="card-header">
