@@ -129,7 +129,7 @@
             <div class="control-buttons">
                 <button id="expandAll">Expand All</button>
                 <button id="collapseAll">Collapse All</button>
-                <button id="showFavorites">★ Favorites (<span id="favCount">0</span>)</button>
+                <button id="showFavorites" aria-pressed="false">★ Favorites (<span id="favCount">0</span>)</button>
             </div>
         </section>
 
@@ -978,10 +978,12 @@
                 favorites.splice(index, 1);
                 btn.textContent = '☆';
                 btn.classList.remove('active');
+                btn.setAttribute('aria-label', 'Add to favorites');
             } else {
                 favorites.push(id);
                 btn.textContent = '★';
                 btn.classList.add('active');
+                btn.setAttribute('aria-label', 'Remove from favorites');
             }
             
             updateFavCount();
@@ -994,6 +996,7 @@
         function showFavorites() {
             showingFavoritesOnly = !showingFavoritesOnly;
             const btn = document.getElementById('showFavorites');
+            btn.setAttribute('aria-pressed', showingFavoritesOnly);
             const allListItems = document.querySelectorAll('li[data-favorite]');
             
             if (showingFavoritesOnly) {
@@ -1077,7 +1080,7 @@
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
             // Theme toggle
-            document.getElementById('themeToggle').addEventListener('click', () => {
+            document.getElementById('themeToggle')?.addEventListener('click', () => {
                 isDarkTheme = !isDarkTheme;
                 document.body.classList.toggle('light');
                 document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
@@ -1116,7 +1119,7 @@
             document.getElementById('showFavorites').addEventListener('click', showFavorites);
 
             // Shortcuts toggle
-            document.getElementById('shortcutsToggle').addEventListener('click', toggleShortcuts);
+            document.getElementById('shortcutsToggle')?.addEventListener('click', toggleShortcuts);
         });
     </script>
 </body>
