@@ -820,3 +820,23 @@ footer a {
 .notification.show {
     transform: translateX(-50%) translateY(0);
 }
+
+/* Skip to content link */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--accent);
+    color: white;
+    padding: 8px 16px;
+    z-index: 10001;
+    transition: top 0.3s;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 0 0 5px 0;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 2px solid white;
+}

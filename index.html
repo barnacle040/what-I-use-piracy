@@ -99,6 +99,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header>
         <div class="header-content">
             <div class="logo">
@@ -116,7 +117,7 @@
         </div>
     </header>
 
-    <main class="container">
+    <main class="container" id="main-content">
         <section class="move">
             <h1>Tips and Piracy Stuff</h1>
             <p>A collection of useful resources and tools. <strong>Use at your own risk—VPN recommended for all downloads.</strong></p>
@@ -136,13 +137,13 @@
       
 
         <section id="basics">
-            <h1> Basics <button class="toggle-btn" data-section="basics" aria-expanded="true" aria-controls="basics-content">
+            <h1> Basics <button class="toggle-btn" aria-label="Toggle Basics section" data-section="basics" aria-expanded="true" aria-controls="basics-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="basics-content">
                 <ul>
                     <li data-favorite="ublock">
-                        <button class="fav-btn" data-id="ublock" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="ublock">☆</button>
                         <img src="./ublock.PNG" loading="lazy" alt="uBlock Origin browser extension logo" width="48" height="48" fetchpriority="high">
                         <span class="resource-info">
                             <span class="resource-name">uBlock Origin</span>
@@ -164,7 +165,7 @@
                         </span>
                     </li>
                     <li data-favorite="idm">
-                        <button class="fav-btn" data-id="idm" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="idm">☆</button>
                         <img src="./IDM.PNG" loading="lazy" alt="Internet Download Manager application icon" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">IDM for large downloads</span>
@@ -178,7 +179,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="qbittorrent">
-                        <button class="fav-btn" data-id="qbittorrent" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="qbittorrent">☆</button>
                         <img src="./torrent.png" loading="lazy" alt="qBittorrent application logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">qBittorrent</span>
@@ -200,7 +201,7 @@
                         </span>
                     </li>
                     <li data-favorite="winrar">
-                        <button class="fav-btn" data-id="winrar" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="winrar">☆</button>
                         <img src="./winrar.png" loading="lazy" alt="WinRAR file compression tool logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">WinRAR</span>
@@ -214,7 +215,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="jdownloader">
-                        <button class="fav-btn" data-id="jdownloader" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="jdownloader">☆</button>
                         <img src="./jdownloader.jpg" loading="lazy" alt="JDownloader download manager logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">JDownloader (alternative to IDM)</span>
@@ -234,13 +235,13 @@
         </section>
 
         <section id="virus-protection">
-            <h1> Virus Protection <button class="toggle-btn" data-section="virus-protection" aria-expanded="true" aria-controls="virus-protection-content">
+            <h1> Virus Protection <button class="toggle-btn" aria-label="Toggle Virus Protection section" data-section="virus-protection" aria-expanded="true" aria-controls="virus-protection-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="virus-protection-content">
                 <ul>
                     <li data-favorite="malwarebytes">
-                        <button class="fav-btn" data-id="malwarebytes" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="malwarebytes">☆</button>
                         <img src="./malwarebytes-logo-1-3657666643.png" loading="lazy" alt="Malwarebytes antivirus software logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Malwarebytes</span>
@@ -255,7 +256,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="hibp">
-                        <button class="fav-btn" data-id="hibp" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="hibp">☆</button>
                         <img src="./pwned.png" loading="lazy" alt="Have I Been Pwned security check logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">HaveIBeenPwned</span>
@@ -269,7 +270,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="virustotal">
-                        <button class="fav-btn" data-id="virustotal" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="virustotal">☆</button>
                         <span class="resource-info">
                             <span class="resource-name">VirusTotal - Scan downloads before running</span>
                             <span class="platform-badges">
@@ -286,13 +287,13 @@
         </section>
 
         <section id="browser-extensions">
-            <h1> Browser Extensions <span class="badge-new">New Section!</span> <button class="toggle-btn" data-section="browser-extensions" aria-expanded="true" aria-controls="browser-extensions-content">
+            <h1> Browser Extensions <span class="badge-new">New Section!</span> <button class="toggle-btn" aria-label="Toggle Browser Extensions section" data-section="browser-extensions" aria-expanded="true" aria-controls="browser-extensions-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="browser-extensions-content">
                 <ul>
                     <li data-favorite="sponsorblock">
-                        <button class="fav-btn" data-id="sponsorblock" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="sponsorblock">☆</button>
                         <span class="resource-info">
                             <span class="resource-name">SponsorBlock - Skip YouTube sponsors</span>
                             <span class="platform-badges">
@@ -305,7 +306,7 @@
                         <span class="status badge-new">New!</span>
                     </li>
                     <li data-favorite="privacybadger">
-                        <button class="fav-btn" data-id="privacybadger" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="privacybadger">☆</button>
                         <span class="resource-info">
                             <span class="resource-name">Privacy Badger - Auto-block trackers</span>
                             <span class="platform-badges">
@@ -318,7 +319,7 @@
                         <span class="status badge-new">New!</span>
                     </li>
                     <li data-favorite="returnyt">
-                        <button class="fav-btn" data-id="returnyt" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="returnyt">☆</button>
                         <span class="resource-info">
                             <span class="resource-name">Return YouTube Dislike - See dislikes again</span>
                             <span class="platform-badges">
@@ -331,7 +332,7 @@
                         <span class="status badge-new">New!</span>
                     </li>
                     <li data-favorite="darkreader">
-                        <button class="fav-btn" data-id="darkreader" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="darkreader">☆</button>
                         <span class="resource-info">
                             <span class="resource-name">Dark Reader - Dark mode for every site</span>
                             <span class="platform-badges">
@@ -348,13 +349,13 @@
         </section>
 
         <section id="anime">
-            <h1> Anime <button class="toggle-btn" data-section="anime" aria-expanded="true" aria-controls="anime-content">
+            <h1> Anime <button class="toggle-btn" aria-label="Toggle Anime section" data-section="anime" aria-expanded="true" aria-controls="anime-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="anime-content">
                 <ul>
                     <li data-favorite="hianime">
-                        <button class="fav-btn" data-id="hianime" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="hianime">☆</button>
                         <img src="./hianime.png" loading="lazy" alt="HiAnime streaming website logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">HiAnime</span>
@@ -372,13 +373,13 @@
         </section>
 
         <section id="gaming">
-            <h1> Gaming <button class="toggle-btn" data-section="gaming" aria-expanded="true" aria-controls="gaming-content">
+            <h1> Gaming <button class="toggle-btn" aria-label="Toggle Gaming section" data-section="gaming" aria-expanded="true" aria-controls="gaming-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="gaming-content">
                 <ul>
                     <li data-favorite="fitgirl">
-                        <button class="fav-btn" data-id="fitgirl" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="fitgirl">☆</button>
                         <img src="./repacks.png" loading="lazy" alt="FitGirl Repacks game torrents logo" width="48" height="48" onerror="this.src='./pirate_ship.png'" fetchpriority="high">
                         <span class="resource-info">
                             <span class="resource-name">FitGirl Repacks</span>
@@ -392,7 +393,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="steamrip">
-                        <button class="fav-btn" data-id="steamrip" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="steamrip">☆</button>
                         <img src="./steamrip.png" loading="lazy" alt="SteamRip game downloads logo" width="48" height="48" onerror="this.src='./pirate_ship.png'" fetchpriority="high">
                         <span class="resource-info">
                             <span class="resource-name">SteamRip</span>
@@ -406,7 +407,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="vimms">
-                        <button class="fav-btn" data-id="vimms" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="vimms">☆</button>
                         <img src="./vims lair.jpg" loading="lazy" alt="Vimm's Lair retro game ROMs logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">Vimms Lair</span>
@@ -420,7 +421,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="retroarch">
-                        <button class="fav-btn" data-id="retroarch" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="retroarch">☆</button>
                         <img src="./retro arch.png" loading="lazy" alt="RetroArch emulator frontend logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">RetroArch</span>
@@ -440,13 +441,13 @@
         </section>
 
         <section id="tv-movies">
-            <h1>TV Shows & Movies <button class="toggle-btn" data-section="tv-movies" aria-expanded="true" aria-controls="tv-movies-content">
+            <h1>TV Shows & Movies <button class="toggle-btn" aria-label="Toggle TV Shows & Movies section" data-section="tv-movies" aria-expanded="true" aria-controls="tv-movies-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="tv-movies-content">
                 <ul>
                     <li data-favorite="1337x">
-                        <button class="fav-btn" data-id="1337x" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="1337x">☆</button>
                         <img src="./1337x.png" loading="lazy" alt="1337x torrent website logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">1337x</span>
@@ -460,7 +461,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="rivestream">
-                        <button class="fav-btn" data-id="rivestream" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="rivestream">☆</button>
                         <img src="./rive.png" loading="lazy" alt="RiveStream streaming platform logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">RiveStream</span>
@@ -474,7 +475,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="cineby">
-                        <button class="fav-btn" data-id="cineby" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="cineby">☆</button>
                         <img src="./cineby.PNG" loading="lazy" alt="Cineby movie streaming website logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">Cineby</span>
@@ -488,7 +489,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="lookmovie">
-                        <button class="fav-btn" data-id="lookmovie" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="lookmovie">☆</button>
                         <img src="./lookmovie.png" loading="lazy" alt="LookMovie streaming service logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">LookMovie</span>
@@ -506,13 +507,13 @@
         </section>
 
         <section id="pc-cleaning">
-            <h1> Clearing Space on PC <button class="toggle-btn" data-section="pc-cleaning" aria-expanded="true" aria-controls="pc-cleaning-content">
+            <h1> Clearing Space on PC <button class="toggle-btn" aria-label="Toggle Clearing Space on PC section" data-section="pc-cleaning" aria-expanded="true" aria-controls="pc-cleaning-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="pc-cleaning-content">
                 <ul>
                     <li data-favorite="ccleaner">
-                        <button class="fav-btn" data-id="ccleaner" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="ccleaner">☆</button>
                         <img src="./ccleaner.png" loading="lazy" alt="CCleaner system cleanup tool logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">CCleaner for basic clean</span>
@@ -527,7 +528,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="bleachbit">
-                        <button class="fav-btn" data-id="bleachbit" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="bleachbit">☆</button>
                         <img src="./bleachbit.png" loading="lazy" alt="BleachBit advanced cleaner logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">BleachBit for deep clean</span>
@@ -542,7 +543,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="wiztree">
-                        <button class="fav-btn" data-id="wiztree" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="wiztree">☆</button>
                         <img src="./wiztree.png" loading="lazy" alt="WizTree disk analyzer logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">WizTree to find large files</span>
@@ -556,7 +557,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="wizfile">
-                        <button class="fav-btn" data-id="wizfile" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="wizfile">☆</button>
                         <img src="./wizfile.png" loading="lazy" alt="WizFile search tool logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">WizFile for better file searching</span>
@@ -574,7 +575,7 @@
         </section>
 
         <section id="tweaks">
-            <h1><img src="./powershell.png" alt="PowerShell scripting tool logo" width="32" height="32"> Tweaks Using PowerShell <button class="toggle-btn" data-section="tweaks" aria-expanded="true" aria-controls="tweaks-content">
+            <h1><img src="./powershell.png" alt="PowerShell scripting tool logo" width="32" height="32"> Tweaks Using PowerShell <button class="toggle-btn" aria-label="Toggle Tweaks Using PowerShell section" data-section="tweaks" aria-expanded="true" aria-controls="tweaks-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="tweaks-content">
@@ -595,13 +596,13 @@
         </section>
 
         <section id="music">
-            <h1> Music <button class="toggle-btn" data-section="music" aria-expanded="true" aria-controls="music-content">
+            <h1> Music <button class="toggle-btn" aria-label="Toggle Music section" data-section="music" aria-expanded="true" aria-controls="music-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="music-content">
                 <ul>
                     <li data-favorite="spotx">
-                        <button class="fav-btn" data-id="spotx" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="spotx">☆</button>
                         <span class="resource-info">
                             <span class="resource-name">SpotX for ad-free Spotify</span>
                             <span class="platform-badges">
@@ -614,7 +615,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="shazam">
-                        <button class="fav-btn" data-id="shazam" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="shazam">☆</button>
                         <img src="./shazam.png" loading="lazy" alt="Shazam music identifier extension logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Shazam browser extension</span>
@@ -632,13 +633,13 @@
         </section>
 
         <section id="browsers">
-            <h1> Browsers <button class="toggle-btn" data-section="browsers" aria-expanded="true" aria-controls="browsers-content">
+            <h1> Browsers <button class="toggle-btn" aria-label="Toggle Browsers section" data-section="browsers" aria-expanded="true" aria-controls="browsers-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="browsers-content">
                 <ul>
                     <li data-favorite="firefox">
-                        <button class="fav-btn" data-id="firefox" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="firefox">☆</button>
                         <img src="./firefox.png" loading="lazy" alt="Mozilla Firefox browser logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Firefox</span>
@@ -666,7 +667,7 @@
                         </span>
                     </li>
                     <li data-favorite="tor">
-                        <button class="fav-btn" data-id="tor" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="tor">☆</button>
                         <img src="./tor.png" loading="lazy" alt="Tor Browser anonymous browsing logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">TOR Browser</span>
@@ -686,13 +687,13 @@
         </section>
 
         <section id="wallpapers">
-            <h1> Wallpapers <button class="toggle-btn" data-section="wallpapers" aria-expanded="true" aria-controls="wallpapers-content">
+            <h1> Wallpapers <button class="toggle-btn" aria-label="Toggle Wallpapers section" data-section="wallpapers" aria-expanded="true" aria-controls="wallpapers-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="wallpapers-content">
                 <ul>
                     <li data-favorite="wallhaven">
-                        <button class="fav-btn" data-id="wallhaven" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="wallhaven">☆</button>
                         <img src="./wallpaper.png" loading="lazy" alt="Wallhaven wallpaper site logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Wallhaven</span>
@@ -710,14 +711,14 @@
         </section>
 
         <section id="windows-keys">
-            <h1> OS <button class="toggle-btn" data-section="windows-keys" aria-expanded="true" aria-controls="windows-keys-content">
+            <h1> OS <button class="toggle-btn" aria-label="Toggle OS section" data-section="windows-keys" aria-expanded="true" aria-controls="windows-keys-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="windows-keys-content">
                 <h2>Windows Keys</h2>
                 <ul>
                     <li data-favorite="winkeys">
-                        <button class="fav-btn" data-id="winkeys" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="winkeys">☆</button>
                         <img src="./windows.png" loading="lazy" alt="Microsoft Windows operating system logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Windows activation keys</span>
@@ -734,7 +735,7 @@
                 <h2>Linux Distributions</h2>
                 <ul>
                     <li data-favorite="arch">
-                        <button class="fav-btn" data-id="arch" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="arch">☆</button>
                         <img src="./arch.png" loading="lazy" alt="Arch Linux distribution logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Arch Linux</span>
@@ -748,7 +749,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li data-favorite="mint">
-                        <button class="fav-btn" data-id="mint" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="mint">☆</button>
                         <img src="./mint.png" loading="lazy" alt="Linux Mint distribution logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Linux Mint</span>
@@ -765,7 +766,7 @@
                 <h2>Tools</h2>
                 <ul>
                     <li data-favorite="rufus">
-                        <button class="fav-btn" data-id="rufus" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="rufus">☆</button>
                         <img src="./rufus.png" loading="lazy" alt="Rufus bootable USB creator logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Rufus for creating bootable USB drives</span>
@@ -783,13 +784,13 @@
         </section>
 
         <section id="minecraft-server">
-            <h1> Minecraft Server <button class="toggle-btn" data-section="minecraft-server" aria-expanded="true" aria-controls="minecraft-server-content">
+            <h1> Minecraft Server <button class="toggle-btn" aria-label="Toggle Minecraft Server section" data-section="minecraft-server" aria-expanded="true" aria-controls="minecraft-server-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="minecraft-server-content">
                 <ul>
                     <li data-favorite="automcs">
-                        <button class="fav-btn" data-id="automcs" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="automcs">☆</button>
                         <img src="./minecraft.png" loading="lazy" alt="Minecraft game logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Auto-MCS for Minecraft servers</span>
@@ -809,13 +810,13 @@
         </section>
 
         <section id="password-manager">
-            <h1> Password Manager <button class="toggle-btn" data-section="password-manager" aria-expanded="true" aria-controls="password-manager-content">
+            <h1> Password Manager <button class="toggle-btn" aria-label="Toggle Password Manager section" data-section="password-manager" aria-expanded="true" aria-controls="password-manager-content">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="password-manager-content">
                 <ul>
                     <li data-favorite="lastpass">
-                        <button class="fav-btn" data-id="lastpass" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="lastpass">☆</button>
                         <img src="./lastpass.png" loading="lazy" alt="LastPass password manager logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">LastPass</span>
@@ -832,7 +833,7 @@
                 <h2>Offline Password Manager</h2>
                 <ul>
                     <li data-favorite="keepass">
-                        <button class="fav-btn" data-id="keepass" aria-label="Add to favorites">☆</button>
+                        <button class="fav-btn" aria-label="Add to favorites" data-id="keepass">☆</button>
                         <img src="./keepass.png" loading="lazy" alt="KeePass offline password manager logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">KeePass</span>
@@ -872,7 +873,8 @@
         let showingFavoritesOnly = false;
 
         window.onscroll = function() {
-            document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
+            const backToTop = document.getElementById('backToTop');
+            if (backToTop) backToTop.style.display = window.scrollY > 200 ? 'block' : 'none';
         };
 
         function scrollToTop() {
@@ -880,7 +882,9 @@
         }
 
         function searchResources() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
+            const searchInput = document.getElementById('searchInput');
+            if (!searchInput) return;
+            const query = searchInput.value.toLowerCase();
             const sections = document.querySelectorAll('section[id]');
             const clearBtn = document.getElementById('clearSearch');
             const resultsDiv = document.getElementById('searchResults');
@@ -906,9 +910,12 @@
         }
 
         function clearSearch() {
-            document.getElementById('searchInput').value = '';
-            searchResources();
-            document.getElementById('searchInput').focus();
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.value = '';
+                searchResources();
+                searchInput.focus();
+            }
         }
 
         function toggleSection(button) {
@@ -990,13 +997,14 @@
         }
 
         function updateFavCount() {
-            document.getElementById('favCount').textContent = favorites.length;
+            const countEl = document.getElementById('favCount');
+            if (countEl) countEl.textContent = favorites.length;
         }
 
         function showFavorites() {
             showingFavoritesOnly = !showingFavoritesOnly;
             const btn = document.getElementById('showFavorites');
-            btn.setAttribute('aria-pressed', showingFavoritesOnly);
+            if (btn) btn.setAttribute('aria-pressed', showingFavoritesOnly);
             const allListItems = document.querySelectorAll('li[data-favorite]');
             
             if (showingFavoritesOnly) {
@@ -1024,7 +1032,9 @@
 
         function toggleShortcuts() {
             const panel = document.getElementById('shortcutsPanel');
-            panel.classList.toggle('hidden');
+            if (panel) {
+                panel.classList.toggle('hidden');
+            }
         }
 
         document.addEventListener('click', (e) => {
@@ -1039,7 +1049,8 @@
             // Ctrl+K to focus search
             if (e.ctrlKey && e.key === 'k') {
                 e.preventDefault();
-                document.getElementById('searchInput').focus();
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) searchInput.focus();
             }
             
             // Ctrl+E to expand all
@@ -1056,7 +1067,8 @@
             
             // Escape to clear search
             if (e.key === 'Escape') {
-                if (document.getElementById('searchInput').value) {
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput && searchInput.value) {
                     clearSearch();
                 }
             }
@@ -1076,18 +1088,19 @@
             });
 
             // Search functionality
-            document.getElementById('searchInput').addEventListener('keyup', searchResources);
-            document.getElementById('clearSearch').addEventListener('click', clearSearch);
+            document.getElementById('searchInput')?.addEventListener('keyup', searchResources);
+            document.getElementById('clearSearch')?.addEventListener('click', clearSearch);
 
             // Theme toggle
             document.getElementById('themeToggle')?.addEventListener('click', () => {
                 isDarkTheme = !isDarkTheme;
                 document.body.classList.toggle('light');
-                document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
+                const themeBtn = document.getElementById('themeToggle');
+                if (themeBtn) themeBtn.textContent = isDarkTheme ? '🌙' : '☀️';
             });
 
             // Back to top
-            document.getElementById('backToTop').addEventListener('click', scrollToTop);
+            document.getElementById('backToTop')?.addEventListener('click', scrollToTop);
 
             // Toggle buttons
             document.querySelectorAll('.toggle-btn').forEach(button => {
@@ -1095,8 +1108,8 @@
             });
 
             // Expand/Collapse all buttons
-            document.getElementById('expandAll').addEventListener('click', expandAll);
-            document.getElementById('collapseAll').addEventListener('click', collapseAll);
+            document.getElementById('expandAll')?.addEventListener('click', expandAll);
+            document.getElementById('collapseAll')?.addEventListener('click', collapseAll);
 
             // Copy buttons
             document.querySelectorAll('.copy-btn').forEach(btn => {
@@ -1116,10 +1129,11 @@
             });
 
             // Show favorites button
-            document.getElementById('showFavorites').addEventListener('click', showFavorites);
+            document.getElementById('showFavorites')?.addEventListener('click', showFavorites);
 
             // Shortcuts toggle
             document.getElementById('shortcutsToggle')?.addEventListener('click', toggleShortcuts);
         });
     </script>
+<div id="notification" class="notification"></div>
 </body>
