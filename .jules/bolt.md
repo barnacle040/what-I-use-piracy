@@ -1,0 +1,3 @@
+## 2026-02-16 - Preload Casing and Priority Conflicts
+**Learning:** Browsers are case-sensitive when matching `<link rel="preload">` to the actual resource request. A mismatch (e.g., `ublock.PNG` vs `ublock.png`) causes the preload hint to be ignored, resulting in either a missing asset or a duplicate fetch. Additionally, combining `fetchpriority="high"` and `loading="lazy"` on the same element creates a conflict that delays the loading of critical above-the-fold assets.
+**Action:** Always verify casing between the filesystem and HTML references. Remove `loading="lazy"` from assets targeted for preload or high fetch priority to ensure they load immediately and improve LCP.
