@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Curated piracy tools and resources for safe downloading.">
@@ -10,9 +11,6 @@
     <meta property="og:description" content="A collection of tools and resources for piracy, including adblockers, VPNs, software, and more.">
     <link rel="preload" href="./pirate_ship.png" as="image">
     <link rel="preload" href="./ublock.png" as="image" fetchpriority="high">
-    <link rel="preload" href="./repacks.png" as="image" fetchpriority="high">
-    <link rel="preload" href="./steamrip.png" as="image" fetchpriority="high">
-    <link rel="preload" href="./firefox.png" as="image">
     <title>Piracy Resources - Home Page</title>
     <link rel="icon" href="./pirate_ship.png" sizes="32x32" type="image/png">
     <link rel="stylesheet" href="styles.css">
@@ -82,12 +80,12 @@
                 flex-direction: column;
                 text-align: center;
             }
-            
+
             nav ul {
                 margin-top: 1rem;
                 justify-content: center;
             }
-            
+
             nav li {
                 margin: 0 0.5rem;
             }
@@ -108,9 +106,9 @@
             <nav>
                 <ul>
                     <li><a href="#" class="active">Home</a></li>
-                    <li><a href="./Game page.html">Games</a></li>
+                    <li><a href="./Game_page.html">Games</a></li>
                     <li><a href="Help.html">Help</a></li>
-                    <li><a href="./Software Library.html">Software</a></li>
+                    <li><a href="./Software_Library.html">Software</a></li>
                 </ul>
             </nav>
         </div>
@@ -120,7 +118,7 @@
         <section class="move">
             <h1>Tips and Piracy Stuff</h1>
             <p>A collection of useful resources and tools. <strong>Use at your own risk—VPN recommended for all downloads.</strong></p>
-    
+
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search resources... (Ctrl+K)" aria-label="Search resources" autocomplete="off">
                 <button id="clearSearch" style="display: none;" aria-label="Clear search">✕</button>
@@ -133,7 +131,7 @@
             </div>
         </section>
 
-      
+
 
         <section id="basics">
             <h1> Basics <button class="toggle-btn" data-section="basics" aria-expanded="true" aria-controls="basics-content" aria-label="Toggle Basics section">
@@ -143,7 +141,7 @@
                 <ul>
                     <li data-favorite="ublock">
                         <button class="fav-btn" data-id="ublock" aria-label="Add to favorites">☆</button>
-                        <img src="./ublock.PNG" loading="lazy" alt="uBlock Origin browser extension logo" width="48" height="48" fetchpriority="high">
+                        <img src="./ublock.png" alt="uBlock Origin browser extension logo" width="48" height="48" fetchpriority="high" decoding="async">
                         <span class="resource-info">
                             <span class="resource-name">uBlock Origin</span>
                             <span class="platform-badges">
@@ -165,7 +163,7 @@
                     </li>
                     <li data-favorite="idm">
                         <button class="fav-btn" data-id="idm" aria-label="Add to favorites">☆</button>
-                        <img src="./IDM.PNG" loading="lazy" alt="Internet Download Manager application icon" width="48" height="48">
+                        <img decoding="async" src="./IDM.PNG" loading="lazy" alt="Internet Download Manager application icon" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">IDM for large downloads</span>
                             <span class="platform-badges">
@@ -179,7 +177,7 @@
                     </li>
                     <li data-favorite="qbittorrent">
                         <button class="fav-btn" data-id="qbittorrent" aria-label="Add to favorites">☆</button>
-                        <img src="./torrent.png" loading="lazy" alt="qBittorrent application logo" width="48" height="48">
+                        <img decoding="async" src="./torrent.png" loading="lazy" alt="qBittorrent application logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">qBittorrent</span>
                             <span class="platform-badges">
@@ -201,7 +199,7 @@
                     </li>
                     <li data-favorite="winrar">
                         <button class="fav-btn" data-id="winrar" aria-label="Add to favorites">☆</button>
-                        <img src="./winrar.png" loading="lazy" alt="WinRAR file compression tool logo" width="48" height="48">
+                        <img decoding="async" src="./winrar.png" loading="lazy" alt="WinRAR file compression tool logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">WinRAR</span>
                             <span class="platform-badges">
@@ -215,7 +213,7 @@
                     </li>
                     <li data-favorite="jdownloader">
                         <button class="fav-btn" data-id="jdownloader" aria-label="Add to favorites">☆</button>
-                        <img src="./jdownloader.jpg" loading="lazy" alt="JDownloader download manager logo" width="48" height="48">
+                        <img decoding="async" src="./jdownloader.jpg" loading="lazy" alt="JDownloader download manager logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">JDownloader (alternative to IDM)</span>
                             <span class="platform-badges">
@@ -241,7 +239,7 @@
                 <ul>
                     <li data-favorite="malwarebytes">
                         <button class="fav-btn" data-id="malwarebytes" aria-label="Add to favorites">☆</button>
-                        <img src="./malwarebytes-logo-1-3657666643.png" loading="lazy" alt="Malwarebytes antivirus software logo" width="48" height="48">
+                        <img decoding="async" src="./malwarebytes-logo-1-3657666643.png" loading="lazy" alt="Malwarebytes antivirus software logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Malwarebytes</span>
                             <span class="platform-badges">
@@ -256,7 +254,7 @@
                     </li>
                     <li data-favorite="hibp">
                         <button class="fav-btn" data-id="hibp" aria-label="Add to favorites">☆</button>
-                        <img src="./pwned.png" loading="lazy" alt="Have I Been Pwned security check logo" width="48" height="48">
+                        <img decoding="async" src="./pwned.png" loading="lazy" alt="Have I Been Pwned security check logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">HaveIBeenPwned</span>
                             <span class="platform-badges">
@@ -355,7 +353,7 @@
                 <ul>
                     <li data-favorite="hianime">
                         <button class="fav-btn" data-id="hianime" aria-label="Add to favorites">☆</button>
-                        <img src="./hianime.png" loading="lazy" alt="HiAnime streaming website logo" width="48" height="48">
+                        <img decoding="async" src="./hianime.png" loading="lazy" alt="HiAnime streaming website logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">HiAnime</span>
                             <span class="platform-badges">
@@ -379,7 +377,7 @@
                 <ul>
                     <li data-favorite="fitgirl">
                         <button class="fav-btn" data-id="fitgirl" aria-label="Add to favorites">☆</button>
-                        <img src="./repacks.png" loading="lazy" alt="FitGirl Repacks game torrents logo" width="48" height="48" onerror="this.src='./pirate_ship.png'" fetchpriority="high">
+                        <img decoding="async" src="./repacks.png" loading="lazy" alt="FitGirl Repacks game torrents logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">FitGirl Repacks</span>
                             <span class="platform-badges">
@@ -393,7 +391,7 @@
                     </li>
                     <li data-favorite="steamrip">
                         <button class="fav-btn" data-id="steamrip" aria-label="Add to favorites">☆</button>
-                        <img src="./steamrip.png" loading="lazy" alt="SteamRip game downloads logo" width="48" height="48" onerror="this.src='./pirate_ship.png'" fetchpriority="high">
+                        <img decoding="async" src="./steamrip.png" loading="lazy" alt="SteamRip game downloads logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">SteamRip</span>
                             <span class="platform-badges">
@@ -407,7 +405,7 @@
                     </li>
                     <li data-favorite="vimms">
                         <button class="fav-btn" data-id="vimms" aria-label="Add to favorites">☆</button>
-                        <img src="./vims lair.jpg" loading="lazy" alt="Vimm's Lair retro game ROMs logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
+                        <img src="./vims_lair.jpg" loading="lazy" alt="Vimm's Lair retro game ROMs logo" width="48" height="48" onerror="this.src='./pirate_ship.png'" decoding="async">
                         <span class="resource-info">
                             <span class="resource-name">Vimms Lair</span>
                             <span class="platform-badges">
@@ -421,7 +419,7 @@
                     </li>
                     <li data-favorite="retroarch">
                         <button class="fav-btn" data-id="retroarch" aria-label="Add to favorites">☆</button>
-                        <img src="./retro arch.png" loading="lazy" alt="RetroArch emulator frontend logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
+                        <img src="./retro_arch.png" loading="lazy" alt="RetroArch emulator frontend logo" width="48" height="48" onerror="this.src='./pirate_ship.png'" decoding="async">
                         <span class="resource-info">
                             <span class="resource-name">RetroArch</span>
                             <span class="platform-badges">
@@ -447,7 +445,7 @@
                 <ul>
                     <li data-favorite="1337x">
                         <button class="fav-btn" data-id="1337x" aria-label="Add to favorites">☆</button>
-                        <img src="./1337x.png" loading="lazy" alt="1337x torrent website logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
+                        <img decoding="async" src="./1337x.png" loading="lazy" alt="1337x torrent website logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">1337x</span>
                             <span class="platform-badges">
@@ -461,7 +459,7 @@
                     </li>
                     <li data-favorite="rivestream">
                         <button class="fav-btn" data-id="rivestream" aria-label="Add to favorites">☆</button>
-                        <img src="./rive.png" loading="lazy" alt="RiveStream streaming platform logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
+                        <img decoding="async" src="./rive.png" loading="lazy" alt="RiveStream streaming platform logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">RiveStream</span>
                             <span class="platform-badges">
@@ -475,7 +473,7 @@
                     </li>
                     <li data-favorite="cineby">
                         <button class="fav-btn" data-id="cineby" aria-label="Add to favorites">☆</button>
-                        <img src="./cineby.PNG" loading="lazy" alt="Cineby movie streaming website logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
+                        <img decoding="async" src="./cineby.PNG" loading="lazy" alt="Cineby movie streaming website logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">Cineby</span>
                             <span class="platform-badges">
@@ -489,7 +487,7 @@
                     </li>
                     <li data-favorite="lookmovie">
                         <button class="fav-btn" data-id="lookmovie" aria-label="Add to favorites">☆</button>
-                        <img src="./lookmovie.png" loading="lazy" alt="LookMovie streaming service logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
+                        <img decoding="async" src="./lookmovie.png" loading="lazy" alt="LookMovie streaming service logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
                         <span class="resource-info">
                             <span class="resource-name">LookMovie</span>
                             <span class="platform-badges">
@@ -513,7 +511,7 @@
                 <ul>
                     <li data-favorite="ccleaner">
                         <button class="fav-btn" data-id="ccleaner" aria-label="Add to favorites">☆</button>
-                        <img src="./ccleaner.png" loading="lazy" alt="CCleaner system cleanup tool logo" width="48" height="48">
+                        <img decoding="async" src="./ccleaner.png" loading="lazy" alt="CCleaner system cleanup tool logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">CCleaner for basic clean</span>
                             <span class="platform-badges">
@@ -528,7 +526,7 @@
                     </li>
                     <li data-favorite="bleachbit">
                         <button class="fav-btn" data-id="bleachbit" aria-label="Add to favorites">☆</button>
-                        <img src="./bleachbit.png" loading="lazy" alt="BleachBit advanced cleaner logo" width="48" height="48">
+                        <img decoding="async" src="./bleachbit.png" loading="lazy" alt="BleachBit advanced cleaner logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">BleachBit for deep clean</span>
                             <span class="platform-badges">
@@ -543,7 +541,7 @@
                     </li>
                     <li data-favorite="wiztree">
                         <button class="fav-btn" data-id="wiztree" aria-label="Add to favorites">☆</button>
-                        <img src="./wiztree.png" loading="lazy" alt="WizTree disk analyzer logo" width="48" height="48">
+                        <img decoding="async" src="./wiztree.png" loading="lazy" alt="WizTree disk analyzer logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">WizTree to find large files</span>
                             <span class="platform-badges">
@@ -557,7 +555,7 @@
                     </li>
                     <li data-favorite="wizfile">
                         <button class="fav-btn" data-id="wizfile" aria-label="Add to favorites">☆</button>
-                        <img src="./wizfile.png" loading="lazy" alt="WizFile search tool logo" width="48" height="48">
+                        <img decoding="async" src="./wizfile.png" loading="lazy" alt="WizFile search tool logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">WizFile for better file searching</span>
                             <span class="platform-badges">
@@ -574,7 +572,7 @@
         </section>
 
         <section id="tweaks">
-            <h1><img src="./powershell.png" alt="PowerShell scripting tool logo" width="32" height="32"> Tweaks Using PowerShell <button class="toggle-btn" data-section="tweaks" aria-expanded="true" aria-controls="tweaks-content" aria-label="Toggle Tweaks Using PowerShell section">
+            <h1><img decoding="async" src="./powershell.png" alt="PowerShell scripting tool logo" width="32" height="32"> Tweaks Using PowerShell <button class="toggle-btn" data-section="tweaks" aria-expanded="true" aria-controls="tweaks-content" aria-label="Toggle Tweaks Using PowerShell section">
                 <span class="toggle-icon" aria-hidden="true">−</span>
             </button></h1>
             <div class="section-content" id="tweaks-content">
@@ -615,7 +613,7 @@
                     </li>
                     <li data-favorite="shazam">
                         <button class="fav-btn" data-id="shazam" aria-label="Add to favorites">☆</button>
-                        <img src="./shazam.png" loading="lazy" alt="Shazam music identifier extension logo" width="48" height="48">
+                        <img decoding="async" src="./shazam.png" loading="lazy" alt="Shazam music identifier extension logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Shazam browser extension</span>
                             <span class="platform-badges">
@@ -639,7 +637,7 @@
                 <ul>
                     <li data-favorite="firefox">
                         <button class="fav-btn" data-id="firefox" aria-label="Add to favorites">☆</button>
-                        <img src="./firefox.png" loading="lazy" alt="Mozilla Firefox browser logo" width="48" height="48">
+                        <img decoding="async" src="./firefox.png" loading="lazy" alt="Mozilla Firefox browser logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Firefox</span>
                             <span class="platform-badges">
@@ -654,7 +652,7 @@
                         <span class="status">Last checked: Sep 2025</span>
                     </li>
                     <li>
-                        <img src="./circle.png" loading="lazy" alt="Google Chrome browser logo" width="48" height="48">
+                        <img decoding="async" src="./circle.png" loading="lazy" alt="Google Chrome browser logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Google Chrome (not recommended for privacy)</span>
                             <span class="platform-badges">
@@ -667,7 +665,7 @@
                     </li>
                     <li data-favorite="tor">
                         <button class="fav-btn" data-id="tor" aria-label="Add to favorites">☆</button>
-                        <img src="./tor.png" loading="lazy" alt="Tor Browser anonymous browsing logo" width="48" height="48">
+                        <img decoding="async" src="./tor.png" loading="lazy" alt="Tor Browser anonymous browsing logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">TOR Browser</span>
                             <span class="platform-badges">
@@ -693,7 +691,7 @@
                 <ul>
                     <li data-favorite="wallhaven">
                         <button class="fav-btn" data-id="wallhaven" aria-label="Add to favorites">☆</button>
-                        <img src="./wallpaper.png" loading="lazy" alt="Wallhaven wallpaper site logo" width="48" height="48">
+                        <img decoding="async" src="./wallpaper.png" loading="lazy" alt="Wallhaven wallpaper site logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Wallhaven</span>
                             <span class="platform-badges">
@@ -718,7 +716,7 @@
                 <ul>
                     <li data-favorite="winkeys">
                         <button class="fav-btn" data-id="winkeys" aria-label="Add to favorites">☆</button>
-                        <img src="./windows.png" loading="lazy" alt="Microsoft Windows operating system logo" width="48" height="48">
+                        <img decoding="async" src="./windows.png" loading="lazy" alt="Microsoft Windows operating system logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Windows activation keys</span>
                             <span class="platform-badges">
@@ -735,7 +733,7 @@
                 <ul>
                     <li data-favorite="arch">
                         <button class="fav-btn" data-id="arch" aria-label="Add to favorites">☆</button>
-                        <img src="./arch.png" loading="lazy" alt="Arch Linux distribution logo" width="48" height="48">
+                        <img decoding="async" src="./arch.png" loading="lazy" alt="Arch Linux distribution logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Arch Linux</span>
                             <span class="platform-badges">
@@ -749,7 +747,7 @@
                     </li>
                     <li data-favorite="mint">
                         <button class="fav-btn" data-id="mint" aria-label="Add to favorites">☆</button>
-                        <img src="./mint.png" loading="lazy" alt="Linux Mint distribution logo" width="48" height="48">
+                        <img decoding="async" src="./mint.png" loading="lazy" alt="Linux Mint distribution logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Linux Mint</span>
                             <span class="platform-badges">
@@ -766,7 +764,7 @@
                 <ul>
                     <li data-favorite="rufus">
                         <button class="fav-btn" data-id="rufus" aria-label="Add to favorites">☆</button>
-                        <img src="./rufus.png" loading="lazy" alt="Rufus bootable USB creator logo" width="48" height="48">
+                        <img decoding="async" src="./rufus.png" loading="lazy" alt="Rufus bootable USB creator logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Rufus for creating bootable USB drives</span>
                             <span class="platform-badges">
@@ -790,7 +788,7 @@
                 <ul>
                     <li data-favorite="automcs">
                         <button class="fav-btn" data-id="automcs" aria-label="Add to favorites">☆</button>
-                        <img src="./minecraft.png" loading="lazy" alt="Minecraft game logo" width="48" height="48">
+                        <img decoding="async" src="./minecraft.png" loading="lazy" alt="Minecraft game logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">Auto-MCS for Minecraft servers</span>
                             <span class="platform-badges">
@@ -816,7 +814,7 @@
                 <ul>
                     <li data-favorite="lastpass">
                         <button class="fav-btn" data-id="lastpass" aria-label="Add to favorites">☆</button>
-                        <img src="./lastpass.png" loading="lazy" alt="LastPass password manager logo" width="48" height="48">
+                        <img decoding="async" src="./lastpass.png" loading="lazy" alt="LastPass password manager logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">LastPass</span>
                             <span class="platform-badges">
@@ -833,7 +831,7 @@
                 <ul>
                     <li data-favorite="keepass">
                         <button class="fav-btn" data-id="keepass" aria-label="Add to favorites">☆</button>
-                        <img src="./keepass.png" loading="lazy" alt="KeePass offline password manager logo" width="48" height="48">
+                        <img decoding="async" src="./keepass.png" loading="lazy" alt="KeePass offline password manager logo" width="48" height="48">
                         <span class="resource-info">
                             <span class="resource-name">KeePass</span>
                             <span class="platform-badges">
@@ -864,7 +862,7 @@
         </div>
     </footer>
 
-    
+
     <script>
         // Theme state and favorites stored in memory
         let isDarkTheme = true;
@@ -884,12 +882,12 @@
             const sections = document.querySelectorAll('section[id]');
             const clearBtn = document.getElementById('clearSearch');
             const resultsDiv = document.getElementById('searchResults');
-            
+
             let visibleCount = 0;
 
             sections.forEach(section => {
                 if (section.classList.contains('move')) return;
-                
+
                 const text = section.textContent.toLowerCase();
                 const isVisible = text.includes(query);
                 section.style.display = isVisible ? 'block' : 'none';
@@ -916,7 +914,7 @@
             const content = document.querySelector(`#${sectionId} .section-content`);
             const icon = button.querySelector('.toggle-icon');
             const isExpanded = button.getAttribute('aria-expanded') === 'true';
-            
+
             content.classList.toggle('hidden');
             button.setAttribute('aria-expanded', !isExpanded);
             icon.textContent = isExpanded ? '+' : '−';
@@ -925,7 +923,7 @@
         function expandAll() {
             const allContents = document.querySelectorAll('.section-content');
             const allButtons = document.querySelectorAll('.toggle-btn');
-            
+
             allContents.forEach(content => content.classList.remove('hidden'));
             allButtons.forEach(button => {
                 button.setAttribute('aria-expanded', 'true');
@@ -937,7 +935,7 @@
         function collapseAll() {
             const allContents = document.querySelectorAll('.section-content');
             const allButtons = document.querySelectorAll('.toggle-btn');
-            
+
             allContents.forEach(content => content.classList.add('hidden'));
             allButtons.forEach(button => {
                 button.setAttribute('aria-expanded', 'false');
@@ -959,11 +957,11 @@
             notification.className = 'notification';
             notification.textContent = message;
             document.body.appendChild(notification);
-            
+
             setTimeout(() => {
                 notification.classList.add('show');
             }, 10);
-            
+
             setTimeout(() => {
                 notification.classList.remove('show');
                 setTimeout(() => notification.remove(), 300);
@@ -973,7 +971,7 @@
         function toggleFavorite(id) {
             const index = favorites.indexOf(id);
             const btn = document.querySelector(`[data-id="${id}"]`);
-            
+
             if (index > -1) {
                 favorites.splice(index, 1);
                 btn.textContent = '☆';
@@ -985,7 +983,7 @@
                 btn.classList.add('active');
                 btn.setAttribute('aria-label', 'Remove from favorites');
             }
-            
+
             updateFavCount();
         }
 
@@ -998,14 +996,14 @@
             const btn = document.getElementById('showFavorites');
             btn.setAttribute('aria-pressed', showingFavoritesOnly);
             const allListItems = document.querySelectorAll('li[data-favorite]');
-            
+
             if (showingFavoritesOnly) {
                 btn.textContent = '← Show All';
                 allListItems.forEach(item => {
                     const id = item.getAttribute('data-favorite');
                     item.style.display = favorites.includes(id) ? 'flex' : 'none';
                 });
-                
+
                 // Hide sections with no favorites
                 document.querySelectorAll('section[id]').forEach(section => {
                     if (section.classList.contains('move')) return;
@@ -1041,19 +1039,19 @@
                 e.preventDefault();
                 document.getElementById('searchInput').focus();
             }
-            
+
             // Ctrl+E to expand all
             if (e.ctrlKey && e.key === 'e' && !e.shiftKey) {
                 e.preventDefault();
                 expandAll();
             }
-            
+
             // Ctrl+Shift+E to collapse all
             if (e.ctrlKey && e.shiftKey && e.key === 'E') {
                 e.preventDefault();
                 collapseAll();
             }
-            
+
             // Escape to clear search
             if (e.key === 'Escape') {
                 if (document.getElementById('searchInput').value) {
