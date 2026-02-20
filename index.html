@@ -93,6 +93,7 @@
 
         /* Keep all your original layout styles intact */
         /* ... your existing CSS for the main content ... */
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -115,6 +116,28 @@
     </header>
 
     <main class="container">
+        <section id="shortcuts">
+            <h1> Keyboard Shortcuts <button class="toggle-btn" data-section="shortcuts" aria-expanded="false" aria-controls="shortcuts-content" aria-label="Toggle Shortcuts guide">
+                <span class="toggle-icon" aria-hidden="true">+</span>
+            </button></h1>
+            <div class="section-content hidden" id="shortcuts-content">
+                <ul style="list-style:none; padding:0; margin:0.5rem 0;">
+                    <li style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);">
+                        <span>Focus Search</span> <span class="platform-badges">Ctrl+K</span>
+                    </li>
+                    <li style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);">
+                        <span>Expand/Collapse All</span> <span class="platform-badges">Ctrl+E / Ctrl+Shift+E</span>
+                    </li>
+                    <li style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);">
+                        <span>Clear Search / Close</span> <span class="platform-badges">Esc</span>
+                    </li>
+                    <li style="display:flex; justify-content:space-between; padding:8px 0;">
+                        <span>Toggle this guide</span> <span class="platform-badges">?</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
         <section class="move">
             <h1>Tips and Piracy Stuff</h1>
             <p>A collection of useful resources and tools. <strong>Use at your own risk—VPN recommended for all downloads.</strong></p>
@@ -128,6 +151,7 @@
                 <button id="expandAll">Expand All</button>
                 <button id="collapseAll">Collapse All</button>
                 <button id="showFavorites" aria-pressed="false">★ Favorites (<span id="favCount">0</span>)</button>
+                <button id="shortcutsToggle" aria-label="Show keyboard shortcuts">⌨️ Shortcuts</button>
             </div>
         </section>
 
@@ -1021,8 +1045,8 @@
         }
 
         function toggleShortcuts() {
-            const panel = document.getElementById('shortcutsPanel');
-            panel.classList.toggle('hidden');
+            const btn = document.querySelector('.toggle-btn[data-section="shortcuts"]');
+            if (btn) toggleSection(btn);
         }
 
         document.addEventListener('click', (e) => {
@@ -1052,11 +1076,18 @@
                 collapseAll();
             }
 
-            // Escape to clear search
+            // Escape to clear search or close shortcuts
             if (e.key === 'Escape') {
                 if (document.getElementById('searchInput').value) {
                     clearSearch();
+                } else if (!document.getElementById('shortcuts-content').classList.contains('hidden')) {
+                    toggleShortcuts();
                 }
+            }
+
+            // ? to toggle shortcuts
+            if (e.key === '?' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                toggleShortcuts();
             }
         });
 
