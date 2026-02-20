@@ -842,6 +842,8 @@
                     if (entry.isIntersecting) {
                         entry.target.style.opacity = '1';
                         entry.target.style.transform = 'translateY(0)';
+                        // Optimization: Stop observing once element is visible to reduce main-thread overhead
+                        observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
