@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Optimization: Preconnect to CDN to reduce connection overhead for FontAwesome -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <title>Software Library - Essential Tools</title>
     <style>
         :root {
@@ -453,7 +456,8 @@
             <div class="software-card" data-category="system">
                 <div class="card-header">
                     <div class="app-icon">
-                        <img decoding="async" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Etcher-icon.png" alt="BalenaEtcher Logo">
+                        <!-- Optimization: Explicit dimensions prevent Cumulative Layout Shift (CLS) -->
+                        <img decoding="async" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Etcher-icon.png" alt="BalenaEtcher Logo" width="50" height="50">
                     </div>
                     <div class="app-info">
                         <h3>BalenaEtcher</h3>
