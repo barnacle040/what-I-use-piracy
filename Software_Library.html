@@ -139,6 +139,24 @@
             color: var(--gray);
         }
 
+        #clearSearch {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 1.2em;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+
+        #clearSearch:hover {
+            color: var(--dark);
+        }
+
         .filters {
             display: flex;
             gap: 1rem;
@@ -356,7 +374,7 @@
         </div>
     </header>
 
-    <div class="container">
+    <main class="container" id="main-content">
         <div class="page-title">
             <h1>Software Library</h1>
             <p>Essential tools and applications for your digital needs</p>
@@ -365,11 +383,12 @@
         <div class="controls">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search software...">
+                <input type="text" id="searchInput" placeholder="Search software..." aria-label="Search software">
+                <button id="clearSearch" style="display: none;" aria-label="Clear search">✕</button>
             </div>
             <div class="filters">
                 <div class="category-filter">
-                    <select id="categoryFilter">
+                    <select id="categoryFilter" aria-label="Filter by category">
                         <option value="all">All Categories</option>
                         <option value="system">System Utilities</option>
                         <option value="media">Media & Creative</option>
@@ -381,6 +400,8 @@
                 </div>
             </div>
         </div>
+
+        <div id="searchStatus" role="status" aria-live="polite" style="margin-bottom: 1rem; color: white; font-style: italic; min-height: 1.5em;"></div>
 
         <div class="software-grid" id="softwareGrid">
             <div class="category-header">System Utilities</div>
@@ -1184,7 +1205,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <footer>
         <div class="container">
@@ -1193,35 +1214,60 @@
     </footer>
 
     <script>
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
+        function updateSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const selectedCategory = document.getElementById('categoryFilter').value;
             const cards = document.querySelectorAll('.software-card');
+            const headers = document.querySelectorAll('.category-header');
+            const clearBtn = document.getElementById('clearSearch');
+            const statusDiv = document.getElementById('searchStatus');
             
+            let visibleCount = 0;
+
             cards.forEach(card => {
                 const appName = card.querySelector('h3').textContent.toLowerCase();
                 const appDescription = card.querySelector('.app-description').textContent.toLowerCase();
+                const cardCategory = card.getAttribute('data-category');
                 
-                if (appName.includes(searchTerm) || appDescription.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
+                const matchesSearch = appName.includes(searchTerm) || appDescription.includes(searchTerm);
+                const matchesCategory = selectedCategory === 'all' || cardCategory === selectedCategory;
 
-        // Category filter functionality
-        document.getElementById('categoryFilter').addEventListener('change', function() {
-            const selectedCategory = this.value;
-            const cards = document.querySelectorAll('.software-card');
-            
-            cards.forEach(card => {
-                if (selectedCategory === 'all' || card.getAttribute('data-category') === selectedCategory) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+                const isVisible = matchesSearch && matchesCategory;
+                card.style.display = isVisible ? 'block' : 'none';
+                if (isVisible) visibleCount++;
             });
+
+            // Update headers visibility
+            headers.forEach(header => {
+                let current = header.nextElementSibling;
+                let hasVisibleInCard = false;
+                while (current && !current.classList.contains('category-header')) {
+                    if (current.classList.contains('software-card') && current.style.display !== 'none') {
+                        hasVisibleInCard = true;
+                        break;
+                    }
+                    current = current.nextElementSibling;
+                }
+                header.style.display = hasVisibleInCard ? 'block' : 'none';
+            });
+
+            clearBtn.style.display = searchTerm ? 'block' : 'none';
+
+            if (searchTerm || selectedCategory !== 'all') {
+                statusDiv.textContent = visibleCount > 0
+                    ? `Found ${visibleCount} software tool${visibleCount !== 1 ? 's' : ''}`
+                    : 'No matching software tools found.';
+            } else {
+                statusDiv.textContent = '';
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('input', updateSearch);
+        document.getElementById('categoryFilter').addEventListener('change', updateSearch);
+        document.getElementById('clearSearch').addEventListener('click', () => {
+            document.getElementById('searchInput').value = '';
+            updateSearch();
+            document.getElementById('searchInput').focus();
         });
 
         // Add animation to cards when they come into view
