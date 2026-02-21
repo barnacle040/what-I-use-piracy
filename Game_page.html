@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Optimization: Preconnect to CDN to reduce connection overhead for FontAwesome -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <title>Game Library - Direct Downloads</title>
     <style>
         :root {
@@ -376,25 +379,25 @@
                 flex-direction: column;
                 text-align: center;
             }
-            
+
             nav ul {
                 margin-top: 1rem;
                 justify-content: center;
             }
-            
+
             nav li {
                 margin: 0 0.5rem;
             }
-            
+
             .controls {
                 flex-direction: column;
                 gap: 1rem;
             }
-            
+
             .search-box {
                 width: 100%;
             }
-            
+
             .game-grid {
                 grid-template-columns: 1fr;
             }
@@ -592,16 +595,16 @@
         function renderGames(gameList = games) {
             const gameGrid = document.getElementById('gameGrid');
             gameGrid.innerHTML = '';
-            
+
             if (gameList.length === 0) {
                 gameGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: white;">No games found matching your criteria.</div>';
                 return;
             }
-            
+
             gameList.forEach(game => {
                 const gameCard = document.createElement('div');
                 gameCard.className = 'game-card';
-                
+
                 let badges = '';
                 if (game.featured) {
                     badges += '<span class="badge badge-featured">Featured</span>';
@@ -609,7 +612,7 @@
                 if (game.new) {
                     badges += '<span class="badge badge-new">New</span>';
                 }
-                
+
                 gameCard.innerHTML = `
                     <div class="card-header">
                         <div class="game-icon">
@@ -632,26 +635,26 @@
                         </div>
                     </div>
                 `;
-                
+
                 gameGrid.appendChild(gameCard);
             });
-            
+
             // Update stats
             document.getElementById('gameCount').textContent = `Showing ${gameList.length} games`;
         }
-        
+
         // Search functionality
         function searchGames() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const categoryFilter = document.getElementById('categoryFilter').value;
-            
+
             let filteredGames = games.filter(game => {
-                const matchesSearch = game.title.toLowerCase().includes(searchTerm) || 
+                const matchesSearch = game.title.toLowerCase().includes(searchTerm) ||
                                      game.description.toLowerCase().includes(searchTerm);
                 const matchesCategory = categoryFilter === 'all' || game.category === categoryFilter;
                 return matchesSearch && matchesCategory;
             });
-            
+
             renderGames(filteredGames);
         }
 
@@ -659,11 +662,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initial render
             renderGames();
-            
+
             // Search functionality
             document.getElementById('searchInput').addEventListener('input', searchGames);
             document.getElementById('categoryFilter').addEventListener('change', searchGames);
-            
+
             // Pagination
             document.querySelectorAll('.pagination button').forEach(button => {
                 button.addEventListener('click', function() {
@@ -673,7 +676,7 @@
                     this.classList.add('active');
                 });
             });
-            
+
             // Add animation to cards when they come into view
             const observerOptions = {
                 threshold: 0.1,
