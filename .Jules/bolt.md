@@ -5,3 +5,7 @@
 ## 2026-02-21 - Resource Discovery and Documentation
 **Learning:** Adding 'preconnect' resource hints across all pages that consume external CDNs (like FontAwesome) ensures consistent performance gains. Documenting estimated metrics in HTML comments provides transparency and justification for optimizations that might otherwise be seen as minor or redundant.
 **Action:** Consistently apply preconnect hints to all pages using external resources. Include estimated performance impact (latency reduction, payload savings) in code comments.
+
+## 2026-02-22 - Search Performance & Debouncing
+**Learning:** Frequent DOM access (like `textContent`) and repeated string operations (like `toLowerCase()`) during real-time search inputs create significant main-thread overhead. Debouncing input events and caching search targets in a pre-calculated index dramatically reduces the computational cost of interactive filtering.
+**Action:** Always debounce frequent input-driven event handlers. For large lists or many sections, build a flat search index on load to avoid repeated DOM traversals and parsing.
