@@ -9,3 +9,7 @@
 ## 2025-05-15 - [Keyboard Shortcut Discoverability]
 **Learning:** Keyboard shortcuts are powerful but often "hidden" features. Providing a dedicated visual guide (Shortcuts Panel) that can be toggled via a universal convention (the `?` key) significantly improves accessibility and discoverability for power users without cluttering the main UI.
 **Action:** Implement a `?` key listener that avoids triggering in text inputs and provides a guide (integrated as a standard section to reuse existing styles) listing all available shortcuts.
+
+## 2025-05-15 - [Unified Search & Filter UX]
+**Learning:** Decoupled search and filter inputs create a confusing experience where one can override the other. Unifying these into a single intersection-based logic (where results must match BOTH search and category) provides a more predictable and powerful interface. Additionally, providing immediate feedback (result counts and empty states) via ARIA-live regions is crucial for accessibility.
+**Action:** Use a single filtering function for multiple inputs, hide empty headers via data-attribute linkage, and provide a `role="status"` region for real-time result counts.
