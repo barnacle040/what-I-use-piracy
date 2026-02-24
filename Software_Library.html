@@ -134,6 +134,14 @@
             font-size: 1rem;
         }
 
+        #searchStatus {
+            margin: 10px 0;
+            font-style: italic;
+            color: white;
+            font-size: 0.95rem;
+            min-height: 1.5em;
+        }
+
         .search-box i {
             position: absolute;
             left: 15px;
@@ -368,11 +376,11 @@
         <div class="controls">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search software...">
+                <input type="text" id="searchInput" placeholder="Search software..." aria-label="Search software">
             </div>
             <div class="filters">
                 <div class="category-filter">
-                    <select id="categoryFilter">
+                    <select id="categoryFilter" aria-label="Filter by category">
                         <option value="all">All Categories</option>
                         <option value="system">System Utilities</option>
                         <option value="media">Media & Creative</option>
@@ -385,8 +393,10 @@
             </div>
         </div>
 
+        <div id="searchStatus" role="status" aria-live="polite"></div>
+
         <div class="software-grid" id="softwareGrid">
-            <div class="category-header">System Utilities</div>
+            <div class="category-header" data-category="system">System Utilities</div>
             <!-- System Utilities -->
             <div class="software-card" data-category="system">
                 <div class="card-header">
@@ -561,7 +571,7 @@
                 </div>
             </div>
 
-            <div class="category-header">Media & Creative</div>
+            <div class="category-header" data-category="media">Media & Creative</div>
             <!-- Media & Creative -->
             <div class="software-card" data-category="media">
                 <div class="card-header">
@@ -793,7 +803,7 @@
                 </div>
             </div>
 
-            <div class="category-header">Productivity</div>
+            <div class="category-header" data-category="productivity">Productivity</div>
             <!-- Productivity -->
             <div class="software-card" data-category="productivity">
                 <div class="card-header">
@@ -930,7 +940,7 @@
                 </div>
             </div>
 
-            <div class="category-header">Security & Privacy</div>
+            <div class="category-header" data-category="security">Security & Privacy</div>
             <!-- Security & Privacy -->
             <div class="software-card" data-category="security">
                 <div class="card-header">
@@ -1092,7 +1102,7 @@
                 </div>
             </div>
 
-            <div class="category-header">Internet & Networking</div>
+            <div class="category-header" data-category="internet">Internet & Networking</div>
             <!-- Internet & Networking -->
             <div class="software-card" data-category="internet">
                 <div class="card-header">
@@ -1140,7 +1150,7 @@
                 </div>
             </div>
 
-            <div class="category-header">Development Tools</div>
+            <div class="category-header" data-category="development">Development Tools</div>
             <!-- Development Tools -->
             <div class="software-card" data-category="development">
                 <div class="card-header">
@@ -1197,36 +1207,58 @@
     </footer>
 
     <script>
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
+        function filterSoftware() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const selectedCategory = document.getElementById('categoryFilter').value;
             const cards = document.querySelectorAll('.software-card');
+            const headers = document.querySelectorAll('.category-header');
+            const status = document.getElementById('searchStatus');
             
+            let visibleCount = 0;
+            const visibleCategories = new Set();
+
             cards.forEach(card => {
                 const appName = card.querySelector('h3').textContent.toLowerCase();
                 const appDescription = card.querySelector('.app-description').textContent.toLowerCase();
+                const cardCategory = card.getAttribute('data-category');
                 
-                if (appName.includes(searchTerm) || appDescription.includes(searchTerm)) {
+                const matchesSearch = appName.includes(searchTerm) || appDescription.includes(searchTerm);
+                const matchesCategory = selectedCategory === 'all' || cardCategory === selectedCategory;
+
+                if (matchesSearch && matchesCategory) {
                     card.style.display = 'block';
+                    visibleCount++;
+                    visibleCategories.add(cardCategory);
                 } else {
                     card.style.display = 'none';
                 }
             });
-        });
+
+            headers.forEach(header => {
+                const headerCategory = header.getAttribute('data-category');
+                if (visibleCategories.has(headerCategory)) {
+                    header.style.display = 'block';
+                } else {
+                    header.style.display = 'none';
+                }
+            });
+
+            if (searchTerm || selectedCategory !== 'all') {
+                if (visibleCount === 0) {
+                    status.textContent = 'No results found matching your criteria.';
+                } else {
+                    status.textContent = `Showing ${visibleCount} result${visibleCount !== 1 ? 's' : ''}`;
+                }
+            } else {
+                status.textContent = '';
+            }
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', filterSoftware);
 
         // Category filter functionality
-        document.getElementById('categoryFilter').addEventListener('change', function() {
-            const selectedCategory = this.value;
-            const cards = document.querySelectorAll('.software-card');
-            
-            cards.forEach(card => {
-                if (selectedCategory === 'all' || card.getAttribute('data-category') === selectedCategory) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
+        document.getElementById('categoryFilter').addEventListener('change', filterSoftware);
 
         // Add animation to cards when they come into view
         const observerOptions = {
