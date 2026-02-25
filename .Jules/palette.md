@@ -9,3 +9,7 @@
 ## 2025-05-15 - [Keyboard Shortcut Discoverability]
 **Learning:** Keyboard shortcuts are powerful but often "hidden" features. Providing a dedicated visual guide (Shortcuts Panel) that can be toggled via a universal convention (the `?` key) significantly improves accessibility and discoverability for power users without cluttering the main UI.
 **Action:** Implement a `?` key listener that avoids triggering in text inputs and provides a guide (integrated as a standard section to reuse existing styles) listing all available shortcuts.
+
+## 2025-05-16 - [Universal Tooltips via ARIA]
+**Learning:** For repositories with numerous repeated interactive elements (like Copy/Favorite buttons), implementing tooltips using CSS `attr(aria-label)` is significantly more maintainable and lightweight than adding manual `data-tooltip` attributes. It leverages existing accessibility data as a source of truth for UI hints.
+**Action:** Use CSS `[aria-label]:hover:after { content: attr(aria-label); }` (with appropriate selectors) to provide automatic tooltips for accessible icon-only buttons.
