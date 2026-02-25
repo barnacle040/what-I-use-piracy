@@ -173,12 +173,11 @@ input:focus {
     box-shadow: var(--focus-ring);
 }
 
-a[data-tooltip] {
+[data-tooltip], .copy-btn, .fav-btn {
     position: relative;
 }
 
-a[data-tooltip]:hover:after {
-    content: attr(data-tooltip);
+[data-tooltip]:hover:after, .copy-btn:hover:after, .fav-btn:hover:after {
     position: absolute;
     bottom: 100%;
     left: 50%;
@@ -189,9 +188,13 @@ a[data-tooltip]:hover:after {
     border-radius: 5px;
     font-size: 0.9rem;
     white-space: nowrap;
-    z-index: 10;
+    z-index: 100;
     border: 1px solid var(--border);
+    pointer-events: none;
 }
+
+[data-tooltip]:hover:after { content: attr(data-tooltip); }
+.copy-btn:hover:after, .fav-btn:hover:after { content: attr(aria-label); }
 
 .link-highlight {
     color: #58a6ff;

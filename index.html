@@ -980,9 +980,21 @@
             });
         }
 
-        function copyToClipboard(text) {
+        function copyToClipboard(text, btn) {
             navigator.clipboard.writeText(text).then(() => {
                 showNotification('Copied to clipboard!');
+                if (btn && !btn.classList.contains('copied')) {
+                    const originalText = btn.textContent;
+                    const originalAria = btn.getAttribute('aria-label');
+                    btn.textContent = '✅';
+                    btn.setAttribute('aria-label', 'Copied!');
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.setAttribute('aria-label', originalAria);
+                        btn.classList.remove('copied');
+                    }, 2000);
+                }
             }).catch(err => {
                 console.error('Failed to copy:', err);
             });
@@ -1144,7 +1156,7 @@
                 btn.addEventListener('click', () => {
                     const url = btn.getAttribute('data-url');
                     const text = btn.getAttribute('data-text');
-                    copyToClipboard(url || text);
+                    copyToClipboard(url || text, btn);
                 });
             });
 
