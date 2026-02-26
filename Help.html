@@ -279,6 +279,15 @@
             text-decoration: underline;
         }
 
+        /* Search bar styles */
+        .search-container { position: relative; max-width: 600px; margin: 0 auto 1.5rem; }
+        #searchInput { width: 100%; padding: 12px 45px 12px 40px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; box-shadow: var(--shadow); outline: none; }
+        #searchInput:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); }
+        .search-container i.fa-search { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--gray); }
+        #clearSearch { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--gray); font-size: 1.1rem; display: none; }
+        #clearSearch:hover { color: var(--accent); }
+        #searchResults { text-align: center; margin-bottom: 1.5rem; font-style: italic; color: white; min-height: 1.5em; font-weight: 500; }
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -330,6 +339,13 @@
             <h1>Help & Support</h1>
             <p>Find answers to common questions and get help with any issues you might encounter.</p>
         </div>
+
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search FAQs..." aria-label="Search FAQs" autocomplete="off">
+            <button id="clearSearch" aria-label="Clear search">✕</button>
+        </div>
+        <div id="searchResults" role="status" aria-live="polite"></div>
 
         <main>
 
@@ -728,6 +744,40 @@
             });
         }
 
+        function searchFAQs() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            const sections = document.querySelectorAll('section[id]');
+            let matchCount = 0;
+
+            faqItems.forEach(item => {
+                const isMatch = item.textContent.toLowerCase().includes(query);
+                item.style.display = isMatch ? 'block' : 'none';
+                if (isMatch) matchCount++;
+            });
+
+            sections.forEach(section => {
+                const hasMatch = Array.from(section.querySelectorAll('.faq-item')).some(i => i.style.display !== 'none');
+                section.style.display = (!query || hasMatch) ? 'block' : 'none';
+                if (query && hasMatch) {
+                    const btn = section.querySelector('.toggle-btn');
+                    section.querySelector('.section-content').classList.remove('hidden');
+                    btn.setAttribute('aria-expanded', 'true');
+                    btn.querySelector('.toggle-icon').textContent = '−';
+                }
+            });
+
+            document.getElementById('clearSearch').style.display = query ? 'block' : 'none';
+            document.getElementById('searchResults').textContent = query ? (matchCount ? `Found ${matchCount} matching FAQ${matchCount !== 1 ? 's' : ''}` : `No matches found for "${query}"`) : '';
+            if (!query) { faqItems.forEach(i => i.style.display = 'block'); sections.forEach(s => s.style.display = 'block'); }
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            searchFAQs();
+            document.getElementById('searchInput').focus();
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // Back to top
             document.getElementById('backToTop').addEventListener('click', scrollToTop);
@@ -740,6 +790,10 @@
             // Expand/Collapse all buttons
             document.getElementById('expandAll').addEventListener('click', expandAll);
             document.getElementById('collapseAll').addEventListener('click', collapseAll);
+
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', searchFAQs);
+            document.getElementById('clearSearch').addEventListener('click', clearSearch);
         });
     </script>
 </body>
