@@ -904,6 +904,23 @@
         let isDarkTheme = true;
         let favorites = [];
         let showingFavoritesOnly = false;
+        let searchIndex = [];
+
+        /**
+         * Debounce utility to prevent excessive calls to expensive functions.
+         * Impact: Reduces DOM updates and string processing overhead during rapid typing.
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
 
         window.onscroll = function() {
             document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
@@ -913,20 +930,20 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function searchResources() {
+        /**
+         * Filters sections based on search query using the pre-built index.
+         * Impact: Eliminates expensive DOM queries and textContent processing on every keystroke.
+         */
+        function performSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const sections = document.querySelectorAll('section[id]');
             const clearBtn = document.getElementById('clearSearch');
             const resultsDiv = document.getElementById('searchResults');
 
             let visibleCount = 0;
 
-            sections.forEach(section => {
-                if (section.classList.contains('move')) return;
-
-                const text = section.textContent.toLowerCase();
-                const isVisible = text.includes(query);
-                section.style.display = isVisible ? 'block' : 'none';
+            searchIndex.forEach(item => {
+                const isVisible = item.text.includes(query);
+                item.element.style.display = isVisible ? 'block' : 'none';
                 if (isVisible) visibleCount++;
             });
 
@@ -939,9 +956,12 @@
             }
         }
 
+        // Use debounced version for active typing to reduce DOM thrashing
+        const debouncedSearch = debounce(performSearch, 250);
+
         function clearSearch() {
             document.getElementById('searchInput').value = '';
-            searchResources();
+            performSearch(); // Immediate execution for responsive UX when clearing
             document.getElementById('searchInput').focus();
         }
 
@@ -1113,11 +1133,17 @@
             sections.forEach((section, index) => {
                 if (!section.classList.contains('move')) {
                     section.style.animationDelay = `${0.5 + index * 0.2}s`;
+
+                    // Optimization: Build search index to avoid repeated DOM queries and textContent processing
+                    searchIndex.push({
+                        element: section,
+                        text: section.textContent.toLowerCase()
+                    });
                 }
             });
 
-            // Search functionality
-            document.getElementById('searchInput').addEventListener('keyup', searchResources);
+            // Search functionality - using 'input' for better cross-browser consistency
+            document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
             // Theme toggle
