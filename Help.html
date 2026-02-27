@@ -700,6 +700,23 @@
 
     <script>
         let isDarkTheme = true;
+        let faqSearchIndex = [];
+
+        /**
+         * Debounce utility to prevent excessive calls to expensive functions.
+         * Impact: Reduces DOM updates and string processing overhead during rapid typing.
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
 
         window.onscroll = function() {
             document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
@@ -744,32 +761,56 @@
             });
         }
 
+        /**
+         * Filters sections and FAQ items based on search query using the pre-built index.
+         * Impact: Eliminates expensive DOM queries and textContent processing on every keystroke.
+         */
         function searchFAQs() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const faqItems = document.querySelectorAll('.faq-item');
-            const sections = document.querySelectorAll('section[id]');
+            const resultsDiv = document.getElementById('searchResults');
+            const clearBtn = document.getElementById('clearSearch');
+
             let matchCount = 0;
+            const sectionsWithMatches = new Set();
 
-            faqItems.forEach(item => {
-                const isMatch = item.textContent.toLowerCase().includes(query);
-                item.style.display = isMatch ? 'block' : 'none';
-                if (isMatch) matchCount++;
-            });
-
-            sections.forEach(section => {
-                const hasMatch = Array.from(section.querySelectorAll('.faq-item')).some(i => i.style.display !== 'none');
-                section.style.display = (!query || hasMatch) ? 'block' : 'none';
-                if (query && hasMatch) {
-                    const btn = section.querySelector('.toggle-btn');
-                    section.querySelector('.section-content').classList.remove('hidden');
-                    btn.setAttribute('aria-expanded', 'true');
-                    btn.querySelector('.toggle-icon').textContent = '−';
+            // Filter FAQ items using index
+            faqSearchIndex.forEach(item => {
+                const isMatch = item.text.includes(query);
+                item.element.style.display = isMatch ? 'block' : 'none';
+                if (isMatch) {
+                    matchCount++;
+                    if (item.section) sectionsWithMatches.add(item.section);
                 }
             });
 
-            document.getElementById('clearSearch').style.display = query ? 'block' : 'none';
-            document.getElementById('searchResults').textContent = query ? (matchCount ? `Found ${matchCount} matching FAQ${matchCount !== 1 ? 's' : ''}` : `No matches found for "${query}"`) : '';
-            if (!query) { faqItems.forEach(i => i.style.display = 'block'); sections.forEach(s => s.style.display = 'block'); }
+            // Update section visibility and expansion
+            const allSections = document.querySelectorAll('section[id]');
+            allSections.forEach(section => {
+                const hasMatch = sectionsWithMatches.has(section);
+                section.style.display = (!query || hasMatch) ? 'block' : 'none';
+
+                if (query && hasMatch) {
+                    const btn = section.querySelector('.toggle-btn');
+                    const content = section.querySelector('.section-content');
+                    if (content) content.classList.remove('hidden');
+                    if (btn) {
+                        btn.setAttribute('aria-expanded', 'true');
+                        const icon = btn.querySelector('.toggle-icon');
+                        if (icon) icon.textContent = '−';
+                    }
+                }
+            });
+
+            clearBtn.style.display = query ? 'block' : 'none';
+
+            if (query) {
+                resultsDiv.textContent = matchCount ? `Found ${matchCount} matching FAQ${matchCount !== 1 ? 's' : ''}` : `No matches found for "${query}"`;
+            } else {
+                resultsDiv.textContent = '';
+                // Restore all visibility when query is empty
+                faqSearchIndex.forEach(item => item.element.style.display = 'block');
+                allSections.forEach(section => section.style.display = 'block');
+            }
         }
 
         function clearSearch() {
@@ -778,7 +819,20 @@
             document.getElementById('searchInput').focus();
         }
 
+        // Use debounced version for active typing to reduce DOM thrashing
+        const debouncedSearch = debounce(searchFAQs, 250);
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Optimization: Build search index to avoid repeated DOM queries and textContent processing
+            const faqItems = document.querySelectorAll('.faq-item');
+            const sections = document.querySelectorAll('section[id]');
+
+            faqSearchIndex = Array.from(faqItems).map(item => ({
+                element: item,
+                text: item.textContent.toLowerCase(),
+                section: item.closest('section[id]')
+            }));
+
             // Back to top
             document.getElementById('backToTop').addEventListener('click', scrollToTop);
 
@@ -792,7 +846,7 @@
             document.getElementById('collapseAll').addEventListener('click', collapseAll);
 
             // Search functionality
-            document.getElementById('searchInput').addEventListener('input', searchFAQs);
+            document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
         });
     </script>
