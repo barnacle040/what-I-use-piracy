@@ -384,6 +384,7 @@
                 </div>
             </div>
         </div>
+        <div id="searchStatus" role="status" aria-live="polite" style="text-align:center; color:white; margin-bottom:1rem; font-style:italic; min-height:1.5em;"></div>
 
         <div class="software-grid" id="softwareGrid">
             <div class="category-header">System Utilities</div>
@@ -1199,8 +1200,10 @@
     <script>
         // Search functionality
         document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
+            const query = this.value;
+            const searchTerm = query.toLowerCase();
             const cards = document.querySelectorAll('.software-card');
+            let visibleCount = 0;
             
             cards.forEach(card => {
                 const appName = card.querySelector('h3').textContent.toLowerCase();
@@ -1208,10 +1211,20 @@
                 
                 if (appName.includes(searchTerm) || appDescription.includes(searchTerm)) {
                     card.style.display = 'block';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            const status = document.getElementById('searchStatus');
+            if (searchTerm) {
+                status.textContent = visibleCount > 0
+                    ? `Found ${visibleCount} software match${visibleCount !== 1 ? 'es' : ''}`
+                    : `No matches found for "${query}"`;
+            } else {
+                status.textContent = '';
+            }
         });
 
         // Category filter functionality
