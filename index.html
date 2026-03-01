@@ -124,6 +124,7 @@
                 </ul>
             </nav>
         </div>
+        <button id="themeToggle" aria-label="Toggle dark/light theme" title="Toggle dark/light theme">🌙</button>
     </header>
 
     <main class="container">
@@ -900,9 +901,9 @@
 
 
     <script>
-        // Theme state and favorites stored in memory
-        let isDarkTheme = true;
-        let favorites = [];
+        // Theme state and favorites stored in memory with persistence
+        let isDarkTheme = localStorage.getItem('theme') !== 'light';
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         let showingFavoritesOnly = false;
         let searchIndex = [];
 
@@ -1030,16 +1031,21 @@
 
             if (index > -1) {
                 favorites.splice(index, 1);
-                btn.textContent = '☆';
-                btn.classList.remove('active');
-                btn.setAttribute('aria-label', 'Add to favorites');
+                if (btn) {
+                    btn.textContent = '☆';
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-label', 'Add to favorites');
+                }
             } else {
                 favorites.push(id);
-                btn.textContent = '★';
-                btn.classList.add('active');
-                btn.setAttribute('aria-label', 'Remove from favorites');
+                if (btn) {
+                    btn.textContent = '★';
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-label', 'Remove from favorites');
+                }
             }
 
+            localStorage.setItem('favorites', JSON.stringify(favorites));
             updateFavCount();
         }
 
@@ -1146,12 +1152,33 @@
             document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
-            // Theme toggle
-            document.getElementById('themeToggle')?.addEventListener('click', () => {
-                isDarkTheme = !isDarkTheme;
-                document.body.classList.toggle('light');
-                document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
+            // Theme toggle with persistence
+            const themeBtn = document.getElementById('themeToggle');
+            if (themeBtn) {
+                themeBtn.textContent = isDarkTheme ? '🌙' : '☀️';
+                themeBtn.addEventListener('click', () => {
+                    isDarkTheme = !isDarkTheme;
+                    document.body.classList.toggle('light', !isDarkTheme);
+                    themeBtn.textContent = isDarkTheme ? '🌙' : '☀️';
+                    localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+                });
+            }
+
+            // Apply stored theme on load
+            if (!isDarkTheme) {
+                document.body.classList.add('light');
+            }
+
+            // Apply stored favorites on load
+            favorites.forEach(id => {
+                const btn = document.querySelector(`[data-id="${id}"]`);
+                if (btn) {
+                    btn.textContent = '★';
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-label', 'Remove from favorites');
+                }
             });
+            updateFavCount();
 
             // Back to top
             document.getElementById('backToTop').addEventListener('click', scrollToTop);

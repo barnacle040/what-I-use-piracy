@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2026-03-01 - [User Preference Persistence]
+**Learning:** Persistence of UI state (like theme and favorites) via `localStorage` significantly improves user satisfaction by respecting their choices across sessions. Implementing this requires careful initialization logic to sync the stored state with the initial DOM render (e.g., updating icons and ARIA labels).
+**Action:** Use `localStorage` to store simple preferences and ensure that on `DOMContentLoaded`, the UI is explicitly updated to reflect these stored values, including both visual icons and accessibility attributes.
