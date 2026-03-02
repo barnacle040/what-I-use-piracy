@@ -109,6 +109,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <button id="themeToggle" aria-label="Toggle dark/light mode">🌙</button>
     <header>
         <div class="header-content">
             <div class="logo">
@@ -126,7 +128,7 @@
         </div>
     </header>
 
-    <main class="container">
+    <main class="container" id="main-content">
         <section id="shortcuts">
             <h1> Keyboard Shortcuts <button class="toggle-btn" data-section="shortcuts" aria-expanded="false" aria-controls="shortcuts-content" aria-label="Toggle Shortcuts guide">
                 <span class="toggle-icon" aria-hidden="true">+</span>
@@ -1146,12 +1148,23 @@
             document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
-            // Theme toggle
-            document.getElementById('themeToggle')?.addEventListener('click', () => {
-                isDarkTheme = !isDarkTheme;
-                document.body.classList.toggle('light');
-                document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
-            });
+            // Theme toggle with persistence
+            const themeBtn = document.getElementById('themeToggle');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    isDarkTheme = !isDarkTheme;
+                    document.body.classList.toggle('light');
+                    themeBtn.textContent = isDarkTheme ? '🌙' : '☀️';
+                    localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+                });
+            }
+
+            // Initialize theme from localStorage
+            if (localStorage.getItem('theme') === 'light') {
+                isDarkTheme = false;
+                document.body.classList.add('light');
+                if (themeBtn) themeBtn.textContent = '☀️';
+            }
 
             // Back to top
             document.getElementById('backToTop').addEventListener('click', scrollToTop);
