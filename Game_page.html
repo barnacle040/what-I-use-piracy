@@ -479,6 +479,22 @@
     </footer>
 
     <script>
+        /**
+         * Debounce utility to prevent excessive calls to expensive functions.
+         * Impact: Reduces DOM updates and string processing overhead during rapid typing.
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
         // Game data
         const games = [
             {
@@ -591,17 +607,18 @@
             }
         ];
 
-        // Function to render games
-        function renderGames(gameList = games) {
+        let gameSearchIndex = [];
+
+        /**
+         * Builds the search index by rendering all games once and caching their elements.
+         * Impact: Eliminates expensive DOM destruction/reconstruction during filtering.
+         */
+        function buildSearchIndex() {
             const gameGrid = document.getElementById('gameGrid');
             gameGrid.innerHTML = '';
+            gameSearchIndex = [];
 
-            if (gameList.length === 0) {
-                gameGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: white;">No games found matching your criteria.</div>';
-                return;
-            }
-
-            gameList.forEach(game => {
+            games.forEach(game => {
                 const gameCard = document.createElement('div');
                 gameCard.className = 'game-card';
 
@@ -637,34 +654,69 @@
                 `;
 
                 gameGrid.appendChild(gameCard);
-            });
 
-            // Update stats
-            document.getElementById('gameCount').textContent = `Showing ${gameList.length} games`;
+                gameSearchIndex.push({
+                    element: gameCard,
+                    category: game.category,
+                    size: parseFloat(game.size) || 0,
+                    text: (game.title + " " + game.description).toLowerCase()
+                });
+            });
         }
 
-        // Search functionality
+        /**
+         * Filters games using the pre-built search index and updates visibility.
+         * Impact: Performance improved from O(N) DOM work to O(N) visibility toggling.
+         */
         function searchGames() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const categoryFilter = document.getElementById('categoryFilter').value;
+            const gameGrid = document.getElementById('gameGrid');
 
-            let filteredGames = games.filter(game => {
-                const matchesSearch = game.title.toLowerCase().includes(searchTerm) ||
-                                     game.description.toLowerCase().includes(searchTerm);
-                const matchesCategory = categoryFilter === 'all' || game.category === categoryFilter;
-                return matchesSearch && matchesCategory;
+            let visibleCount = 0;
+            let totalVisibleSize = 0;
+
+            gameSearchIndex.forEach(item => {
+                const matchesSearch = !searchTerm || item.text.includes(searchTerm);
+                const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
+                const isVisible = matchesSearch && matchesCategory;
+
+                item.element.style.display = isVisible ? '' : 'none';
+                if (isVisible) {
+                    visibleCount++;
+                    totalVisibleSize += item.size;
+                }
             });
 
-            renderGames(filteredGames);
+            // Update stats
+            document.getElementById('gameCount').textContent = `Showing ${visibleCount} games`;
+            document.getElementById('totalSize').textContent = `Total size: ~${Math.round(totalVisibleSize)} GB`;
+
+            // Handle "No results" message
+            const existingNoResults = document.getElementById('noResultsMessage');
+            if (visibleCount === 0) {
+                if (!existingNoResults) {
+                    const noResults = document.createElement('div');
+                    noResults.id = 'noResultsMessage';
+                    noResults.style.cssText = 'grid-column: 1 / -1; text-align: center; padding: 2rem; color: white;';
+                    noResults.textContent = 'No games found matching your criteria.';
+                    gameGrid.appendChild(noResults);
+                }
+            } else if (existingNoResults) {
+                existingNoResults.remove();
+            }
         }
+
+        // Use debounced version for active typing to reduce DOM thrashing
+        const debouncedSearch = debounce(searchGames, 250);
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            // Initial render
-            renderGames();
+            // Initial render and build index
+            buildSearchIndex();
 
             // Search functionality
-            document.getElementById('searchInput').addEventListener('input', searchGames);
+            document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('categoryFilter').addEventListener('change', searchGames);
 
             // Pagination
