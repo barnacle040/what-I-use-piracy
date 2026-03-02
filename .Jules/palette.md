@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2026-03-01 - [Skip to Main Content for Keyboard Navigation]
+**Learning:** For users who rely on keyboard navigation, repetitive header elements (like long nav menus) can be a significant barrier. A "Skip to Main Content" link, visually hidden until focused, provides a crucial shortcut to the core information, dramatically improving the page's accessibility and "perceived" speed.
+**Action:** Always implement a `.skip-link` targeting the `<main>` content as the first element in the `<body>`.
