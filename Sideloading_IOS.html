@@ -52,8 +52,8 @@
         </aside>
 
         <article id="before-installing">
-            <h1> Before Installing AltStore <button class="toggle-btn" onclick="toggleSection('before-installing')">Toggle</button></h1>
-            <div class="section-content">
+            <h1> Before Installing AltStore <button class="toggle-btn" onclick="toggleSection('before-installing')" aria-expanded="true" aria-controls="before-installing-content" aria-label="Toggle Before Installing AltStore section">Toggle</button></h1>
+            <div class="section-content" id="before-installing-content">
                 <p>Download and install the latest version of iTunes and iCloud directly from Apple (not the Microsoft Store).</p>
                 <ul>
                     <li><strong>iTunes Direct Download Links:</strong>
@@ -72,8 +72,8 @@
         </article>
 
         <article id="installing-altstore">
-            <h1> Installing AltStore <button class="toggle-btn" onclick="toggleSection('installing-altstore')">Toggle</button></h1>
-            <div class="section-content">
+            <h1> Installing AltStore <button class="toggle-btn" onclick="toggleSection('installing-altstore')" aria-expanded="true" aria-controls="installing-altstore-content" aria-label="Toggle Installing AltStore section">Toggle</button></h1>
+            <div class="section-content" id="installing-altstore-content">
                 <ol>
                     <li>Download AltServer for Windows.</li>
                     <li>Extract AltInstaller.zip and run Setup.exe.</li>
@@ -90,8 +90,8 @@
         </article>
 
         <article id="developer-mode">
-            <h1> Enable Developer Mode (iOS 16+) <button class="toggle-btn" onclick="toggleSection('developer-mode')">Toggle</button></h1>
-            <div class="section-content">
+            <h1> Enable Developer Mode (iOS 16+) <button class="toggle-btn" onclick="toggleSection('developer-mode')" aria-expanded="true" aria-controls="developer-mode-content" aria-label="Toggle Enable Developer Mode section">Toggle</button></h1>
+            <div class="section-content" id="developer-mode-content">
                 <p>To use AltStore on iOS 16 or later, you need to enable Developer Mode on your device:</p>
                 <ol>
                     <li>Go to Settings → Privacy and Security → Developer Mode.</li>
@@ -102,8 +102,8 @@
         </article>
 
         <article id="sources">
-            <h1> Sources for AltStore <button class="toggle-btn" onclick="toggleSection('sources')">Toggle</button></h1>
-            <div class="section-content">
+            <h1> Sources for AltStore <button class="toggle-btn" onclick="toggleSection('sources')" aria-expanded="true" aria-controls="sources-content" aria-label="Toggle Sources for AltStore section">Toggle</button></h1>
+            <div class="section-content" id="sources-content">
                 <p>Here are some sources to download some apps from AltStore:</p>
                 <p>Copy and paste these links into the AltStore sources list:</p>
                 <ul>
@@ -147,8 +147,11 @@
         }
 
         function toggleSection(id) {
-            const content = document.querySelector(`#${id} .section-content`);
-            content.classList.toggle('hidden');
+            const article = document.getElementById(id);
+            const content = article.querySelector('.section-content');
+            const button = article.querySelector('.toggle-btn');
+            const isHidden = content.classList.toggle('hidden');
+            button.setAttribute('aria-expanded', isHidden ? 'false' : 'true');
         }
 
         document.addEventListener('click', (e) => {
