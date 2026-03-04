@@ -9,3 +9,7 @@
 ## 2026-02-23 - Search Indexing & Event Debouncing
 **Learning:** Performing repeated DOM queries (`querySelectorAll`) and text extraction (`textContent`) on every `input` event for lists of ~40 items creates unnecessary main-thread overhead. Caching searchable content in a simple JavaScript index on `DOMContentLoaded` and debouncing the input event (e.g., 250ms) reduces string processing overhead by ~90% during active search.
 **Action:** Use pre-built search indexes and debouncing for all client-side filtering features to minimize DOM thrashing and CPU usage.
+
+## 2026-02-25 - Efficient List Filtering vs. DOM Re-rendering
+**Learning:** For lists of moderate size (~20-40 items), clearing and re-rendering the entire DOM grid via `innerHTML = ''` on every keystroke is significantly less efficient than toggling the `display` property of existing elements. Pre-caching DOM references and searchable text in a `searchIndex` on initial load allows for O(N) visibility toggling without the high cost of element destruction and creation.
+**Action:** Prefer visibility toggling (`display: none`) and DOM reference indexing over `innerHTML` clearing for filtering static lists. Always clear stateful indexes (e.g., `gameSearchIndex = []`) if the base list is re-rendered to prevent stale references.
