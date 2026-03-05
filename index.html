@@ -121,6 +121,7 @@
                     <li><a href="./Game_page.html">Games</a></li>
                     <li><a href="Help.html">Help</a></li>
                     <li><a href="./Software_Library.html">Software</a></li>
+                    <li><button id="themeToggle" aria-label="Toggle dark mode">🌙</button></li>
                 </ul>
             </nav>
         </div>
@@ -1024,22 +1025,30 @@
             }, 2000);
         }
 
+        /**
+         * Updates the UI state of a favorite button.
+         */
+        function updateFavoriteUI(id, isActive) {
+            const btn = document.querySelector(`[data-id="${id}"]`);
+            if (btn) {
+                btn.textContent = isActive ? '★' : '☆';
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-label', isActive ? 'Remove from favorites' : 'Add to favorites');
+            }
+        }
+
         function toggleFavorite(id) {
             const index = favorites.indexOf(id);
-            const btn = document.querySelector(`[data-id="${id}"]`);
+            const isActive = index === -1;
 
-            if (index > -1) {
-                favorites.splice(index, 1);
-                btn.textContent = '☆';
-                btn.classList.remove('active');
-                btn.setAttribute('aria-label', 'Add to favorites');
-            } else {
+            if (isActive) {
                 favorites.push(id);
-                btn.textContent = '★';
-                btn.classList.add('active');
-                btn.setAttribute('aria-label', 'Remove from favorites');
+            } else {
+                favorites.splice(index, 1);
             }
 
+            updateFavoriteUI(id, isActive);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
             updateFavCount();
         }
 
@@ -1124,6 +1133,23 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Restore theme from localStorage
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                isDarkTheme = false;
+                document.body.classList.add('light');
+                const themeToggle = document.getElementById('themeToggle');
+                if (themeToggle) themeToggle.textContent = '☀️';
+            }
+
+            // Restore favorites from localStorage
+            const savedFavorites = localStorage.getItem('favorites');
+            if (savedFavorites) {
+                favorites = JSON.parse(savedFavorites);
+                favorites.forEach(id => updateFavoriteUI(id, true));
+                updateFavCount();
+            }
+
             const items = document.querySelectorAll('li, .image-item');
             items.forEach((item, index) => {
                 item.style.animationDelay = `${index * 0.1}s`;
@@ -1150,6 +1176,8 @@
             document.getElementById('themeToggle')?.addEventListener('click', () => {
                 isDarkTheme = !isDarkTheme;
                 document.body.classList.toggle('light');
+                const theme = document.body.classList.contains('light') ? 'light' : 'dark';
+                localStorage.setItem('theme', theme);
                 document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
             });
 
