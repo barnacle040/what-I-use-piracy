@@ -129,6 +129,24 @@
     </footer>
 
     <script>
+        let sideloadSearchIndex = [];
+
+        /**
+         * Debounce utility to reduce CPU overhead during rapid typing.
+         * Impact: Improves UI responsiveness and reduces redundant DOM updates.
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
         window.onscroll = function() {
             document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
         };
@@ -137,14 +155,19 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        /**
+         * Optimized search using a pre-built index to avoid expensive DOM queries.
+         */
         function searchResources() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const sections = document.querySelectorAll('article');
-            sections.forEach(section => {
-                const text = section.textContent.toLowerCase();
-                section.style.display = text.includes(query) ? 'block' : 'none';
+
+            sideloadSearchIndex.forEach(item => {
+                const isMatch = !query || item.text.includes(query);
+                item.element.style.display = isMatch ? 'block' : 'none';
             });
         }
+
+        const debouncedSearch = debounce(searchResources, 250);
 
         function toggleSection(id) {
             const content = document.querySelector(`#${id} .section-content`);
@@ -158,7 +181,14 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('searchInput').addEventListener('keyup', searchResources);
+            // Build search index once on load to minimize runtime overhead
+            const articles = document.querySelectorAll('article');
+            sideloadSearchIndex = Array.from(articles).map(article => ({
+                element: article,
+                text: article.textContent.toLowerCase()
+            }));
+
+            document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('themeToggle').addEventListener('click', () => {
                 document.body.classList.toggle('light');
                 localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
