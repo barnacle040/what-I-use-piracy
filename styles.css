@@ -64,14 +64,6 @@ nav a:hover, nav a.active {
     display: none;
 }
 
-/* Background from Software Library */
-body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-body.light {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
 
 @media (max-width: 768px) {
     .header-content {
@@ -79,7 +71,7 @@ body.light {
         text-align: center;
         gap: 1rem;
     }
-    
+
     nav ul {
         flex-wrap: wrap;
         justify-content: center;
