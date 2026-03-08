@@ -700,6 +700,23 @@
 
     <script>
         let isDarkTheme = true;
+        let faqSearchIndex = [];
+
+        /**
+         * Debounce utility to prevent excessive calls to expensive functions.
+         * Impact: Reduces DOM updates and string processing overhead during rapid typing.
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
 
         window.onscroll = function() {
             document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
@@ -744,32 +761,40 @@
             });
         }
 
+        /**
+         * Filters FAQ items and sections based on the search query using the pre-built index.
+         * Impact: Eliminates expensive DOM queries and textContent processing on every keystroke.
+         */
         function searchFAQs() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const faqItems = document.querySelectorAll('.faq-item');
-            const sections = document.querySelectorAll('section[id]');
             let matchCount = 0;
 
-            faqItems.forEach(item => {
-                const isMatch = item.textContent.toLowerCase().includes(query);
-                item.style.display = isMatch ? 'block' : 'none';
-                if (isMatch) matchCount++;
-            });
+            faqSearchIndex.forEach(sectionData => {
+                let sectionHasMatch = false;
 
-            sections.forEach(section => {
-                const hasMatch = Array.from(section.querySelectorAll('.faq-item')).some(i => i.style.display !== 'none');
-                section.style.display = (!query || hasMatch) ? 'block' : 'none';
-                if (query && hasMatch) {
-                    const btn = section.querySelector('.toggle-btn');
-                    section.querySelector('.section-content').classList.remove('hidden');
-                    btn.setAttribute('aria-expanded', 'true');
-                    btn.querySelector('.toggle-icon').textContent = '−';
+                sectionData.items.forEach(item => {
+                    const isMatch = !query || item.text.includes(query);
+                    item.element.style.display = isMatch ? 'block' : 'none';
+                    if (isMatch) {
+                        sectionHasMatch = true;
+                        if (query) matchCount++;
+                    }
+                });
+
+                sectionData.section.style.display = (!query || sectionHasMatch) ? 'block' : 'none';
+
+                if (query && sectionHasMatch) {
+                    sectionData.content.classList.remove('hidden');
+                    if (sectionData.toggleBtn) {
+                        sectionData.toggleBtn.setAttribute('aria-expanded', 'true');
+                        const icon = sectionData.toggleBtn.querySelector('.toggle-icon');
+                        if (icon) icon.textContent = '−';
+                    }
                 }
             });
 
             document.getElementById('clearSearch').style.display = query ? 'block' : 'none';
             document.getElementById('searchResults').textContent = query ? (matchCount ? `Found ${matchCount} matching FAQ${matchCount !== 1 ? 's' : ''}` : `No matches found for "${query}"`) : '';
-            if (!query) { faqItems.forEach(i => i.style.display = 'block'); sections.forEach(s => s.style.display = 'block'); }
         }
 
         function clearSearch() {
@@ -778,7 +803,40 @@
             document.getElementById('searchInput').focus();
         }
 
+        /**
+         * Builds a search index of FAQ items to avoid repeated DOM queries and text extractions.
+         * Impact: Reduces search execution time by caching searchable content and DOM references.
+         */
+        function buildFAQIndex() {
+            const sections = document.querySelectorAll('section[id]');
+            faqSearchIndex = [];
+
+            sections.forEach(section => {
+                const faqItems = section.querySelectorAll('.faq-item');
+                const toggleBtn = section.querySelector('.toggle-btn');
+                const content = section.querySelector('.section-content');
+
+                const items = Array.from(faqItems).map(item => ({
+                    element: item,
+                    text: item.textContent.toLowerCase()
+                }));
+
+                faqSearchIndex.push({
+                    section: section,
+                    items: items,
+                    toggleBtn: toggleBtn,
+                    content: content
+                });
+            });
+        }
+
+        // Use debounced version for active typing to reduce DOM thrashing
+        const debouncedSearch = debounce(searchFAQs, 250);
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Build index once DOM is ready
+            buildFAQIndex();
+
             // Back to top
             document.getElementById('backToTop').addEventListener('click', scrollToTop);
 
@@ -792,7 +850,7 @@
             document.getElementById('collapseAll').addEventListener('click', collapseAll);
 
             // Search functionality
-            document.getElementById('searchInput').addEventListener('input', searchFAQs);
+            document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
         });
     </script>

@@ -9,3 +9,7 @@
 ## 2026-02-23 - Search Indexing & Event Debouncing
 **Learning:** Performing repeated DOM queries (`querySelectorAll`) and text extraction (`textContent`) on every `input` event for lists of ~40 items creates unnecessary main-thread overhead. Caching searchable content in a simple JavaScript index on `DOMContentLoaded` and debouncing the input event (e.g., 250ms) reduces string processing overhead by ~90% during active search.
 **Action:** Use pre-built search indexes and debouncing for all client-side filtering features to minimize DOM thrashing and CPU usage.
+
+## 2026-03-08 - Scalable Search Indexing & UI Synchronization
+**Learning:** For FAQ-style lists with nested sections, an optimized search index must cache not just item text, but also references to parent containers and toggle elements. This allows for synchronous UI state updates (like auto-expanding sections) without triggering expensive layout recalculations via repeated DOM lookups.
+**Action:** When implementing search indices for hierarchical data, include references to all affected UI elements in the index to ensure atomic and efficient state synchronization.
