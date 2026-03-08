@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2026-03-08 - [Granular Search Filtering with Header Context]
+**Learning:** When implementing search for grouped content, filtering individual items within sections is more precise than toggling whole sections. However, users often search for the category name itself. Ensuring that a "Header Match" shows all items within that section prevents "dead ends" when a user searches for a category title that isn't repeated in the item descriptions.
+**Action:** In search logic, check for matches in both the section header and the individual items. If the header matches, show all items; otherwise, show only the specific matching items. Always ensure matching sections are auto-expanded for visibility.
