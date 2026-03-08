@@ -154,6 +154,7 @@
             <p>A collection of useful resources and tools. <strong>Use at your own risk—VPN recommended for all downloads.</strong></p>
 
             <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
                 <input type="text" id="searchInput" placeholder="Search resources... (Ctrl+K)" aria-label="Search resources" autocomplete="off">
                 <button id="clearSearch" style="display: none;" aria-label="Clear search">✕</button>
             </div>
@@ -935,22 +936,53 @@
          * Impact: Eliminates expensive DOM queries and textContent processing on every keystroke.
          */
         function performSearch() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
+            const rawQuery = document.getElementById('searchInput').value;
+            const query = rawQuery.toLowerCase();
             const clearBtn = document.getElementById('clearSearch');
             const resultsDiv = document.getElementById('searchResults');
 
-            let visibleCount = 0;
+            let totalMatches = 0;
 
-            searchIndex.forEach(item => {
-                const isVisible = item.text.includes(query);
-                item.element.style.display = isVisible ? 'block' : 'none';
-                if (isVisible) visibleCount++;
+            searchIndex.forEach(section => {
+                const isHeaderMatch = query && section.headerText.includes(query);
+                let sectionHasMatch = isHeaderMatch;
+
+                section.items.forEach(item => {
+                    const isItemMatch = item.text.includes(query);
+                    const shouldShow = isItemMatch || isHeaderMatch;
+                    item.element.style.display = shouldShow ? '' : 'none';
+                    if (isItemMatch) {
+                        sectionHasMatch = true;
+                        totalMatches++;
+                    }
+                });
+
+                section.element.style.display = (sectionHasMatch || !query) ? '' : 'none';
+
+                if (query && sectionHasMatch) {
+                    const content = section.element.querySelector('.section-content');
+                    const btn = section.element.querySelector('.toggle-btn');
+                    if (content && content.classList.contains('hidden')) {
+                        content.classList.remove('hidden');
+                        if (btn) {
+                            btn.setAttribute('aria-expanded', 'true');
+                            const icon = btn.querySelector('.toggle-icon');
+                            if (icon) icon.textContent = '−';
+                        }
+                    }
+                }
             });
 
             clearBtn.style.display = query ? 'inline-block' : 'none';
 
             if (query) {
-                resultsDiv.textContent = `${visibleCount} section${visibleCount !== 1 ? 's' : ''} found`;
+                const hasHeaderMatch = searchIndex.some(s => s.headerText.includes(query));
+                if (totalMatches > 0 || hasHeaderMatch) {
+                    const matchText = totalMatches > 0 ? `${totalMatches} match${totalMatches !== 1 ? 'es' : ''}` : 'Matches';
+                    resultsDiv.textContent = `${matchText} found for "${rawQuery}"`;
+                } else {
+                    resultsDiv.textContent = `No matches found for "${rawQuery}"`;
+                }
             } else {
                 resultsDiv.textContent = '';
             }
@@ -1134,10 +1166,19 @@
                 if (!section.classList.contains('move')) {
                     section.style.animationDelay = `${0.5 + index * 0.2}s`;
 
+                    const items = Array.from(section.querySelectorAll('li')).map(li => ({
+                        element: li,
+                        text: li.textContent.toLowerCase()
+                    }));
+
+                    const header = section.querySelector('h1, h2');
+                    const headerText = header ? header.textContent.toLowerCase() : '';
+
                     // Optimization: Build search index to avoid repeated DOM queries and textContent processing
                     searchIndex.push({
                         element: section,
-                        text: section.textContent.toLowerCase()
+                        headerText: headerText,
+                        items: items
                     });
                 }
             });
