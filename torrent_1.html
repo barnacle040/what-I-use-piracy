@@ -174,6 +174,14 @@
             cursor: pointer;
         }
 
+        #searchResults {
+            color: white;
+            font-style: italic;
+            font-size: 0.85rem;
+            min-height: 1.2em;
+            margin-top: 5px;
+        }
+
         /* Stats */
         .stats {
             display: flex;
@@ -470,8 +478,9 @@
         <div class="controls">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search games...">
+                <input type="text" id="searchInput" placeholder="Search games... (Ctrl+K)">
             </div>
+            <div id="searchResults" role="status" aria-live="polite"></div>
             <div class="category-filter">
                 <select id="categoryFilter">
                     <option value="all">All Genres</option>
@@ -808,12 +817,28 @@
             });
 
             renderGames(filteredGames);
+
+            // Update search results feedback
+            const resultsDiv = document.getElementById('searchResults');
+            if (searchTerm || categoryFilter !== 'all') {
+                resultsDiv.textContent = `${filteredGames.length} game${filteredGames.length !== 1 ? 's' : ''} found`;
+            } else {
+                resultsDiv.textContent = '';
+            }
         }
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             // Initial render
             renderGames();
+
+            // Keyboard shortcut for search
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+            });
 
             // Search functionality
             document.getElementById('searchInput').addEventListener('input', searchGames);

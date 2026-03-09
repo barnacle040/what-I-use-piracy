@@ -142,6 +142,14 @@
             color: var(--gray);
         }
 
+        #searchResults {
+            color: var(--primary);
+            font-style: italic;
+            font-size: 0.85rem;
+            min-height: 1.2em;
+            margin-top: 5px;
+        }
+
         .filters {
             display: flex;
             gap: 1rem;
@@ -368,9 +376,9 @@
         <div class="controls">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search software..." aria-label="Search software">
-                <div id="searchResults" role="status" aria-live="polite" style="margin-top: 5px; font-size: 0.85rem; color: white; min-height: 1.2em;"></div>
+                <input type="text" id="searchInput" placeholder="Search software... (Ctrl+K)" aria-label="Search software">
             </div>
+            <div id="searchResults" role="status" aria-live="polite"></div>
             <div class="filters">
                 <div class="category-filter">
                     <select id="categoryFilter">
@@ -1288,6 +1296,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Build index once DOM is ready
             buildSearchIndex();
+
+            // Keyboard shortcut for search
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+            });
 
             // Search and Filter event listeners
             document.getElementById('searchInput').addEventListener('input', debouncedSearch);

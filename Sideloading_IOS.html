@@ -38,7 +38,8 @@
             <p>Follow these steps to sideload iOS apps:</p>
             <p><strong>Note: You will have to connect to a PC and refresh the app and App Store using AltServer every week to continue using them.</strong></p>
             <button id="themeToggle">Toggle Theme</button>
-            <input type="text" id="searchInput" placeholder="Search steps..." aria-label="Search steps">
+            <input type="text" id="searchInput" placeholder="Search steps... (Ctrl+K)" aria-label="Search steps">
+            <div id="searchResults" role="status" aria-live="polite" style="margin-top: 10px; font-style: italic; color: var(--text-secondary); font-size: 0.95rem; min-height: 1.5em;"></div>
         </div>
 
         <aside class="sidebar">
@@ -140,10 +141,20 @@
         function searchResources() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const sections = document.querySelectorAll('article');
+            let matchCount = 0;
             sections.forEach(section => {
                 const text = section.textContent.toLowerCase();
-                section.style.display = text.includes(query) ? 'block' : 'none';
+                const isMatch = text.includes(query);
+                section.style.display = isMatch ? 'block' : 'none';
+                if (isMatch) matchCount++;
             });
+
+            const resultsDiv = document.getElementById('searchResults');
+            if (query) {
+                resultsDiv.textContent = `${matchCount} section${matchCount !== 1 ? 's' : ''} found`;
+            } else {
+                resultsDiv.textContent = '';
+            }
         }
 
         function toggleSection(id) {
@@ -158,6 +169,14 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Keyboard shortcut for search
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+            });
+
             document.getElementById('searchInput').addEventListener('keyup', searchResources);
             document.getElementById('themeToggle').addEventListener('click', () => {
                 document.body.classList.toggle('light');
