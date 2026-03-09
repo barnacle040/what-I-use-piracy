@@ -342,7 +342,7 @@
 
         <div class="search-container">
             <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Search FAQs..." aria-label="Search FAQs" autocomplete="off">
+            <input type="text" id="searchInput" placeholder="Search FAQs... (Ctrl+K)" aria-label="Search FAQs" autocomplete="off">
             <button id="clearSearch" aria-label="Clear search">✕</button>
         </div>
         <div id="searchResults" role="status" aria-live="polite"></div>
@@ -779,6 +779,14 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Keyboard shortcut for search
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+            });
+
             // Back to top
             document.getElementById('backToTop').addEventListener('click', scrollToTop);
 

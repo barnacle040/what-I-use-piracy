@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2026-02-27 - [Cross-Page Search Consistency]
+**Learning:** In a multi-page resource library, inconsistent search affordances (like missing keyboard shortcuts or feedback regions) create friction for power users. Standardizing UX patterns like `Ctrl+K` for focus and ARIA live regions for match counts across all sub-libraries ensures a predictable and accessible experience throughout the entire site.
+**Action:** When adding search to any sub-page, ensure it mirrors the main page's shortcut logic, placeholder conventions, and accessibility feedback mechanisms.
