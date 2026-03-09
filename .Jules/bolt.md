@@ -9,3 +9,7 @@
 ## 2026-02-23 - Search Indexing & Event Debouncing
 **Learning:** Performing repeated DOM queries (`querySelectorAll`) and text extraction (`textContent`) on every `input` event for lists of ~40 items creates unnecessary main-thread overhead. Caching searchable content in a simple JavaScript index on `DOMContentLoaded` and debouncing the input event (e.g., 250ms) reduces string processing overhead by ~90% during active search.
 **Action:** Use pre-built search indexes and debouncing for all client-side filtering features to minimize DOM thrashing and CPU usage.
+
+## 2026-03-09 - Granular Search Indexing for Complex Sections
+**Learning:** For pages with nested or grouped content (like FAQs in sections), a flat search index is insufficient for managing parent visibility. Creating a secondary index for sections that maps them to their child items allows for $O(n)$ visibility updates and synchronized state (like auto-expanding matching sections) without repeated DOM traversals.
+**Action:** When implementing search for grouped content, use a two-tier indexing strategy: one for individual items and one for their parent containers.
