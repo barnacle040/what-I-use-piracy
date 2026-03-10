@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2026-05-15 - [Non-Destructive Feedback & Layout Preservation]
+**Learning:** UX feedback mechanisms and search filtering must be non-destructive. Using `textContent` for "Copied!" messages can accidentally delete icon elements within buttons. Similarly, forcing `display: flex` during search filtering can break elements that rely on `inline-block` or other layout modes.
+**Action:** Use `innerHTML` to restore original UI states including icons. When toggling visibility for search, use `element.style.display = ''` to allow the element to revert to its natural CSS-defined display property.
