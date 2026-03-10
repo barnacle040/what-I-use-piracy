@@ -105,10 +105,77 @@
         /* Keep all your original layout styles intact */
         /* ... your existing CSS for the main content ... */
 
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #3498db;
+            color: white;
+            padding: 8px;
+            z-index: 1001;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        #searchInput {
+            padding-left: 40px;
+            width: 100%;
+        }
+
+        #themeToggle {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 1rem;
+        }
+
+        #themeToggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        body.light #themeToggle {
+            color: #2c3e50;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            #themeToggle {
+                margin: 10px 0 0 0;
+            }
+        }
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header>
         <div class="header-content">
             <div class="logo">
@@ -123,10 +190,11 @@
                     <li><a href="./Software_Library.html">Software</a></li>
                 </ul>
             </nav>
+            <button id="themeToggle" aria-label="Toggle theme">🌙</button>
         </div>
     </header>
 
-    <main class="container">
+    <main class="container" id="main-content">
         <section id="shortcuts">
             <h1> Keyboard Shortcuts <button class="toggle-btn" data-section="shortcuts" aria-expanded="false" aria-controls="shortcuts-content" aria-label="Toggle Shortcuts guide">
                 <span class="toggle-icon" aria-hidden="true">+</span>
@@ -154,6 +222,7 @@
             <p>A collection of useful resources and tools. <strong>Use at your own risk—VPN recommended for all downloads.</strong></p>
 
             <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
                 <input type="text" id="searchInput" placeholder="Search resources... (Ctrl+K)" aria-label="Search resources" autocomplete="off">
                 <button id="clearSearch" style="display: none;" aria-label="Clear search">✕</button>
             </div>
@@ -914,7 +983,7 @@
             let timeout;
             return function executedFunction(...args) {
                 const later = () => {
-                    clearTimeout(timeout);
+                    timeout = null;
                     func(...args);
                 };
                 clearTimeout(timeout);
@@ -942,15 +1011,34 @@
             let visibleCount = 0;
 
             searchIndex.forEach(item => {
-                const isVisible = item.text.includes(query);
-                item.element.style.display = isVisible ? 'block' : 'none';
-                if (isVisible) visibleCount++;
+                const listItems = item.element.querySelectorAll('li');
+                let sectionHasMatch = false;
+
+                listItems.forEach(li => {
+                    const isLiMatch = li.textContent.toLowerCase().includes(query);
+                    li.style.display = isLiMatch ? '' : 'none';
+                    if (isLiMatch) sectionHasMatch = true;
+                });
+
+                item.element.style.display = (!query || sectionHasMatch) ? 'block' : 'none';
+
+                if (query && sectionHasMatch) {
+                    const btn = item.element.querySelector('.toggle-btn');
+                    const content = item.element.querySelector('.section-content');
+                    if (content) content.classList.remove('hidden');
+                    if (btn) {
+                        btn.setAttribute('aria-expanded', 'true');
+                        const icon = btn.querySelector('.toggle-icon');
+                        if (icon) icon.textContent = '−';
+                    }
+                    visibleCount++;
+                }
             });
 
             clearBtn.style.display = query ? 'inline-block' : 'none';
 
             if (query) {
-                resultsDiv.textContent = `${visibleCount} section${visibleCount !== 1 ? 's' : ''} found`;
+                resultsDiv.textContent = visibleCount > 0 ? `${visibleCount} section${visibleCount !== 1 ? 's' : ''} found` : `No matches found for "${query}"`;
             } else {
                 resultsDiv.textContent = '';
             }
@@ -1000,9 +1088,14 @@
             });
         }
 
-        function copyToClipboard(text) {
+        function copyToClipboard(text, btn) {
             navigator.clipboard.writeText(text).then(() => {
                 showNotification('Copied to clipboard!');
+                if (btn) {
+                    const originalHTML = btn.innerHTML;
+                    btn.textContent = '✅';
+                    setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
+                }
             }).catch(err => {
                 console.error('Failed to copy:', err);
             });
@@ -1147,11 +1240,22 @@
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
             // Theme toggle
+            const toggleTheme = (isLight) => {
+                document.body.classList.toggle('light', isLight);
+                document.getElementById('themeToggle').textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            };
+
             document.getElementById('themeToggle')?.addEventListener('click', () => {
                 isDarkTheme = !isDarkTheme;
-                document.body.classList.toggle('light');
-                document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
+                toggleTheme(!isDarkTheme);
             });
+
+            // Restore theme from localStorage
+            if (localStorage.getItem('theme') === 'light') {
+                isDarkTheme = false;
+                toggleTheme(true);
+            }
 
             // Back to top
             document.getElementById('backToTop').addEventListener('click', scrollToTop);
@@ -1170,7 +1274,7 @@
                 btn.addEventListener('click', () => {
                     const url = btn.getAttribute('data-url');
                     const text = btn.getAttribute('data-text');
-                    copyToClipboard(url || text);
+                    copyToClipboard(url || text, btn);
                 });
             });
 
