@@ -109,6 +109,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <button id="themeToggle" aria-label="Toggle theme">🌙</button>
     <header>
         <div class="header-content">
             <div class="logo">
@@ -1171,6 +1172,16 @@
                     const url = btn.getAttribute('data-url');
                     const text = btn.getAttribute('data-text');
                     copyToClipboard(url || text);
+                    const originalIcon = btn.textContent;
+                    const originalAria = btn.getAttribute('aria-label');
+                    btn.textContent = '✅';
+                    btn.setAttribute('aria-label', 'Copied!');
+                    btn.setAttribute('data-tooltip', 'Copied!');
+                    setTimeout(() => {
+                        btn.textContent = originalIcon;
+                        btn.setAttribute('aria-label', originalAria);
+                        btn.setAttribute('data-tooltip', originalAria);
+                    }, 2000);
                 });
             });
 
@@ -1187,6 +1198,11 @@
 
             // Shortcuts toggle
             document.getElementById('shortcutsToggle')?.addEventListener('click', toggleShortcuts);
+            document.querySelectorAll('button[aria-label]').forEach(btn => {
+                if (!btn.hasAttribute('data-tooltip')) {
+                    btn.setAttribute('data-tooltip', btn.getAttribute('aria-label'));
+                }
+            });
         });
     </script>
 </body>
