@@ -173,11 +173,11 @@ input:focus {
     box-shadow: var(--focus-ring);
 }
 
-a[data-tooltip] {
+[data-tooltip] {
     position: relative;
 }
 
-a[data-tooltip]:hover:after {
+[data-tooltip]:hover:after {
     content: attr(data-tooltip);
     position: absolute;
     bottom: 100%;
