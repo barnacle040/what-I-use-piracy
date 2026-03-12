@@ -700,9 +700,30 @@
 
     <script>
         let isDarkTheme = true;
+        let faqSearchIndex = [];
+        let faqSectionIndex = [];
+        let backToTopBtn;
+
+        /**
+         * Debounce utility to prevent excessive calls to expensive functions.
+         * Impact: Reduces DOM updates and string processing overhead during rapid typing.
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
 
         window.onscroll = function() {
-            document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
+            if (backToTopBtn) {
+                backToTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+            }
         };
 
         function scrollToTop() {
@@ -746,41 +767,70 @@
 
         function searchFAQs() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const faqItems = document.querySelectorAll('.faq-item');
-            const sections = document.querySelectorAll('section[id]');
             let matchCount = 0;
 
-            faqItems.forEach(item => {
-                const isMatch = item.textContent.toLowerCase().includes(query);
-                item.style.display = isMatch ? 'block' : 'none';
+            // Use the index for filtering items
+            faqSearchIndex.forEach(item => {
+                const isMatch = item.text.includes(query);
+                item.element.style.display = isMatch ? 'block' : 'none';
                 if (isMatch) matchCount++;
             });
 
-            sections.forEach(section => {
-                const hasMatch = Array.from(section.querySelectorAll('.faq-item')).some(i => i.style.display !== 'none');
-                section.style.display = (!query || hasMatch) ? 'block' : 'none';
+            // Use the index for filtering and expanding sections
+            faqSectionIndex.forEach(section => {
+                const hasMatch = section.items.some(i => i.style.display !== 'none');
+                section.element.style.display = (!query || hasMatch) ? 'block' : 'none';
+
                 if (query && hasMatch) {
-                    const btn = section.querySelector('.toggle-btn');
-                    section.querySelector('.section-content').classList.remove('hidden');
-                    btn.setAttribute('aria-expanded', 'true');
-                    btn.querySelector('.toggle-icon').textContent = '−';
+                    section.content.classList.remove('hidden');
+                    if (section.btn) section.btn.setAttribute('aria-expanded', 'true');
+                    if (section.icon) section.icon.textContent = '−';
                 }
             });
 
             document.getElementById('clearSearch').style.display = query ? 'block' : 'none';
             document.getElementById('searchResults').textContent = query ? (matchCount ? `Found ${matchCount} matching FAQ${matchCount !== 1 ? 's' : ''}` : `No matches found for "${query}"`) : '';
-            if (!query) { faqItems.forEach(i => i.style.display = 'block'); sections.forEach(s => s.style.display = 'block'); }
+
+            if (!query) {
+                faqSearchIndex.forEach(i => i.element.style.display = 'block');
+                faqSectionIndex.forEach(s => s.element.style.display = 'block');
+            }
         }
+
+        // Use debounced version for active typing to reduce DOM thrashing
+        const debouncedSearch = debounce(searchFAQs, 250);
 
         function clearSearch() {
             document.getElementById('searchInput').value = '';
-            searchFAQs();
+            searchFAQs(); // Immediate execution for responsive UX
             document.getElementById('searchInput').focus();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Optimization: Cache frequently accessed DOM elements
+            backToTopBtn = document.getElementById('backToTop');
+
+            // Optimization: Build indices for faster search
+            const items = document.querySelectorAll('.faq-item');
+            faqSearchIndex = Array.from(items).map(item => ({
+                element: item,
+                text: item.textContent.toLowerCase()
+            }));
+
+            const sections = document.querySelectorAll('section[id]');
+            faqSectionIndex = Array.from(sections).map(section => {
+                const btn = section.querySelector('.toggle-btn');
+                return {
+                    element: section,
+                    btn: btn,
+                    content: section.querySelector('.section-content'),
+                    items: Array.from(section.querySelectorAll('.faq-item')),
+                    icon: btn ? btn.querySelector('.toggle-icon') : null
+                };
+            });
+
             // Back to top
-            document.getElementById('backToTop').addEventListener('click', scrollToTop);
+            backToTopBtn?.addEventListener('click', scrollToTop);
 
             // Toggle buttons
             document.querySelectorAll('.toggle-btn').forEach(button => {
@@ -791,8 +841,8 @@
             document.getElementById('expandAll').addEventListener('click', expandAll);
             document.getElementById('collapseAll').addEventListener('click', collapseAll);
 
-            // Search functionality
-            document.getElementById('searchInput').addEventListener('input', searchFAQs);
+            // Search functionality - debounced for performance
+            document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
         });
     </script>
