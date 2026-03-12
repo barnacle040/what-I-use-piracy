@@ -9,3 +9,7 @@
 ## 2026-02-23 - Search Indexing & Event Debouncing
 **Learning:** Performing repeated DOM queries (`querySelectorAll`) and text extraction (`textContent`) on every `input` event for lists of ~40 items creates unnecessary main-thread overhead. Caching searchable content in a simple JavaScript index on `DOMContentLoaded` and debouncing the input event (e.g., 250ms) reduces string processing overhead by ~90% during active search.
 **Action:** Use pre-built search indexes and debouncing for all client-side filtering features to minimize DOM thrashing and CPU usage.
+
+## 2026-03-12 - Search Indexing & UI Restoration UX
+**Learning:** While debouncing search inputs (e.g., 250ms) is critical for performance, applying it to "clear" actions or "Esc" key events creates a perceptible lag that degrades UX. Immediate execution of the filtering logic upon clearing ensures the UI feels responsive while still maintaining the performance benefits of debouncing during active typing.
+**Action:** Always bypass debounced wrappers for state-resetting actions like clearing a search input or closing modal/shortcut guides.
