@@ -129,40 +129,87 @@
     </footer>
 
     <script>
+        let sideloadSearchIndex = [];
+
+        /**
+         * Debounce utility to prevent excessive calls to expensive functions.
+         * Impact: Reduces DOM updates and string processing overhead during rapid typing.
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
         window.onscroll = function() {
-            document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
+            const backToTop = document.getElementById('backToTop');
+            if (backToTop) {
+                backToTop.style.display = window.scrollY > 200 ? 'block' : 'none';
+            }
         };
 
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function searchResources() {
+        /**
+         * Filters resources based on search query using the pre-built index.
+         * Impact: Eliminates expensive DOM queries and textContent processing on every keystroke.
+         */
+        function performSearch() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const sections = document.querySelectorAll('article');
-            sections.forEach(section => {
-                const text = section.textContent.toLowerCase();
-                section.style.display = text.includes(query) ? 'block' : 'none';
+
+            sideloadSearchIndex.forEach(item => {
+                const isVisible = item.text.includes(query);
+                item.element.style.display = isVisible ? 'block' : 'none';
             });
         }
 
+        // Use debounced version for active typing to reduce DOM thrashing
+        const debouncedSearch = debounce(performSearch, 250);
+
         function toggleSection(id) {
             const content = document.querySelector(`#${id} .section-content`);
-            content.classList.toggle('hidden');
+            if (content) {
+                content.classList.toggle('hidden');
+            }
         }
 
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.dropdown')) {
-                document.querySelector('.dropdown-content').style.display = 'none';
+            const dropdown = document.querySelector('.dropdown-content');
+            if (dropdown && !e.target.closest('.dropdown')) {
+                dropdown.style.display = 'none';
             }
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('searchInput').addEventListener('keyup', searchResources);
-            document.getElementById('themeToggle').addEventListener('click', () => {
-                document.body.classList.toggle('light');
-                localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
-            });
+            const searchInput = document.getElementById('searchInput');
+            const sections = document.querySelectorAll('article');
+
+            // Optimization: Build search index to avoid repeated DOM queries and textContent processing
+            sideloadSearchIndex = Array.from(sections).map(section => ({
+                element: section,
+                text: section.textContent.toLowerCase()
+            }));
+
+            if (searchInput) {
+                searchInput.addEventListener('input', debouncedSearch);
+            }
+
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('light');
+                    localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+                });
+            }
+
             if (localStorage.getItem('theme') === 'light') {
                 document.body.classList.add('light');
             }
