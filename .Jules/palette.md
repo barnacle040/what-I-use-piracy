@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2025-05-16 - [Restoring Broken UI via Code Archeology]
+**Learning:** In projects with inconsistent page development, a feature might be fully styled and scripted but missing from the HTML (e.g., a theme toggle). Identifying these "ghost" features via CSS/JS exploration allows for high-impact UX restoration with minimal code additions.
+**Action:** Always cross-reference CSS selectors and JS event listeners against the HTML structure to identify and restore missing or broken functional components.
