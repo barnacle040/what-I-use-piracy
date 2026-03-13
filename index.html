@@ -123,6 +123,7 @@
                     <li><a href="./Software_Library.html">Software</a></li>
                 </ul>
             </nav>
+            <button id="themeToggle" aria-label="Toggle theme">🌙</button>
         </div>
     </header>
 
@@ -901,7 +902,7 @@
 
     <script>
         // Theme state and favorites stored in memory
-        let isDarkTheme = true;
+        let isDarkTheme = localStorage.getItem('theme') !== 'light';
         let favorites = [];
         let showingFavoritesOnly = false;
         let searchIndex = [];
@@ -1146,10 +1147,18 @@
             document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
-            // Theme toggle
+            // Theme toggle initialization
+            if (!isDarkTheme) {
+                document.body.classList.add('light');
+                const toggleBtn = document.getElementById('themeToggle');
+                if (toggleBtn) toggleBtn.textContent = '☀️';
+            }
+
+            // Theme toggle listener
             document.getElementById('themeToggle')?.addEventListener('click', () => {
                 isDarkTheme = !isDarkTheme;
                 document.body.classList.toggle('light');
+                localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
                 document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
             });
 
