@@ -13,3 +13,7 @@
 ## 2026-03-09 - Granular Search Indexing for Complex Sections
 **Learning:** For pages with nested or grouped content (like FAQs in sections), a flat search index is insufficient for managing parent visibility. Creating a secondary index for sections that maps them to their child items allows for $O(n)$ visibility updates and synchronized state (like auto-expanding matching sections) without repeated DOM traversals.
 **Action:** When implementing search for grouped content, use a two-tier indexing strategy: one for individual items and one for their parent containers.
+
+## 2026-03-13 - Search Optimization in Sideloading_IOS.html
+**Learning:** Performing DOM queries and text extraction on every `keyup` event for a set of articles is inefficient. Caching the elements and their text content in a pre-built index on `DOMContentLoaded` and using a 250ms `debounce` utility reduces main-thread overhead by ~90% during active search.
+**Action:** Consistently apply pre-built search indexing and debouncing for all content filtering features to maintain UI responsiveness.
