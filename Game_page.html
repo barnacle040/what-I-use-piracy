@@ -479,6 +479,22 @@
     </footer>
 
     <script>
+        /**
+         * Debounce utility to prevent excessive calls to expensive functions.
+         * Impact: Reduces DOM updates and string processing overhead during rapid typing.
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
         // Game data
         const games = [
             {
@@ -658,13 +674,16 @@
             renderGames(filteredGames);
         }
 
+        // Use debounced version for active typing to reduce DOM thrashing
+        const debouncedSearch = debounce(searchGames, 250);
+
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             // Initial render
             renderGames();
 
             // Search functionality
-            document.getElementById('searchInput').addEventListener('input', searchGames);
+            document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('categoryFilter').addEventListener('change', searchGames);
 
             // Pagination
