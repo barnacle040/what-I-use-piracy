@@ -13,3 +13,7 @@
 ## 2026-03-09 - Granular Search Indexing for Complex Sections
 **Learning:** For pages with nested or grouped content (like FAQs in sections), a flat search index is insufficient for managing parent visibility. Creating a secondary index for sections that maps them to their child items allows for $O(n)$ visibility updates and synchronized state (like auto-expanding matching sections) without repeated DOM traversals.
 **Action:** When implementing search for grouped content, use a two-tier indexing strategy: one for individual items and one for their parent containers.
+
+## 2026-03-14 - Balancing Optimization with Architectural Consistency
+**Learning:** While imperative DOM manipulation (toggling `display: none`) and custom indexing can offer extreme performance, they can easily break existing architectural patterns like data-driven rendering or pagination. A simpler "Bolt" win is often to apply debouncing to the existing rendering logic, which provides measurable gains while maintaining code safety and readability.
+**Action:** Prioritize non-intrusive optimizations (like debouncing) that preserve existing architectural patterns (like data-driven re-renders) before resorting to complex imperative DOM management.
