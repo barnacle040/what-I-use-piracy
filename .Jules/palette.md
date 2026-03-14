@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2025-10-14 - [Identifying and Restoring Partially Implemented UX Features]
+**Learning:** In evolving codebases, features may become "orphaned" where the JavaScript logic or CSS remains, but the HTML entry point (like a button) is removed or forgotten during a refactor. Identifying these gaps by auditing script listeners against the DOM allows for high-impact micro-UX wins with minimal new code.
+**Action:** Before implementing a new feature, grep the codebase for existing but unused logic (e.g., `themeToggle` listeners) that can be restored to provide immediate value.

@@ -123,6 +123,7 @@
                     <li><a href="./Software_Library.html">Software</a></li>
                 </ul>
             </nav>
+            <button id="themeToggle" aria-label="Toggle dark/light mode" data-tooltip="Toggle Theme">🌙</button>
         </div>
     </header>
 
@@ -1124,6 +1125,19 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize theme from localStorage
+            const savedTheme = localStorage.getItem('theme');
+            const toggleBtn = document.getElementById('themeToggle');
+            if (savedTheme === 'light') {
+                isDarkTheme = false;
+                document.body.classList.add('light');
+                if (toggleBtn) toggleBtn.textContent = '☀️';
+            } else {
+                isDarkTheme = true;
+                document.body.classList.remove('light');
+                if (toggleBtn) toggleBtn.textContent = '🌙';
+            }
+
             const items = document.querySelectorAll('li, .image-item');
             items.forEach((item, index) => {
                 item.style.animationDelay = `${index * 0.1}s`;
@@ -1147,10 +1161,11 @@
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
             // Theme toggle
-            document.getElementById('themeToggle')?.addEventListener('click', () => {
-                isDarkTheme = !isDarkTheme;
-                document.body.classList.toggle('light');
-                document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
+            document.getElementById('themeToggle')?.addEventListener('click', function() {
+                const isNowLight = document.body.classList.toggle('light');
+                isDarkTheme = !isNowLight;
+                localStorage.setItem('theme', isNowLight ? 'light' : 'dark');
+                this.textContent = isNowLight ? '☀️' : '🌙';
             });
 
             // Back to top
