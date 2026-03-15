@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2026-05-14 - [Theme Persistence and Internal Style Overrides]
+**Learning:** When adding a theme toggle to a page with existing internal <style> blocks, hardcoded colors (like #fff in headers) can cause visibility issues in light mode. Overriding these requires using themed variables (var(--text-primary)) with higher specificity or !important to ensure the design system remains consistent. Additionally, initializing theme state from localStorage on DOMContentLoaded prevents "theme flicker" and ensures a unified experience across multiple pages.
+**Action:** Audit internal styles for hardcoded color values and replace them with themed variables when implementing site-wide dark/light mode toggles.

@@ -31,10 +31,13 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
+        body.light {
+            background: var(--bg-primary);
+        }
 
         header {
-            background-color: #2c3e50;
-            color: white;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
             padding: 1rem 0;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: sticky;
@@ -56,6 +59,7 @@
             font-weight: 700;
             display: flex;
             align-items: center;
+            color: var(--text-primary);
         }
 
         .logo i {
@@ -73,7 +77,7 @@
         }
 
         nav a {
-            color: white;
+            color: var(--text-primary) !important;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
@@ -115,6 +119,7 @@
                 <i class="fas fa-box-open"></i>
                 <span>Piracy Resources</span>
             </div>
+            <button id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">🌙</button>
             <nav>
                 <ul>
                     <li><a href="#" class="active">Home</a></li>
@@ -1146,10 +1151,20 @@
             document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
-            // Theme toggle
+            // Theme toggle initialization and persistence
+            if (localStorage.getItem('theme') === 'light') {
+                isDarkTheme = false;
+                document.body.classList.add('light');
+                if (document.getElementById('themeToggle')) {
+                    document.getElementById('themeToggle').textContent = '☀️';
+                }
+            }
+
             document.getElementById('themeToggle')?.addEventListener('click', () => {
                 isDarkTheme = !isDarkTheme;
                 document.body.classList.toggle('light');
+                const newTheme = document.body.classList.contains('light') ? 'light' : 'dark';
+                localStorage.setItem('theme', newTheme);
                 document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
             });
 
