@@ -13,3 +13,7 @@
 ## 2026-03-09 - Granular Search Indexing for Complex Sections
 **Learning:** For pages with nested or grouped content (like FAQs in sections), a flat search index is insufficient for managing parent visibility. Creating a secondary index for sections that maps them to their child items allows for $O(n)$ visibility updates and synchronized state (like auto-expanding matching sections) without repeated DOM traversals.
 **Action:** When implementing search for grouped content, use a two-tier indexing strategy: one for individual items and one for their parent containers.
+
+## 2026-03-15 - Dynamic Indexing & Layout Preservation
+**Learning:** Building a search index once on `DOMContentLoaded` is insufficient for applications with dynamic rendering or pagination, as references to DOM nodes become stale. Additionally, hardcoding `display: block` for visibility toggling can break complex grid/flex layouts.
+**Action:** Always rebuild search indices within the core rendering function (`renderGames`) to ensure synchronization. Use `element.style.display = ''` to show elements, allowing them to revert to their CSS-defined layout property.
