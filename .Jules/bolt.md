@@ -13,3 +13,7 @@
 ## 2026-03-09 - Granular Search Indexing for Complex Sections
 **Learning:** For pages with nested or grouped content (like FAQs in sections), a flat search index is insufficient for managing parent visibility. Creating a secondary index for sections that maps them to their child items allows for $O(n)$ visibility updates and synchronized state (like auto-expanding matching sections) without repeated DOM traversals.
 **Action:** When implementing search for grouped content, use a two-tier indexing strategy: one for individual items and one for their parent containers.
+
+## 2026-03-16 - DOM Re-rendering vs. Visibility Toggling
+**Learning:** For static or infrequently updated data sets (like the game library with 10-40 items), re-rendering the entire container using `innerHTML` on every search query is significantly more expensive than toggling the `display` property of pre-existing elements. Combining visibility toggling with a pre-built search index and a 250ms debounce reduces main-thread work from (n \times m)$ (where $ is the complexity of DOM creation) to (n)$ simple property updates.
+**Action:** Favor visibility toggling (`element.style.display`) and pre-cached DOM references for client-side filtering features to minimize scripting and rendering overhead.
