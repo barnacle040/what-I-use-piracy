@@ -479,6 +479,24 @@
     </footer>
 
     <script>
+        /**
+         * Debounce utility to prevent excessive calls to expensive functions.
+         * Impact: Reduces DOM updates and string processing overhead during rapid typing.
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        let gameSearchIndex = [];
+
         // Game data
         const games = [
             {
@@ -591,17 +609,16 @@
             }
         ];
 
-        // Function to render games
-        function renderGames(gameList = games) {
+        /**
+         * Renders all game cards once and builds the search index.
+         * Impact: Eliminates redundant DOM re-renders by switching to visibility toggling.
+         */
+        function renderGames() {
             const gameGrid = document.getElementById('gameGrid');
             gameGrid.innerHTML = '';
+            gameSearchIndex = [];
 
-            if (gameList.length === 0) {
-                gameGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: white;">No games found matching your criteria.</div>';
-                return;
-            }
-
-            gameList.forEach(game => {
+            games.forEach(game => {
                 const gameCard = document.createElement('div');
                 gameCard.className = 'game-card';
 
@@ -637,34 +654,68 @@
                 `;
 
                 gameGrid.appendChild(gameCard);
+
+                gameSearchIndex.push({
+                    element: gameCard,
+                    title: game.title.toLowerCase(),
+                    description: game.description.toLowerCase(),
+                    category: game.category
+                });
             });
 
-            // Update stats
-            document.getElementById('gameCount').textContent = `Showing ${gameList.length} games`;
+            updateGameCount(games.length);
         }
 
-        // Search functionality
+        function updateGameCount(count) {
+            document.getElementById('gameCount').textContent = `Showing ${count} games`;
+        }
+
+        /**
+         * Filters visible games using the pre-built search index.
+         * Impact: Reduces main-thread overhead by avoiding full DOM re-renders.
+         */
         function searchGames() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const categoryFilter = document.getElementById('categoryFilter').value;
+            const gameGrid = document.getElementById('gameGrid');
 
-            let filteredGames = games.filter(game => {
-                const matchesSearch = game.title.toLowerCase().includes(searchTerm) ||
-                                     game.description.toLowerCase().includes(searchTerm);
-                const matchesCategory = categoryFilter === 'all' || game.category === categoryFilter;
-                return matchesSearch && matchesCategory;
+            let visibleCount = 0;
+
+            gameSearchIndex.forEach(item => {
+                const matchesSearch = item.title.includes(searchTerm) || item.description.includes(searchTerm);
+                const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
+                const isVisible = matchesSearch && matchesCategory;
+
+                item.element.style.display = isVisible ? 'block' : 'none';
+                if (isVisible) visibleCount++;
             });
 
-            renderGames(filteredGames);
+            updateGameCount(visibleCount);
+
+            // Handle "No results" message
+            let noResults = document.getElementById('noResultsMessage');
+            if (visibleCount === 0) {
+                if (!noResults) {
+                    noResults = document.createElement('div');
+                    noResults.id = 'noResultsMessage';
+                    noResults.style.cssText = 'grid-column: 1 / -1; text-align: center; padding: 2rem; color: white;';
+                    noResults.textContent = 'No games found matching your criteria.';
+                    gameGrid.appendChild(noResults);
+                }
+            } else if (noResults) {
+                noResults.remove();
+            }
         }
+
+        const debouncedSearch = debounce(searchGames, 250);
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            // Initial render
+            // Initial render and index build
             renderGames();
 
-            // Search functionality
-            document.getElementById('searchInput').addEventListener('input', searchGames);
+            // Search functionality - debounced for typing
+            document.getElementById('searchInput').addEventListener('input', debouncedSearch);
             document.getElementById('categoryFilter').addEventListener('change', searchGames);
 
             // Pagination
