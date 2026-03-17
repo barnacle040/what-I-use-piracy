@@ -65,12 +65,8 @@ nav a:hover, nav a.active {
 }
 
 /* Background from Software Library */
-body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
 
 body.light {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 @media (max-width: 768px) {
@@ -86,7 +82,7 @@ body.light {
     }
 }
 :root {
-    --bg-primary: #0f1419;
+    --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --bg-secondary: #1a1f2e;
     --text-primary: #e6edf3;
     --text-secondary: #8b949e;
@@ -114,7 +110,7 @@ html {
 }
 
 body {
-    background: var(--bg-primary);
+    background: var(--bg-primary) !important;
     font-family: 'Segoe UI', Arial, sans-serif;
     color: var(--text-primary);
     line-height: 1.8;
@@ -122,6 +118,7 @@ body {
     padding: 0;
     overflow-x: hidden;
     cursor: url('./pirate_cursor.png'), auto;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 body.light {
@@ -134,6 +131,7 @@ body.light {
     --border: var(--border-light);
     --focus-ring: var(--focus-ring-light);
     background: var(--bg-primary-light);
+    background-image: none;
 }
 
 h1, h2, h3, h4 {
