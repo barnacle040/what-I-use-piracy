@@ -28,13 +28,12 @@
     <style>
         /* Only changed the background and header styles */
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
 
         header {
-            background-color: #2c3e50;
-            color: white;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
             padding: 1rem 0;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: sticky;
@@ -123,6 +122,7 @@
                     <li><a href="./Software_Library.html">Software</a></li>
                 </ul>
             </nav>
+            <button id="themeToggle" aria-label="Toggle dark/light mode">🌙</button>
         </div>
     </header>
 
@@ -901,9 +901,18 @@
 
     <script>
         // Theme state and favorites stored in memory
-        let isDarkTheme = true;
+        let isDarkTheme = localStorage.getItem('theme') !== 'light';
         let favorites = [];
+        try {
+            favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        } catch (e) {
+            console.error('Error parsing favorites from localStorage', e);
+            favorites = [];
+        }
         let showingFavoritesOnly = false;
+
+        // Immediately apply theme to prevent flash
+        if (!isDarkTheme) document.body.classList.add('light');
         let searchIndex = [];
 
         /**
@@ -1040,6 +1049,7 @@
                 btn.setAttribute('aria-label', 'Remove from favorites');
             }
 
+            localStorage.setItem('favorites', JSON.stringify(favorites));
             updateFavCount();
         }
 
@@ -1124,6 +1134,21 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Restore theme toggle icon
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) themeToggle.textContent = isDarkTheme ? '🌙' : '☀️';
+
+            // Restore favorites UI
+            favorites.forEach(id => {
+                const btn = document.querySelector(`.fav-btn[data-id="${id}"]`);
+                if (btn) {
+                    btn.textContent = '★';
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-label', 'Remove from favorites');
+                }
+            });
+            updateFavCount();
+
             const items = document.querySelectorAll('li, .image-item');
             items.forEach((item, index) => {
                 item.style.animationDelay = `${index * 0.1}s`;
@@ -1151,6 +1176,7 @@
                 isDarkTheme = !isDarkTheme;
                 document.body.classList.toggle('light');
                 document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
+                localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
             });
 
             // Back to top
