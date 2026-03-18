@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2025-05-16 - [Theme State Persistence]
+**Learning:** For static sites with multiple pages, the theme state should be persisted in `localStorage` and applied immediately on `DOMContentLoaded` to provide a consistent user experience. If a UI component (like a theme toggle) exists in JavaScript logic but is missing from the HTML, restoring it is a high-impact micro-UX win.
+**Action:** Implement a robust `applyTheme` helper that synchronizes the DOM class, button icons, and `localStorage` state. Ensure all interactive theme elements have appropriate `aria-label` attributes for accessibility.
