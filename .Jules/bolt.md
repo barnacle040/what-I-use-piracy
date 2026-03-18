@@ -13,3 +13,7 @@
 ## 2026-03-09 - Granular Search Indexing for Complex Sections
 **Learning:** For pages with nested or grouped content (like FAQs in sections), a flat search index is insufficient for managing parent visibility. Creating a secondary index for sections that maps them to their child items allows for $O(n)$ visibility updates and synchronized state (like auto-expanding matching sections) without repeated DOM traversals.
 **Action:** When implementing search for grouped content, use a two-tier indexing strategy: one for individual items and one for their parent containers.
+
+## 2025-05-14 - InnerHTML Thrashing vs. Visibility Toggling
+**Learning:** Re-rendering a large grid of elements (even ~20) using `innerHTML = ''` on every keystroke causes measurable UI lag and DOM thrashing. Toggling `display: none/block` on a pre-cached index of DOM references maintains the same visual result with near-zero re-render cost.
+**Action:** Favor CSS visibility toggling over destructive re-renders for static library pages.
