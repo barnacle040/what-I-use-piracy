@@ -109,6 +109,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <button id="themeToggle" aria-label="Toggle dark/light mode">🌙</button>
     <header>
         <div class="header-content">
             <div class="logo">
@@ -1147,10 +1148,25 @@
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
             // Theme toggle
-            document.getElementById('themeToggle')?.addEventListener('click', () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const applyTheme = (isLight) => {
+                document.body.classList.toggle('light', isLight);
+                if (themeToggle) {
+                    themeToggle.textContent = isLight ? '☀️' : '🌙';
+                }
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            };
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                isDarkTheme = false;
+                applyTheme(true);
+            }
+
+            themeToggle?.addEventListener('click', () => {
                 isDarkTheme = !isDarkTheme;
-                document.body.classList.toggle('light');
-                document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
+                applyTheme(!isDarkTheme);
             });
 
             // Back to top
