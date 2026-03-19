@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2026-03-19 - [Visual Parity for Screen Reader Labels]
+**Learning:** Interactive elements often have descriptive `aria-label` attributes for screen readers, but mouse users may be left without visual hints for icon-only buttons. Programmatically mirroring `aria-label` to a visual tooltip (e.g., via `data-tooltip`) ensures UX parity between accessibility tools and traditional pointer interactions.
+**Action:** Implement a global initialization script that assigns `data-tooltip` from `aria-label` for any interactive element lacking a manual tooltip.
