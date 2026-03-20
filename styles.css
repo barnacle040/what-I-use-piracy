@@ -64,14 +64,6 @@ nav a:hover, nav a.active {
     display: none;
 }
 
-/* Background from Software Library */
-body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-body.light {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
 
 @media (max-width: 768px) {
     .header-content {
@@ -134,6 +126,7 @@ body.light {
     --border: var(--border-light);
     --focus-ring: var(--focus-ring-light);
     background: var(--bg-primary-light);
+    background-image: none;
 }
 
 h1, h2, h3, h4 {
