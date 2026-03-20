@@ -13,3 +13,7 @@
 ## 2026-02-26 - [Dynamic Search Interaction in FAQs]
 **Learning:** Adding search to an FAQ page significantly improves user experience, especially when it automatically expands matching sections and provides a real-time result count announced by screen readers (`aria-live`). This makes "hidden" content instantly discoverable and accessible.
 **Action:** Implement search logic that not only filters items but also manages parent section states (expanding them to show matches) and provides clear accessibility feedback through live regions.
+
+## 2026-02-27 - [Theme Switch Visual Reliability]
+**Learning:** When implementing a theme toggle on pages with existing complex backgrounds (like `linear-gradient`), simply toggling a class on the `body` might not be enough if the gradient is set via `background-image`. The themed background color will be hidden behind the gradient unless `background-image: none` is explicitly set in the theme override.
+**Action:** Always include `background-image: none` (or equivalent) when overriding a gradient-based background with a solid-color theme variable.

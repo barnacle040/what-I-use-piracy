@@ -890,6 +890,8 @@
         </div>
     </main>
 
+    <button id="themeToggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+
     <footer>
         <p>&copy; Barnacle. All rights reserved. Last updated: September 2025. Icons by <a href="https://flaticon.com" target="_blank" rel="noopener">Flaticon</a>.</p>
         <div class="social-links">
@@ -901,7 +903,7 @@
 
     <script>
         // Theme state and favorites stored in memory
-        let isDarkTheme = true;
+        let isDarkTheme = localStorage.getItem('theme') !== 'light';
         let favorites = [];
         let showingFavoritesOnly = false;
         let searchIndex = [];
@@ -1121,6 +1123,11 @@
             if (e.key === '?' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
                 toggleShortcuts();
             }
+
+            // T to toggle theme
+            if ((e.key === 't' || e.key === 'T') && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                document.getElementById('themeToggle')?.click();
+            }
         });
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -1147,11 +1154,21 @@
             document.getElementById('clearSearch').addEventListener('click', clearSearch);
 
             // Theme toggle
-            document.getElementById('themeToggle')?.addEventListener('click', () => {
-                isDarkTheme = !isDarkTheme;
-                document.body.classList.toggle('light');
-                document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
-            });
+            const themeBtn = document.getElementById('themeToggle');
+            if (themeBtn) {
+                // Initialize theme
+                if (!isDarkTheme) {
+                    document.body.classList.add('light');
+                    themeBtn.textContent = '☀️';
+                }
+
+                themeBtn.addEventListener('click', () => {
+                    isDarkTheme = !isDarkTheme;
+                    document.body.classList.toggle('light');
+                    themeBtn.textContent = isDarkTheme ? '🌙' : '☀️';
+                    localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+                });
+            }
 
             // Back to top
             document.getElementById('backToTop').addEventListener('click', scrollToTop);
