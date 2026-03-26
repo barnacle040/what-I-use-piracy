@@ -4,87 +4,184 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Library - Direct Downloads</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            tailwind.config = { content: ["./**/*.html"] };
+        });
+    </script>
 </head>
-<body class="bg-black text-white font-mono">
-    <div class="section-container">
-        <nav class="nav-links">
-            <a href="index.html">← INDEX</a>
-            <a href="Game_page.html" class="active">GAMES</a>
-            <a href="torrent_1.html">TORRENTS</a>
-            <a href="Software_Library.html">SOFTWARE</a>
-        </nav>
+<body class="bg-gray-950 text-gray-100 font-sans">
+    <!-- Navbar (exact match to index) -->
+    <header class="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl">🏴‍☠️</span>
+                <h1 class="text-2xl font-bold tracking-tight">What I Use (Piracy)</h1>
+            </div>
+            <nav class="flex items-center gap-8 text-sm font-medium">
+                <a href="index.html" class="hover:text-teal-400 transition-colors">Home</a>
+                <a href="Software_Library.html" class="hover:text-teal-400 transition-colors">Software</a>
+                <a href="Game_page.html" class="text-teal-400 font-semibold">Games</a>
+                <a href="torrent_1.html" class="hover:text-teal-400 transition-colors">Torrents</a>
+            </nav>
+        </div>
+    </header>
 
-        <header class="page-header">
-            <h1>GAME LIBRARY</h1>
-            <p class="subtitle">Direct links to safe and verified game downloads. <strong>Always use a VPN.</strong></p>
-        </header>
-
-        <div class="index-controls">
-            <input type="text" id="searchInput" placeholder="Search games..." class="minimal-input">
-            <select id="categoryFilter" class="minimal-select">
-                <option value="all">ALL GENRES</option>
-                <option value="action">ACTION</option>
-                <option value="adventure">ADVENTURE</option>
-                <option value="rpg">RPG</option>
-                <option value="shooter">SHOOTER</option>
-                <option value="open-world">OPEN WORLD</option>
-            </select>
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="mb-12">
+            <h1 class="text-5xl font-bold mb-3">GAME LIBRARY</h1>
+            <p class="text-2xl text-gray-400">Direct links to safe and verified game downloads.<br>
+            <span class="text-red-400 font-medium">Always use a VPN • Scan every file.</span></p>
         </div>
 
-        <div id="gameGrid" class="item-list">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Game 1 -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-bold leading-none">Grand Theft Auto V</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">95 GB</span>
+                    </div>
+                    <p class="text-teal-400 text-sm mb-3">OPEN-WORLD • 2013</p>
+                    <p class="text-gray-400 mb-8 line-clamp-4">Iconic open-world crime masterpiece. Los Santos at its finest.</p>
+                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
+                </div>
             </div>
 
-        <div class="pagination-list">
-            <span class="page-label">PAGES:</span>
-            <a href="Game_page.html" class="active">01</a>
-            <a href="Game_page_2.html">02</a>
-        </div>
-    </div>
-
-    <script>
-        const games = [
-            { id: 1, title: "Grand Theft Auto V", category: "open-world", year: 2013, size: "95 GB", url: "https://buzzheavier.com/ouvyovqmuez0" },
-            { id: 2, title: "Red Dead Redemption 2", category: "open-world", year: 2018, size: "120 GB", url: "https://buzzheavier.com/ck7nob6r1bcv" },
-            { id: 3, title: "The Last of Us Part I", category: "adventure", year: 2022, size: "75 GB", url: "https://buzzheavier.com/tcibtnfemphk" },
-            { id: 4, title: "Cyberpunk 2077", category: "rpg", year: 2020, size: "70 GB", url: "https://buzzheavier.com/3nbhvi632e30" },
-            { id: 5, title: "Elden Ring", category: "rpg", year: 2022, size: "50 GB", url: "https://buzzheavier.com/x9zkbd83m8bj" },
-            { id: 6, title: "God of War Ragnarok", category: "action", year: 2022, size: "85 GB", url: "https://buzzheavier.com/7qzqvrto2lgy" },
-            { id: 7, title: "Palworld", category: "adventure", year: 2024, size: "20 GB", url: "https://buzzheavier.com/85n7uzvvautg" },
-            { id: 8, title: "Spider-Man: Miles Morales", category: "action", year: 2020, size: "50 GB", url: "https://buzzheavier.com/67pt5szrjk0h" },
-            { id: 9, title: "Alan Wake 2", category: "adventure", year: 2023, size: "85 GB", url: "https://buzzheavier.com/xy2sm8ez5ult" },
-            { id: 10, title: "Sniper Elite 5", category: "shooter", year: 2022, size: "60 GB", url: "https://buzzheavier.com/raidloxs5qya" }
-        ];
-
-        function renderGames(list = games) {
-            const container = document.getElementById('gameGrid');
-            container.innerHTML = list.map(game => `
-                <a href="${game.url}" target="_blank" class="item-row">
-                    <div class="item-main">
-                        <span class="item-title">${game.title}</span>
-                        <span class="item-meta">${game.category.toUpperCase()} • ${game.year}</span>
+            <!-- Game 2 -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-bold leading-none">Red Dead Redemption 2</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">120 GB</span>
                     </div>
-                    <span class="item-side">${game.size}</span>
-                </a>
-            `).join('');
-        }
+                    <p class="text-teal-400 text-sm mb-3">OPEN-WORLD • 2018</p>
+                    <p class="text-gray-400 mb-8 line-clamp-4">Epic Western masterpiece. The most detailed open world ever created.</p>
+                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
+                </div>
+            </div>
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const category = document.getElementById('categoryFilter').value;
-            const filtered = games.filter(g => 
-                (g.title.toLowerCase().includes(term)) && 
-                (category === 'all' || g.category === category)
-            );
-            renderGames(filtered);
-        });
+            <!-- Game 3 -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-bold leading-none">The Last of Us Part I</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">75 GB</span>
+                    </div>
+                    <p class="text-teal-400 text-sm mb-3">ADVENTURE • 2022</p>
+                    <p class="text-gray-400 mb-8 line-clamp-4">Emotional masterpiece. Story-driven action-adventure at its peak.</p>
+                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
+                </div>
+            </div>
 
-        document.getElementById('categoryFilter').addEventListener('change', () => {
-            document.getElementById('searchInput').dispatchEvent(new Event('input'));
-        });
+            <!-- Game 4 -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-bold leading-none">Cyberpunk 2077</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">70 GB</span>
+                    </div>
+                    <p class="text-teal-400 text-sm mb-3">RPG • 2020</p>
+                    <p class="text-gray-400 mb-8 line-clamp-4">Neon-drenched open-world RPG. Night City never sleeps.</p>
+                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
+                </div>
+            </div>
 
-        document.addEventListener('DOMContentLoaded', () => renderGames());
-    </script>
+            <!-- Game 5 -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-bold leading-none">Elden Ring</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">50 GB</span>
+                    </div>
+                    <p class="text-teal-400 text-sm mb-3">RPG • 2022</p>
+                    <p class="text-gray-400 mb-8 line-clamp-4">FromSoftware's masterpiece. Open-world souls-like perfection.</p>
+                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
+                </div>
+            </div>
+
+            <!-- Game 6 -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-bold leading-none">God of War Ragnarök</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">85 GB</span>
+                    </div>
+                    <p class="text-teal-400 text-sm mb-3">ACTION • 2022</p>
+                    <p class="text-gray-400 mb-8 line-clamp-4">Epic Norse mythology conclusion. Kratos and Atreus at their best.</p>
+                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
+                </div>
+            </div>
+
+            <!-- Game 7 -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-bold leading-none">Palworld</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">20 GB</span>
+                    </div>
+                    <p class="text-teal-400 text-sm mb-3">ADVENTURE • 2024</p>
+                    <p class="text-gray-400 mb-8 line-clamp-4">Pokémon with guns. The viral creature-collecting survival hit.</p>
+                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
+                </div>
+            </div>
+
+            <!-- Game 8 -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-bold leading-none">Spider-Man: Miles Morales</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">50 GB</span>
+                    </div>
+                    <p class="text-teal-400 text-sm mb-3">ACTION • 2020</p>
+                    <p class="text-gray-400 mb-8 line-clamp-4">Swing through New York as the newest Spider-Man.</p>
+                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
+                </div>
+            </div>
+
+            <!-- Game 9 -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-bold leading-none">Alan Wake 2</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">85 GB</span>
+                    </div>
+                    <p class="text-teal-400 text-sm mb-3">ADVENTURE • 2023</p>
+                    <p class="text-gray-400 mb-8 line-clamp-4">Mind-bending survival horror sequel. Remedy at its storytelling peak.</p>
+                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
+                </div>
+            </div>
+
+            <!-- Game 10 -->
+            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="text-3xl font-bold leading-none">Sniper Elite 5</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">60 GB</span>
+                    </div>
+                    <p class="text-teal-400 text-sm mb-3">SHOOTER • 2022</p>
+                    <p class="text-gray-400 mb-8 line-clamp-4">WWII stealth sniper action. Tactical and satisfying.</p>
+                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center mt-16">
+            <div class="inline-flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-3xl p-2">
+                <a href="Game_page.html" class="px-8 py-4 bg-teal-500 text-black font-semibold rounded-3xl">01</a>
+                <a href="Game_page_2.html" class="px-8 py-4 hover:bg-gray-800 rounded-3xl transition-colors">02</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer (exact match) -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-10 text-center text-xs text-gray-500">
+        For educational purposes only • Always scan files with antivirus • Use a VPN • Stay safe out there 🏴‍☠️
+    </footer>
 </body>
 </html>
