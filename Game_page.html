@@ -1,187 +1,551 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Library - Direct Downloads</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            tailwind.config = { content: ["./**/*.html"] };
-        });
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Library — Piracy Resources</title>
+  <meta name="description" content="Direct downloads for verified repacks, pre-installed games, and cracked releases. Safe & curated gaming section." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* extra game page fine-tuning — stays consistent with index */
+    .game-stats-custom {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .game-meta-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      background: var(--bg-3);
+      padding: 2px 8px;
+      border-radius: 20px;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+    .size-tag {
+      background: var(--bg-3);
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      border: 1px solid var(--accent-dim);
+    }
+    /* pagination cyber style */
+    .pagination-cyber {
+      display: flex;
+      justify-content: center;
+      margin-top: 48px;
+      margin-bottom: 24px;
+      gap: 12px;
+    }
+    .page-btn {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 8px 22px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all var(--t-fast) var(--ease);
+    }
+    .page-btn.active-page {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .page-btn:hover:not(.active-page) {
+      color: var(--accent);
+      border-color: var(--border-hover);
+      background: var(--accent-dim);
+    }
+    /* ensure cards grid uses same gap as index */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      padding-top: 12px;
+    }
+    /* optional badge for new games */
+    .new-tag {
+      color: var(--accent);
+    }
+  </style>
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans">
-    <!-- Navbar (exact match to index) -->
-    <header class="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <span class="text-3xl">🏴‍☠️</span>
-                <h1 class="text-2xl font-bold tracking-tight">What I Use (Piracy)</h1>
-            </div>
-            <nav class="flex items-center gap-8 text-sm font-medium">
-                <a href="index.html" class="hover:text-teal-400 transition-colors">Home</a>
-                <a href="Software_Library.html" class="hover:text-teal-400 transition-colors">Software</a>
-                <a href="Game_page.html" class="text-teal-400 font-semibold">Games</a>
-                <a href="torrent_1.html" class="hover:text-teal-400 transition-colors">Torrents</a>
-            </nav>
+<body>
+
+  <!-- SCANLINES + CANVAS (same atmosphere as index) -->
+  <div class="scanlines" aria-hidden="true"></div>
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <!-- ========= STICKY NAVIGATION (exact replica from index) ========= -->
+  <header class="site-nav" id="site-nav">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Home">
+        <span class="logo-bracket">[</span>PIRACY<span class="logo-accent">.</span>RES<span class="logo-bracket">]</span>
+      </a>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="index.html#basics" class="nav-link">Basics</a></li>
+        <li><a href="index.html#security" class="nav-link">Security</a></li>
+        <li><a href="index.html#extensions" class="nav-link">Extensions</a></li>
+        <li><a href="index.html#media" class="nav-link">Media</a></li>
+        <li><a href="index.html#gaming" class="nav-link">Gaming</a></li>
+        <li><a href="index.html#system" class="nav-link">System</a></li>
+        <li><a href="index.html#os" class="nav-link">OS</a></li>
+        <li><a href="index.html#misc" class="nav-link">Misc</a></li>
+        <li><a href="Game_page.html" class="nav-link active" aria-current="page">Games</a></li>
+        <li><a href="Software_Library.html" class="nav-link">Software</a></li>
+        <li><a href="torrent_1.html" class="nav-link">Torrents</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-icon" id="search-toggle" aria-label="Open search (Ctrl+K)" title="Search (Ctrl+K)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="btn-icon" id="theme-toggle" aria-label="Toggle light mode" title="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="btn-icon nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- SEARCH OVERLAY (same interactive component) -->
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search games">
+    <div class="search-box">
+      <div class="search-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="search-input" placeholder="Search games, genre, size..." autocomplete="off" spellcheck="false" />
+        <kbd>ESC</kbd>
+      </div>
+      <div class="search-results" id="search-results" role="listbox" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- SHORTCUTS PANEL (global) -->
+  <div class="shortcuts-panel" id="shortcuts-panel" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+    <div class="shortcuts-content">
+      <div class="shortcuts-header">
+        <span>Keyboard Shortcuts</span>
+        <button class="btn-icon" id="shortcuts-close" aria-label="Close shortcuts">✕</button>
+      </div>
+      <ul class="shortcuts-list">
+        <li><kbd>Ctrl</kbd><kbd>K</kbd> <span>Focus Search</span></li>
+        <li><kbd>Esc</kbd> <span>Clear Search / Close</span></li>
+        <li><kbd>?</kbd> <span>Toggle This Guide</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- HERO SECTION — game library specific, but same cyber-noir vibe -->
+    <section class="hero" id="hero" aria-label="Game Library Hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>GAME LIBRARY · DIRECT DOWNLOADS</span>
         </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto px-6 py-12">
-        <div class="mb-12">
-            <h1 class="text-5xl font-bold mb-3">GAME LIBRARY</h1>
-            <p class="text-2xl text-gray-400">Direct links to safe and verified game downloads.<br>
-            <span class="text-red-400 font-medium">Always use a VPN • Scan every file.</span></p>
+        <h1 class="hero-title">
+          <span class="title-line">GAME</span>
+          <span class="title-line title-accent">LIBRARY</span>
+        </h1>
+        <p class="hero-subtitle">Curated releases · Repacks · Pre-installed games</p>
+        <p class="hero-warning">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          VPN required · Always scan before executing · Use at your own risk
+        </p>
+        <div class="hero-actions">
+          <a href="#game-grid" class="btn-primary">Browse Games</a>
+          <button class="btn-ghost" id="shortcuts-trigger-btn">Shortcuts</button>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <!-- Game 1 -->
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-3xl font-bold leading-none">Grand Theft Auto V</h3>
-                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">95 GB</span>
-                    </div>
-                    <p class="text-teal-400 text-sm mb-3">OPEN-WORLD • 2013</p>
-                    <p class="text-gray-400 mb-8 line-clamp-4">Iconic open-world crime masterpiece. Los Santos at its finest.</p>
-                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
-                </div>
-            </div>
-
-            <!-- Game 2 -->
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-3xl font-bold leading-none">Red Dead Redemption 2</h3>
-                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">120 GB</span>
-                    </div>
-                    <p class="text-teal-400 text-sm mb-3">OPEN-WORLD • 2018</p>
-                    <p class="text-gray-400 mb-8 line-clamp-4">Epic Western masterpiece. The most detailed open world ever created.</p>
-                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
-                </div>
-            </div>
-
-            <!-- Game 3 -->
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-3xl font-bold leading-none">The Last of Us Part I</h3>
-                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">75 GB</span>
-                    </div>
-                    <p class="text-teal-400 text-sm mb-3">ADVENTURE • 2022</p>
-                    <p class="text-gray-400 mb-8 line-clamp-4">Emotional masterpiece. Story-driven action-adventure at its peak.</p>
-                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
-                </div>
-            </div>
-
-            <!-- Game 4 -->
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-3xl font-bold leading-none">Cyberpunk 2077</h3>
-                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">70 GB</span>
-                    </div>
-                    <p class="text-teal-400 text-sm mb-3">RPG • 2020</p>
-                    <p class="text-gray-400 mb-8 line-clamp-4">Neon-drenched open-world RPG. Night City never sleeps.</p>
-                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
-                </div>
-            </div>
-
-            <!-- Game 5 -->
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-3xl font-bold leading-none">Elden Ring</h3>
-                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">50 GB</span>
-                    </div>
-                    <p class="text-teal-400 text-sm mb-3">RPG • 2022</p>
-                    <p class="text-gray-400 mb-8 line-clamp-4">FromSoftware's masterpiece. Open-world souls-like perfection.</p>
-                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
-                </div>
-            </div>
-
-            <!-- Game 6 -->
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-3xl font-bold leading-none">God of War Ragnarök</h3>
-                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">85 GB</span>
-                    </div>
-                    <p class="text-teal-400 text-sm mb-3">ACTION • 2022</p>
-                    <p class="text-gray-400 mb-8 line-clamp-4">Epic Norse mythology conclusion. Kratos and Atreus at their best.</p>
-                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
-                </div>
-            </div>
-
-            <!-- Game 7 -->
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-3xl font-bold leading-none">Palworld</h3>
-                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">20 GB</span>
-                    </div>
-                    <p class="text-teal-400 text-sm mb-3">ADVENTURE • 2024</p>
-                    <p class="text-gray-400 mb-8 line-clamp-4">Pokémon with guns. The viral creature-collecting survival hit.</p>
-                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
-                </div>
-            </div>
-
-            <!-- Game 8 -->
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-3xl font-bold leading-none">Spider-Man: Miles Morales</h3>
-                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">50 GB</span>
-                    </div>
-                    <p class="text-teal-400 text-sm mb-3">ACTION • 2020</p>
-                    <p class="text-gray-400 mb-8 line-clamp-4">Swing through New York as the newest Spider-Man.</p>
-                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
-                </div>
-            </div>
-
-            <!-- Game 9 -->
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-3xl font-bold leading-none">Alan Wake 2</h3>
-                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">85 GB</span>
-                    </div>
-                    <p class="text-teal-400 text-sm mb-3">ADVENTURE • 2023</p>
-                    <p class="text-gray-400 mb-8 line-clamp-4">Mind-bending survival horror sequel. Remedy at its storytelling peak.</p>
-                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
-                </div>
-            </div>
-
-            <!-- Game 10 -->
-            <div class="bg-gray-900 rounded-3xl overflow-hidden border border-gray-800 hover:border-teal-500 transition-all group">
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-6">
-                        <h3 class="text-3xl font-bold leading-none">Sniper Elite 5</h3>
-                        <span class="text-xs font-mono bg-gray-800 px-4 py-2 rounded-2xl text-teal-400">60 GB</span>
-                    </div>
-                    <p class="text-teal-400 text-sm mb-3">SHOOTER • 2022</p>
-                    <p class="text-gray-400 mb-8 line-clamp-4">WWII stealth sniper action. Tactical and satisfying.</p>
-                    <a href="#" class="block w-full text-center bg-teal-500 hover:bg-teal-600 py-4 rounded-2xl font-semibold text-sm tracking-widest transition-colors group-hover:scale-105">DIRECT DOWNLOAD</a>
-                </div>
-            </div>
-
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num" id="stat-tools">28+</span><span class="stat-label">Games</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num">7</span><span class="stat-label">Genres</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num" id="stat-safe">24</span><span class="stat-label">Verified</span></div>
         </div>
+      </div>
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
 
-        <!-- Pagination -->
-        <div class="flex justify-center mt-16">
-            <div class="inline-flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-3xl p-2">
-                <a href="Game_page.html" class="px-8 py-4 bg-teal-500 text-black font-semibold rounded-3xl">01</a>
-                <a href="Game_page_2.html" class="px-8 py-4 hover:bg-gray-800 rounded-3xl transition-colors">02</a>
-            </div>
+    <!-- Global control row (minimal, shortcuts + hint) matches index vibe -->
+    <div class="global-controls">
+      <button class="ctrl-btn" id="show-shortcuts-btn-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
+        Shortcuts
+      </button>
+      <span class="ctrl-hint">Press <kbd>?</kbd> for help</span>
+    </div>
+
+    <!-- GAMES GRID SECTION -->
+    <section class="resource-section reveal" id="game-grid">
+      <div class="section-header" style="cursor: default; background: var(--bg-2);">
+        <div class="section-title-group">
+          <span class="section-index">🎮</span>
+          <h2 class="section-title">Direct Download Vault</h2>
+          <span class="section-badge">28 releases</span>
         </div>
-    </main>
+        <!-- no collapse toggle on game page, but keep consistent design -->
+      </div>
+      <div class="section-body" style="max-height: none; opacity: 1;">
+        <div class="cards-grid" id="game-cards-container">
+          
+          <!-- Game 1 : GTA V -->
+          <article class="tool-card" data-search="grand theft auto v gta5 rockstar open world action 95gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Grand Theft Auto V</h3>
+                <p class="card-desc">Open-world crime epic. Los Santos single-player + mod support. Legendary release.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                  </div>
+                  <span class="size-tag">95 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">FitGirl / Dodi</span>
+              </div>
+            </div>
+          </article>
 
-    <!-- Footer (exact match) -->
-    <footer class="bg-gray-900 border-t border-gray-800 py-10 text-center text-xs text-gray-500">
-        For educational purposes only • Always scan files with antivirus • Use a VPN • Stay safe out there 🏴‍☠️
-    </footer>
+          <!-- Game 2 : Red Dead Redemption 2 -->
+          <article class="tool-card" data-search="red dead redemption 2 rdr2 western open world rockstar 120gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Red Dead Redemption 2</h3>
+                <p class="card-desc">Western masterpiece, immersive world, hunting, outlaw life. Highest rated story.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="size-tag">120 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Empress / RUNE</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 3 : The Last of Us Part I -->
+          <article class="tool-card" data-search="the last of us part 1 tlou remake survival 75gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M20 12H4M12 4v16"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">The Last of Us Part I</h3>
+                <p class="card-desc">Emotional survival-action remake. Joel & Ellie's journey remastered for PC.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="size-tag">75 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated new-tag">New!</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 4 : Cyberpunk 2077 -->
+          <article class="tool-card" data-search="cyberpunk 2077 rpg open world night city 70gb phantom liberty">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Cyberpunk 2077</h3>
+                <p class="card-desc">Neon-drenched dystopian RPG with Phantom Liberty DLC included.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="size-tag">70 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">GOG rip</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 5 : Elden Ring -->
+          <article class="tool-card" data-search="elden ring soulsborne open world rpg 50gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Elden Ring</h3>
+                <p class="card-desc">Game of the Year. Open-world soulslike with deep combat & lore.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="size-tag">50 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">FLT / RUNE</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 6 : God of War Ragnarök -->
+          <article class="tool-card" data-search="god of war ragnarok norse action kratos 85gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">God of War Ragnarök</h3>
+                <p class="card-desc">Epic conclusion to Norse saga, breathtaking combat & story.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="size-tag">85 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated new-tag">New!</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 7 : Palworld -->
+          <article class="tool-card" data-search="palworld pokemon survival crafting 20gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M4 4L20 20M20 4L4 20"/><circle cx="12" cy="12" r="4"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Palworld</h3>
+                <p class="card-desc">"Pokémon with guns" — multiplayer survival & automation.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="size-tag">20 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Early Access</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 8 : Spider-Man Miles Morales -->
+          <article class="tool-card" data-search="spider man miles morales action marvel 50gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Spider-Man: Miles Morales</h3>
+                <p class="card-desc">Swing, stealth, electric Venom powers. Standalone masterpiece.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="size-tag">50 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Insomniac crack</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 9 : Alan Wake 2 -->
+          <article class="tool-card" data-search="alan wake 2 survival horror remedy 85gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M12 22V12"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Alan Wake 2</h3>
+                <p class="card-desc">Psychological horror sequel, stunning visuals, mind-bending narrative.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="size-tag">85 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">RUNE</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Game 10 : Sniper Elite 5 -->
+          <article class="tool-card" data-search="sniper elite 5 ww2 stealth shooter 60gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10 10 10 0 0 1-10-10 10 10 0 0 1 10-10z"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Sniper Elite 5</h3>
+                <p class="card-desc">X-ray kill cam, stealth sabotage, Nazi-hunting sandbox.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="size-tag">60 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Codex</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- extra 11+ to match stat count, adds variety -->
+          <article class="tool-card" data-search="resident evil 4 remake horror action 55gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M20 12H4M12 4v16"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Resident Evil 4 Remake</h3>
+                <p class="card-desc">Survival horror masterpiece, reinvented.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="size-tag">55 GB</span>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="#" class="card-link">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated new-tag">Dodi</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGINATION (cyber style) -->
+    <div class="pagination-cyber">
+      <a href="Game_page.html" class="page-btn active-page">01</a>
+      <a href="Game_page_2.html" class="page-btn">02</a>
+      <a href="Game_page_2.html" class="page-btn">Next →</a>
+    </div>
+
+  </main>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- FOOTER (exact copy from index) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">[PIRACY.RES]</span>
+        <p class="footer-disclaimer">This site is for educational purposes only. The author does not endorse or encourage copyright infringement. Always comply with your local laws. Use a VPN. Use your brain.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <span class="footer-col-title">Pages</span>
+          <a href="Game_page.html">Games</a>
+          <a href="Help.html">Help</a>
+          <a href="Software_Library.html">Software</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Contact</span>
+          <a href="https://x.com/BJ0RN9" target="_blank" rel="noopener">Twitter / X</a>
+          <a href="https://github.com/barnacle040?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Barnacle. All rights reserved.</span>
+      <span class="footer-sep">·</span>
+      <span>Last updated: September 2025</span>
+      <span class="footer-sep">·</span>
+      <span>Icons by <a href="https://flaticon.com" target="_blank" rel="noopener">Flaticon</a></span>
+    </div>
+  </footer>
+
+  <!-- main script from index (controls theme, canvas, shortcuts, search, etc) -->
+  <script src="script.js"></script>
+  <script>
+    // small extra: ensure shortcuts button works also on game page
+    (function() {
+      const shortcutsPanel = document.getElementById('shortcuts-panel');
+      const shortcutsBtns = document.querySelectorAll('#show-shortcuts-btn, #show-shortcuts-btn-2, #shortcuts-trigger-btn');
+      const closeShortcut = document.getElementById('shortcuts-close');
+      function toggleShortcuts(show) {
+        if (!shortcutsPanel) return;
+        if (show === undefined) shortcutsPanel.classList.toggle('open');
+        else if (show) shortcutsPanel.classList.add('open');
+        else shortcutsPanel.classList.remove('open');
+      }
+      shortcutsBtns.forEach(btn => {
+        if (btn) btn.addEventListener('click', (e) => { e.stopPropagation(); toggleShortcuts(); });
+      });
+      if (closeShortcut) closeShortcut.addEventListener('click', () => toggleShortcuts(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '?' && !e.ctrlKey && !e.metaKey && document.activeElement?.tagName !== 'INPUT') {
+          e.preventDefault();
+          toggleShortcuts();
+        }
+        if (e.key === 'Escape' && shortcutsPanel?.classList.contains('open')) {
+          shortcutsPanel.classList.remove('open');
+        }
+      });
+      // also enable search on game page (basic)
+      const searchOverlay = document.getElementById('search-overlay');
+      const searchToggle = document.getElementById('search-toggle');
+      const searchInput = document.getElementById('search-input');
+      if (searchToggle && searchOverlay) {
+        searchToggle.addEventListener('click', () => {
+          searchOverlay.classList.add('open');
+          searchInput?.focus();
+        });
+        document.addEventListener('keydown', (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            searchOverlay.classList.add('open');
+            searchInput?.focus();
+          }
+          if (e.key === 'Escape' && searchOverlay.classList.contains('open')) {
+            searchOverlay.classList.remove('open');
+            if (searchInput) searchInput.value = '';
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
