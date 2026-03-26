@@ -1,814 +1,555 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Optimization: Preconnect to CDN to reduce connection overhead for FontAwesome -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <title>Game Library - Page 2</title>
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-            --success: #27ae60;
-            --warning: #f39c12;
-            --danger: #e74c3c;
-            --gray: #95a5a6;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --card-bg: #ffffff;
-            --text-color: #333333;
-            --border-color: #e0e0e0;
-            --muted-text: #7f8c8d;
-            --hover-color: #f8f9fa;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--text-color);
-            line-height: 1.6;
-            min-height: 100vh;
-            padding-bottom: 2rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        .header {
-            background-color: var(--primary);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo i {
-            margin-right: 10px;
-            color: var(--secondary);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav li {
-            margin-left: 1.5rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-
-        nav a:hover, nav a.active {
-            color: var(--secondary);
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Page Title */
-        .page-title {
-            text-align: center;
-            margin: 2rem 0;
-            color: white;
-        }
-
-        .page-title h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-title p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-
-        .torrent-btn {
-            display: inline-block;
-            background-color: var(--warning);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s;
-            margin-top: 10px;
-        }
-
-        .torrent-btn:hover {
-            background-color: #e67e22;
-        }
-
-        /* Controls */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-        }
-
-        .search-box {
-            position: relative;
-            width: 300px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 10px 15px 10px 40px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-
-        .search-box i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-        }
-
-        .category-filter select {
-            padding: 10px 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 1rem;
-            background: white;
-            cursor: pointer;
-        }
-
-        /* Stats */
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            color: white;
-            font-size: 0.9rem;
-        }
-
-        /* Game Grid */
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .game-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-        }
-
-        .game-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--secondary);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .game-info h3 {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-
-        .game-info .category {
-            font-size: 0.8rem;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .game-description {
-            color: #555;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .game-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            color: var(--muted-text);
-        }
-
-        .game-size {
-            font-weight: bold;
-        }
-
-        .game-year {
-            color: var(--accent);
-        }
-
-        .game-links {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #2980b9;
-        }
-
-        .btn-secondary {
-            background: var(--light);
-            color: var(--dark);
-        }
-
-        .btn-secondary:hover {
-            background: #bdc3c7;
-        }
-
-        /* Badges */
-        .badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            margin-left: 8px;
-        }
-
-        .badge-featured {
-            background-color: rgba(255, 193, 7, 0.2);
-            color: #f39c12;
-        }
-
-        .badge-new {
-            background-color: rgba(46, 204, 113, 0.2);
-            color: #27ae60;
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin: 2rem 0;
-        }
-
-        .pagination button {
-            padding: 8px 15px;
-            border: 1px solid var(--border-color);
-            background-color: white;
-            color: var(--text-color);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .pagination button.active {
-            background-color: var(--secondary);
-            color: white;
-            border-color: var(--secondary);
-        }
-
-        .pagination button:hover:not(.active) {
-            background-color: var(--hover-color);
-        }
-
-        /* Warning Box */
-        .warning-box {
-            background-color: rgba(255, 193, 7, 0.1);
-            border-left: 4px solid #ffc107;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 0 5px 5px 0;
-            color: white;
-        }
-
-        .warning-box h4 {
-            margin-top: 0;
-            color: #ffc107;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            margin-top: 3rem;
-            color: white;
-            padding: 1rem;
-            opacity: 0.8;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            nav ul {
-                margin-top: 1rem;
-                justify-content: center;
-            }
-
-            nav li {
-                margin: 0 0.5rem;
-            }
-
-            .controls {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .search-box {
-                width: 100%;
-            }
-
-            .game-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Library — Page 2 | Piracy Resources</title>
+  <meta name="description" content="Direct downloads for verified game repacks — page 2. Curated with safety ratings and platform info." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* extra tweaks for game page consistency */
+    .game-stats-custom {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .size-tag {
+      background: var(--bg-3);
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      border: 1px solid var(--accent-dim);
+    }
+    .pagination-cyber {
+      display: flex;
+      justify-content: center;
+      margin-top: 48px;
+      margin-bottom: 24px;
+      gap: 12px;
+    }
+    .page-btn {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 8px 22px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all var(--t-fast) var(--ease);
+    }
+    .page-btn.active-page {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .page-btn:hover:not(.active-page) {
+      color: var(--accent);
+      border-color: var(--border-hover);
+      background: var(--accent-dim);
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      padding-top: 12px;
+    }
+    .new-tag {
+      color: var(--accent);
+    }
+  </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-gamepad"></i>
-                    <span>Game Library</span>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#" class="active">Games</a></li>
-                        <li><a href="./Help.html">Help</a></li>
-                        <li><a href="./Software_Library.html">Software</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
 
-    <div class="container">
-        <div class="page-title">
-            <h1>Game Library - Page 2</h1>
-            <p>Direct links to safe and verified game downloads</p>
-            <a href="torrent_1.html" class="torrent-btn">
-                <i class="fas fa-download"></i> Torrent Downloads
-            </a>
-        </div>
+  <!-- SCANLINES + CANVAS (atmosphere) -->
+  <div class="scanlines" aria-hidden="true"></div>
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
-        <div class="warning-box">
-            <h4><i class="fas fa-exclamation-triangle"></i> Important Notice</h4>
-            <p>Always use a VPN when downloading games. These are direct download links - no torrenting required. Make sure to scan files with antivirus software before installation.</p>
-        </div>
+  <!-- ========= STICKY NAVIGATION (exact replica from index) ========= -->
+  <header class="site-nav" id="site-nav">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Home">
+        <span class="logo-bracket">[</span>PIRACY<span class="logo-accent">.</span>RES<span class="logo-bracket">]</span>
+      </a>
 
-        <div class="controls">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search games...">
-            </div>
-            <div class="category-filter">
-                <select id="categoryFilter">
-                    <option value="all">All Genres</option>
-                    <option value="action">Action</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="rpg">RPG</option>
-                    <option value="shooter">Shooter</option>
-                    <option value="open-world">Open World</option>
-                    <option value="sports">Sports</option>
-                    <option value="indie">Indie</option>
-                </select>
-            </div>
-        </div>
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="index.html#basics" class="nav-link">Basics</a></li>
+        <li><a href="index.html#security" class="nav-link">Security</a></li>
+        <li><a href="index.html#extensions" class="nav-link">Extensions</a></li>
+        <li><a href="index.html#media" class="nav-link">Media</a></li>
+        <li><a href="index.html#gaming" class="nav-link">Gaming</a></li>
+        <li><a href="index.html#system" class="nav-link">System</a></li>
+        <li><a href="index.html#os" class="nav-link">OS</a></li>
+        <li><a href="index.html#misc" class="nav-link">Misc</a></li>
+        <li><a href="Game_page.html" class="nav-link">Games</a></li>
+        <li><a href="Game_page_2.html" class="nav-link active" aria-current="page">Games 2</a></li>
+        <li><a href="Software_Library.html" class="nav-link">Software</a></li>
+        <li><a href="torrent_1.html" class="nav-link">Torrents</a></li>
+      </ul>
 
-        <div class="stats">
-            <span id="gameCount">Showing 20 games</span>
-            <span id="totalSize">Total size: ~180 GB</span>
-        </div>
+      <div class="nav-actions">
+        <button class="btn-icon" id="search-toggle" aria-label="Open search (Ctrl+K)" title="Search (Ctrl+K)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="btn-icon" id="theme-toggle" aria-label="Toggle light mode" title="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="btn-icon nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
 
-        <div class="game-grid" id="gameGrid">
-            <!-- Games will be populated by JavaScript -->
-        </div>
+  <!-- SEARCH OVERLAY (global) -->
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search games">
+    <div class="search-box">
+      <div class="search-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="search-input" placeholder="Search games, genre, size..." autocomplete="off" spellcheck="false" />
+        <kbd>ESC</kbd>
+      </div>
+      <div class="search-results" id="search-results" role="listbox" aria-live="polite"></div>
+    </div>
+  </div>
 
-        <div class="pagination">
-            <a href="./Game_page.html"><button>← Previous</button></a>
-            <button>1</button>
-            <button class="active">2</button>
-            <button>3</button>
-            <button>Next →</button>
+  <!-- SHORTCUTS PANEL (global) -->
+  <div class="shortcuts-panel" id="shortcuts-panel" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+    <div class="shortcuts-content">
+      <div class="shortcuts-header">
+        <span>Keyboard Shortcuts</span>
+        <button class="btn-icon" id="shortcuts-close" aria-label="Close shortcuts">✕</button>
+      </div>
+      <ul class="shortcuts-list">
+        <li><kbd>Ctrl</kbd><kbd>K</kbd> <span>Focus Search</span></li>
+        <li><kbd>Esc</kbd> <span>Clear Search / Close</span></li>
+        <li><kbd>?</kbd> <span>Toggle This Guide</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- HERO SECTION — game library page 2 -->
+    <section class="hero" id="hero" aria-label="Game Library Hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>GAME LIBRARY · PAGE 2</span>
         </div>
+        <h1 class="hero-title">
+          <span class="title-line">GAME</span>
+          <span class="title-line title-accent">VAULT II</span>
+        </h1>
+        <p class="hero-subtitle">More direct downloads · 20 additional verified releases</p>
+        <p class="hero-warning">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          VPN required · Always scan before executing · Use at your own risk
+        </p>
+        <div class="hero-actions">
+          <a href="#game-grid" class="btn-primary">Browse Games</a>
+          <button class="btn-ghost" id="shortcuts-trigger-btn">Shortcuts</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num" id="stat-tools">20</span><span class="stat-label">Games</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num">8</span><span class="stat-label">Genres</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num" id="stat-safe">18</span><span class="stat-label">Verified</span></div>
+        </div>
+      </div>
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- Global control row (shortcuts + hint) -->
+    <div class="global-controls">
+      <button class="ctrl-btn" id="show-shortcuts-btn-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
+        Shortcuts
+      </button>
+      <span class="ctrl-hint">Press <kbd>?</kbd> for help</span>
     </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 Game Library. All resources are provided for educational purposes.</p>
+    <!-- GAMES GRID SECTION (page 2 data) -->
+    <section class="resource-section reveal" id="game-grid">
+      <div class="section-header" style="cursor: default; background: var(--bg-2);">
+        <div class="section-title-group">
+          <span class="section-index">🎮</span>
+          <h2 class="section-title">Direct Download Vault · Page 2</h2>
+          <span class="section-badge">20 releases</span>
         </div>
-    </footer>
+      </div>
+      <div class="section-body" style="max-height: none; opacity: 1;">
+        <div class="cards-grid" id="game-cards-container">
+          <!-- all games from original page2, transformed to tool-card style -->
+          <!-- Game 21: Hogwarts Legacy -->
+          <article class="tool-card" data-search="hogwarts legacy harry potter adventure open world 85gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Hogwarts Legacy</h3>
+                <p class="card-desc">Open-world action RPG set in the wizarding world of Harry Potter.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">85 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/sqsvm6qwnpnf" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated new-tag">Featured</span></div>
+            </div>
+          </article>
+          <!-- Game 22: Forza Horizon 5 -->
+          <article class="tool-card" data-search="forza horizon 5 racing open world 110gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Forza Horizon 5</h3>
+                <p class="card-desc">Open-world racing game set in a fictional representation of Mexico.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">110 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/rx1qjh1hkq4j" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated new-tag">Featured</span></div>
+            </div>
+          </article>
+          <!-- Game 23: Spider-Man -->
+          <article class="tool-card" data-search="spider man marvel action 55gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Spider-Man</h3>
+                <p class="card-desc">Action-adventure game based on the Marvel Comics superhero Spider-Man.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">55 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/716go6imtzta" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">Repack</span></div>
+            </div>
+          </article>
+          <!-- Game 24: Watch Dogs -->
+          <article class="tool-card" data-search="watch dogs open world hacking 25gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Watch Dogs</h3>
+                <p class="card-desc">Open-world action-adventure game set in a fictionalized Chicago.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">25 GB</span><span class="safety-tag safe">● Safe</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/tih1vqd4m3nt" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2014</span></div>
+            </div>
+          </article>
+          <!-- Game 25: Spider-Man 2 -->
+          <article class="tool-card" data-search="spider man 2 miles morales sequel 90gb new">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Spider-Man 2</h3>
+                <p class="card-desc">Sequel featuring both Peter Parker and Miles Morales.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">90 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/5wj5uvnxura5" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated new-tag">New!</span></div>
+            </div>
+          </article>
+          <!-- Game 26: Dark Souls 2 -->
+          <article class="tool-card" data-search="dark souls 2 rpg challenging 12gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/><path d="M12 6v6l4 2"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Dark Souls 2</h3>
+                <p class="card-desc">Action role-playing game known for its challenging gameplay.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">12 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/97ki7d4o0n3w" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">Scholar</span></div>
+            </div>
+          </article>
+          <!-- Game 27: FIFA 23 -->
+          <article class="tool-card" data-search="fifa 23 football sports 50gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/><path d="M7 9l4-2 4 2-1 5-3 3-3-3-1-5z"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">FIFA 23</h3>
+                <p class="card-desc">Football simulation with various leagues and teams.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">50 GB</span><span class="safety-tag safe">● Safe</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/zmasjuexf733" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2022</span></div>
+            </div>
+          </article>
+          <!-- Game 28: Cuphead -->
+          <article class="tool-card" data-search="cuphead indie run gun 4gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/><path d="M8 12h8M12 8v8"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Cuphead</h3>
+                <p class="card-desc">Run and gun indie game with 1930s cartoon art style.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">4 GB</span><span class="safety-tag safe">● Safe</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/n6odzuvudocs" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">Indie</span></div>
+            </div>
+          </article>
+          <!-- Game 29: The Witcher 3 -->
+          <article class="tool-card" data-search="witcher 3 rpg open world 50gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">The Witcher 3</h3>
+                <p class="card-desc">Action RPG set in a fantasy world. GOTY edition.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">50 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/wge5xqrqagzc" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated new-tag">Featured</span></div>
+            </div>
+          </article>
+          <!-- Game 30: Hollow Knight -->
+          <article class="tool-card" data-search="hollow knight indie metroidvania 9gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/><path d="M8 12h8M12 8v8"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Hollow Knight</h3>
+                <p class="card-desc">Action-adventure game set in a haunted insect kingdom.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">9 GB</span><span class="safety-tag safe">● Safe</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/ibozyrc7vpjq" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2017</span></div>
+            </div>
+          </article>
+          <!-- Game 31: AC Black Flag -->
+          <article class="tool-card" data-search="assassin's creed black flag pirate 30gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><polygon points="12 2 15 9 22 9 16 14 19 22 12 17 5 22 8 14 2 9 9 9 12 2"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Assassin's Creed Black Flag</h3>
+                <p class="card-desc">Golden Age of Piracy, naval combat, open world.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">30 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/x05hezzbg7tn" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2013</span></div>
+            </div>
+          </article>
+          <!-- Game 32: Mafia Definitive -->
+          <article class="tool-card" data-search="mafia definitive edition remake 45gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M20 12H4M12 4v16"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Mafia: Definitive Edition</h3>
+                <p class="card-desc">Remake of the 1930s underworld classic.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">45 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/9lgps5dsumpd" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2020</span></div>
+            </div>
+          </article>
+          <!-- Game 33: Star Wars Jedi Fallen Order -->
+          <article class="tool-card" data-search="star wars jedi fallen order action 55gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Star Wars Jedi: Fallen Order</h3>
+                <p class="card-desc">Action-adventure set in the Star Wars universe.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">55 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/qti3paiyxshg" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2019</span></div>
+            </div>
+          </article>
+          <!-- Game 34: Fallout 4 -->
+          <article class="tool-card" data-search="fallout 4 rpg post apocalyptic 30gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/><path d="M12 8v4l3 3"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Fallout 4</h3>
+                <p class="card-desc">Post-apocalyptic Boston, RPG with settlement building.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">30 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/aftsmcep54ql" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2015</span></div>
+            </div>
+          </article>
+          <!-- Game 35: Batman Arkham Origins -->
+          <article class="tool-card" data-search="batman arkham origins action 17gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Batman: Arkham Origins</h3>
+                <p class="card-desc">Prequel to the Arkham series, early years of Batman.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">17 GB</span><span class="safety-tag safe">● Safe</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/q22diwngc3gk" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2013</span></div>
+            </div>
+          </article>
+          <!-- Game 36: Detroit Become Human -->
+          <article class="tool-card" data-search="detroit become human adventure 55gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Detroit: Become Human</h3>
+                <p class="card-desc">Interactive drama in a futuristic Detroit.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">55 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/jm9rg8ae8koj" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2018</span></div>
+            </div>
+          </article>
+          <!-- Game 37: Watch Dogs 2 -->
+          <article class="tool-card" data-search="watch dogs 2 open world hacking 27gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Watch Dogs 2</h3>
+                <p class="card-desc">San Francisco Bay Area open-world hacking adventure.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">27 GB</span><span class="safety-tag safe">● Safe</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/2u96bsppi26y" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2016</span></div>
+            </div>
+          </article>
+          <!-- Game 38: AC Unity -->
+          <article class="tool-card" data-search="assassin's creed unity french revolution 45gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><polygon points="12 2 15 9 22 9 16 14 19 22 12 17 5 22 8 14 2 9 9 9 12 2"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Assassin's Creed Unity</h3>
+                <p class="card-desc">Paris during the French Revolution, co-op multiplayer.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">45 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/e5shwi6a457m" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2014</span></div>
+            </div>
+          </article>
+          <!-- Game 39: Far Cry 3 -->
+          <article class="tool-card" data-search="far cry 3 shooter tropical island 15gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a10 10 0 0 0-10 10 10 10 0 0 0 10 10 10 10 0 0 0 10-10 10 10 0 0 0-10-10z"/><path d="M12 8v8M8 12h8"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Far Cry 3</h3>
+                <p class="card-desc">First-person shooter on a tropical island, iconic villain.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">15 GB</span><span class="safety-tag safe">● Safe</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/hnam4zxjo3k5" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2012</span></div>
+            </div>
+          </article>
+          <!-- Game 40: Doom Eternal -->
+          <article class="tool-card" data-search="doom eternal shooter 50gb">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><polygon points="12 2 15 9 22 9 16 14 19 22 12 17 5 22 8 14 2 9 9 9 12 2"/></svg></div>
+              <div class="card-content">
+                <h3 class="card-name">Doom Eternal</h3>
+                <p class="card-desc">Fast-paced FPS, the fifth main game in the Doom series.</p>
+                <div class="card-meta"><div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div><span class="size-tag">50 GB</span><span class="safety-tag caution">● Caution</span></div>
+              </div>
+              <div class="card-actions"><a href="https://buzzheavier.com/ydoifogzx08c" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a><span class="card-updated">2020</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-    <script>
-        // Game data for page 2
-        const games = [
-            {
-                id: 21,
-                title: "Hogwarts Legacy",
-                icon: "fas fa-hat-wizard",
-                category: "adventure",
-                description: "Open-world action RPG set in the wizarding world of Harry Potter.",
-                year: 2023,
-                size: "85 GB",
-                url: "https://buzzheavier.com/sqsvm6qwnpnf",
-                featured: true
-            },
-            {
-                id: 22,
-                title: "Forza Horizon 5",
-                icon: "fas fa-car",
-                category: "sports",
-                description: "Open-world racing game set in a fictional representation of Mexico.",
-                year: 2021,
-                size: "110 GB",
-                url: "https://buzzheavier.com/rx1qjh1hkq4j",
-                featured: true
-            },
-            {
-                id: 23,
-                title: "Spider-Man",
-                icon: "fas fa-spider",
-                category: "action",
-                description: "Action-adventure game based on the Marvel Comics superhero Spider-Man.",
-                year: 2018,
-                size: "55 GB",
-                url: "https://buzzheavier.com/716go6imtzta"
-            },
-            {
-                id: 24,
-                title: "Watch Dogs",
-                icon: "fas fa-laptop-code",
-                category: "open-world",
-                description: "Open-world action-adventure game set in a fictionalized Chicago.",
-                year: 2014,
-                size: "25 GB",
-                url: "https://buzzheavier.com/tih1vqd4m3nt"
-            },
-            {
-                id: 25,
-                title: "Spider-Man 2",
-                icon: "fas fa-spider",
-                category: "action",
-                description: "Sequel to the 2018 Spider-Man game, featuring both Peter Parker and Miles Morales.",
-                year: 2023,
-                size: "90 GB",
-                url: "https://buzzheavier.com/5wj5uvnxura5",
-                new: true
-            },
-            {
-                id: 26,
-                title: "Dark Souls 2",
-                icon: "fas fa-skull",
-                category: "rpg",
-                description: "Action role-playing game known for its challenging gameplay.",
-                year: 2014,
-                size: "12 GB",
-                url: "https://buzzheavier.com/97ki7d4o0n3w"
-            },
-            {
-                id: 27,
-                title: "FIFA 23",
-                icon: "fas fa-futbol",
-                category: "sports",
-                description: "Football simulation video game featuring various leagues and teams.",
-                year: 2022,
-                size: "50 GB",
-                url: "https://buzzheavier.com/zmasjuexf733"
-            },
-            {
-                id: 28,
-                title: "Cuphead",
-                icon: "fas fa-mug-hot",
-                category: "indie",
-                description: "Run and gun indie game known for its 1930s cartoon art style.",
-                year: 2017,
-                size: "4 GB",
-                url: "https://buzzheavier.com/n6odzuvudocs"
-            },
-            {
-                id: 29,
-                title: "The Witcher 3",
-                icon: "fas fa-dragon",
-                category: "rpg",
-                description: "Action role-playing game set in a fantasy world.",
-                year: 2015,
-                size: "50 GB",
-                url: "https://buzzheavier.com/wge5xqrqagzc",
-                featured: true
-            },
-            {
-                id: 30,
-                title: "Hollow Knight",
-                icon: "fas fa-bug",
-                category: "indie",
-                description: "Action-adventure game set in a fictional ancient insect kingdom.",
-                year: 2017,
-                size: "9 GB",
-                url: "https://buzzheavier.com/ibozyrc7vpjq"
-            },
-            {
-                id: 31,
-                title: "Assassin's Creed Black Flag",
-                icon: "fas fa-ship",
-                category: "action",
-                description: "Action-adventure game set during the Golden Age of Piracy.",
-                year: 2013,
-                size: "30 GB",
-                url: "https://buzzheavier.com/x05hezzbg7tn"
-            },
-            {
-                id: 32,
-                title: "Mafia: Definitive Edition",
-                icon: "fas fa-user-secret",
-                category: "action",
-                description: "Remake of the 2002 game Mafia, set in the 1930s underworld.",
-                year: 2020,
-                size: "45 GB",
-                url: "https://buzzheavier.com/9lgps5dsumpd"
-            },
-            {
-                id: 33,
-                title: "Star Wars Jedi: Fallen Order",
-                icon: "fas fa-jedi",
-                category: "action",
-                description: "Action-adventure game set in the Star Wars universe.",
-                year: 2019,
-                size: "55 GB",
-                url: "https://buzzheavier.com/qti3paiyxshg"
-            },
-            {
-                id: 34,
-                title: "Fallout 4",
-                icon: "fas fa-radiation",
-                category: "rpg",
-                description: "Action role-playing game set in a post-apocalyptic Boston.",
-                year: 2015,
-                size: "30 GB",
-                url: "https://buzzheavier.com/aftsmcep54ql"
-            },
-            {
-                id: 35,
-                title: "Batman: Arkham Origins",
-                icon: "fas fa-mask",
-                category: "action",
-                description: "Action-adventure game based on the DC Comics superhero Batman.",
-                year: 2013,
-                size: "17 GB",
-                url: "https://buzzheavier.com/q22diwngc3gk"
-            },
-            {
-                id: 36,
-                title: "Detroit: Become Human",
-                icon: "fas fa-robot",
-                category: "adventure",
-                description: "Interactive drama and action-adventure game set in a futuristic Detroit.",
-                year: 2018,
-                size: "55 GB",
-                url: "https://buzzheavier.com/jm9rg8ae8koj"
-            },
-            {
-                id: 37,
-                title: "Watch Dogs 2",
-                icon: "fas fa-laptop-code",
-                category: "open-world",
-                description: "Open-world action-adventure game set in the San Francisco Bay Area.",
-                year: 2016,
-                size: "27 GB",
-                url: "https://buzzheavier.com/2u96bsppi26y"
-            },
-            {
-                id: 38,
-                title: "Assassin's Creed Unity",
-                icon: "fas fa-landmark",
-                category: "action",
-                description: "Action-adventure game set in Paris during the French Revolution.",
-                year: 2014,
-                size: "45 GB",
-                url: "https://buzzheavier.com/e5shwi6a457m"
-            },
-            {
-                id: 39,
-                title: "Far Cry 3",
-                icon: "fas fa-fire",
-                category: "shooter",
-                description: "First-person shooter set on a tropical island.",
-                year: 2012,
-                size: "15 GB",
-                url: "https://buzzheavier.com/hnam4zxjo3k5"
-            },
-            {
-                id: 40,
-                title: "Doom Eternal",
-                icon: "fas fa-skull-crossbones",
-                category: "shooter",
-                description: "First-person shooter and the fifth main game in the Doom series.",
-                year: 2020,
-                size: "50 GB",
-                url: "https://buzzheavier.com/ydoifogzx08c"
-            }
-        ];
+    <!-- Pagination cyber style -->
+    <div class="pagination-cyber">
+      <a href="Game_page.html" class="page-btn">← Previous</a>
+      <a href="Game_page.html" class="page-btn">01</a>
+      <a href="Game_page_2.html" class="page-btn active-page">02</a>
+      <a href="#" class="page-btn">03</a>
+      <a href="#" class="page-btn">Next →</a>
+    </div>
 
-        // Function to render games
-        function renderGames(gameList = games) {
-            const gameGrid = document.getElementById('gameGrid');
-            gameGrid.innerHTML = '';
+  </main>
 
-            if (gameList.length === 0) {
-                gameGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: white;">No games found matching your criteria.</div>';
-                return;
-            }
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
 
-            gameList.forEach(game => {
-                const gameCard = document.createElement('div');
-                gameCard.className = 'game-card';
+  <!-- FOOTER (identical to index) -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">[PIRACY.RES]</span>
+        <p class="footer-disclaimer">This site is for educational purposes only. The author does not endorse or encourage copyright infringement. Always comply with your local laws. Use a VPN. Use your brain.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <span class="footer-col-title">Pages</span>
+          <a href="Game_page.html">Games</a>
+          <a href="Help.html">Help</a>
+          <a href="Software_Library.html">Software</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Contact</span>
+          <a href="https://x.com/BJ0RN9" target="_blank" rel="noopener">Twitter / X</a>
+          <a href="https://github.com/barnacle040?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Barnacle. All rights reserved.</span>
+      <span class="footer-sep">·</span>
+      <span>Last updated: September 2025</span>
+      <span class="footer-sep">·</span>
+      <span>Icons by <a href="https://flaticon.com" target="_blank" rel="noopener">Flaticon</a></span>
+    </div>
+  </footer>
 
-                let badges = '';
-                if (game.featured) {
-                    badges += '<span class="badge badge-featured">Featured</span>';
-                }
-                if (game.new) {
-                    badges += '<span class="badge badge-new">New</span>';
-                }
-
-                gameCard.innerHTML = `
-                    <div class="card-header">
-                        <div class="game-icon">
-                            <i class="${game.icon}"></i>
-                        </div>
-                        <div class="game-info">
-                            <h3>${game.title} ${badges}</h3>
-                            <span class="category">${game.category.toUpperCase()}</span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p class="game-description">${game.description}</p>
-                        <div class="game-meta">
-                            <span class="game-year">${game.year}</span>
-                            <span class="game-size">${game.size}</span>
-                        </div>
-                        <div class="game-links">
-                            <a href="${game.url}" target="_blank" rel="noopener" class="btn btn-primary">Download</a>
-                            <button class="btn btn-secondary">More Info</button>
-                        </div>
-                    </div>
-                `;
-
-                gameGrid.appendChild(gameCard);
-            });
-
-            // Update stats
-            document.getElementById('gameCount').textContent = `Showing ${gameList.length} games`;
+  <script src="script.js"></script>
+  <script>
+    // ensure shortcuts and search work on game page 2
+    (function() {
+      const shortcutsPanel = document.getElementById('shortcuts-panel');
+      const shortcutsBtns = document.querySelectorAll('#show-shortcuts-btn, #show-shortcuts-btn-2, #shortcuts-trigger-btn');
+      const closeShortcut = document.getElementById('shortcuts-close');
+      function toggleShortcuts(show) {
+        if (!shortcutsPanel) return;
+        if (show === undefined) shortcutsPanel.classList.toggle('open');
+        else if (show) shortcutsPanel.classList.add('open');
+        else shortcutsPanel.classList.remove('open');
+      }
+      shortcutsBtns.forEach(btn => {
+        if (btn) btn.addEventListener('click', (e) => { e.stopPropagation(); toggleShortcuts(); });
+      });
+      if (closeShortcut) closeShortcut.addEventListener('click', () => toggleShortcuts(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '?' && !e.ctrlKey && !e.metaKey && document.activeElement?.tagName !== 'INPUT') {
+          e.preventDefault();
+          toggleShortcuts();
         }
-
-        // Search functionality
-        function searchGames() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const categoryFilter = document.getElementById('categoryFilter').value;
-
-            let filteredGames = games.filter(game => {
-                const matchesSearch = game.title.toLowerCase().includes(searchTerm) ||
-                                     game.description.toLowerCase().includes(searchTerm);
-                const matchesCategory = categoryFilter === 'all' || game.category === categoryFilter;
-                return matchesSearch && matchesCategory;
-            });
-
-            renderGames(filteredGames);
+        if (e.key === 'Escape' && shortcutsPanel?.classList.contains('open')) {
+          shortcutsPanel.classList.remove('open');
         }
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initial render
-            renderGames();
-
-            // Search functionality
-            document.getElementById('searchInput').addEventListener('input', searchGames);
-            document.getElementById('categoryFilter').addEventListener('change', searchGames);
-
-            // Pagination
-            document.querySelectorAll('.pagination button').forEach(button => {
-                button.addEventListener('click', function() {
-                    if (this.textContent.includes('Previous')) {
-                        window.location.href = './Game_page.html';
-                    } else if (this.textContent.includes('Next')) {
-                        // In a real implementation, this would load page 3
-                        alert('Page 3 would load here in a complete implementation');
-                    } else {
-                        document.querySelectorAll('.pagination button').forEach(btn => {
-                            btn.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                    }
-                });
-            });
-
-            // Add animation to cards when they come into view
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                        // Optimization: Stop observing once element is visible to reduce main-thread overhead
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            // Apply initial styles and observe cards
-            document.querySelectorAll('.game-card').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s, transform 0.5s';
-                observer.observe(card);
-            });
+      });
+      const searchOverlay = document.getElementById('search-overlay');
+      const searchToggle = document.getElementById('search-toggle');
+      const searchInput = document.getElementById('search-input');
+      if (searchToggle && searchOverlay) {
+        searchToggle.addEventListener('click', () => {
+          searchOverlay.classList.add('open');
+          searchInput?.focus();
         });
-    </script>
+        document.addEventListener('keydown', (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            searchOverlay.classList.add('open');
+            searchInput?.focus();
+          }
+          if (e.key === 'Escape' && searchOverlay.classList.contains('open')) {
+            searchOverlay.classList.remove('open');
+            if (searchInput) searchInput.value = '';
+          }
+        });
+      }
+      // simple reveal animation for cards (already handled by main script but double-check)
+      const cards = document.querySelectorAll('.tool-card');
+      if (cards.length && typeof IntersectionObserver !== 'undefined') {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        cards.forEach(card => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(15px)';
+          card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          observer.observe(card);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
