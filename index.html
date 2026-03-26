@@ -3,1241 +3,803 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Piracy Resources</title>
-  <meta name="description" content="Safe & efficient piracy tools and guides. Curated resources with safety ratings, platform info, and direct links." />
+  <title>Piracy Resources · Darknet Arsenal</title>
+  <meta name="description" content="Curated piracy tools, media sources, gaming repacks, security utils — with safety ratings and live search." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+   /* ════════════════════════════════════════════════════════
+       CYBER-NOIR BASE (from original style.css)
+       ════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #090b0f;
+      --bg-2:        #0d1117;
+      --bg-3:        #111820;
+      --bg-card:     #0f151e;
+      --border:      rgba(0, 255, 157, 0.08);
+      --border-hover:rgba(0, 255, 157, 0.28);
+      --text:        #e2e8f0;
+      --text-muted:  #6b7a8d;
+      --text-dim:    #3d4f63;
+      --accent:      #00ff9d;
+      --accent-dim:  rgba(0, 255, 157, 0.12);
+      --accent-glow: rgba(0, 255, 157, 0.25);
+      --safe:        #00e676;
+      --safe-bg:     rgba(0, 230, 118, 0.08);
+      --caution:     #ffb300;
+      --caution-bg:  rgba(255, 179, 0, 0.08);
+      --danger:      #ff4d4d;
+      --danger-bg:   rgba(255, 77, 77, 0.08);
+      --font-display: 'Syne', sans-serif;
+      --font-mono:    'JetBrains Mono', monospace;
+      --nav-h:       64px;
+      --max-w:       1280px;
+      --radius:      10px;
+      --radius-lg:   16px;
+      --ease:        cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-theme="light"] {
+      --bg:          #f0f4f8;
+      --bg-2:        #ffffff;
+      --bg-3:        #e8edf3;
+      --bg-card:     #ffffff;
+      --border:      rgba(0, 150, 100, 0.14);
+      --border-hover:rgba(0, 150, 100, 0.4);
+      --text:        #0f1923;
+      --text-muted:  #4a5568;
+      --text-dim:    #a0aec0;
+      --accent:      #007a4d;
+      --accent-dim:  rgba(0, 122, 77, 0.08);
+      --accent-glow: rgba(0, 122, 77, 0.15);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.65;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* scanlines + canvas */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+      opacity: 0.5;
+    }
+    [data-theme="light"] .scanlines { display: none; }
+    #hero-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.45;
+    }
+
+    /* nav, hero, global controls from original */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      border-bottom: 1px solid var(--border);
+      background: rgba(9, 11, 15, 0.82);
+      backdrop-filter: blur(20px) saturate(1.4);
+    }
+    [data-theme="light"] .site-nav { background: rgba(240,244,248,0.88); }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .nav-logo:hover { color: var(--accent); }
+    .logo-bracket, .logo-accent { color: var(--accent); }
+    .nav-links { display: flex; gap: 4px; list-style: none; flex-wrap: wrap; flex: 1; }
+    .nav-link {
+      font-size: 12px; font-weight: 500; color: var(--text-muted);
+      text-decoration: none; padding: 6px 10px; border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .nav-link:hover { color: var(--accent); background: var(--accent-dim); }
+    .nav-actions { display: flex; gap: 6px; margin-left: auto; }
+    .btn-icon {
+      width: 36px; height: 36px;
+      background: transparent; border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text-muted);
+      cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+    }
+    .btn-icon:hover { color: var(--accent); border-color: var(--border-hover); background: var(--accent-dim); }
+    .icon-moon { display: none; }
+    [data-theme="light"] .icon-sun { display: none; }
+    [data-theme="light"] .icon-moon { display: block; }
+
+    /* hero */
+    .hero {
+      position: relative; z-index: 1; min-height: 100svh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: calc(var(--nav-h) + 40px) 24px 80px;
+      text-align: center;
+    }
+    .hero-content { max-width: 760px; }
+    .hero-badge {
+      display: inline-flex; gap: 8px; padding: 6px 14px;
+      border: 1px solid var(--accent-dim); border-radius: 100px;
+      font-size: 11px; color: var(--accent); margin-bottom: 32px;
+    }
+    .hero-title {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(52px, 9vw, 110px); line-height: 0.92;
+      margin-bottom: 24px;
+    }
+    .title-accent {
+      color: transparent; -webkit-text-stroke: 1.5px var(--accent);
+    }
+    .hero-subtitle { font-size: clamp(13px,2vw,17px); color: var(--text-muted); margin-bottom: 20px; }
+    .hero-warning {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--caution-bg); border: 1px solid rgba(255,179,0,0.2);
+      border-radius: 8px; padding: 8px 14px; font-size: 12px; color: var(--caution);
+      margin-bottom: 36px;
+    }
+    .btn-primary {
+      padding: 12px 28px; background: var(--accent); color: #000;
+      font-family: var(--font-mono); font-weight: 600; border-radius: 8px;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
+    .btn-ghost {
+      padding: 12px 24px; background: transparent; border: 1px solid var(--border);
+      color: var(--text-muted); border-radius: 8px; cursor: pointer;
+    }
+    .hero-stats { display: flex; gap: 32px; justify-content: center; margin-top: 56px; }
+    .stat-num { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: 11px; color: var(--text-muted); }
+    .stat-divider { width: 1px; height: 32px; background: var(--border); }
+
+    /* global controls */
+    .global-controls {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 24px 24px;
+      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    }
+    .ctrl-btn {
+      background: var(--bg-3); border: 1px solid var(--border); border-radius: 7px;
+      padding: 7px 14px; font-size: 11px; cursor: pointer; color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .ctrl-btn:hover { color: var(--accent); border-color: var(--border-hover); background: var(--accent-dim); }
+    .ctrl-hint { font-size: 11px; color: var(--text-dim); margin-left: 8px; }
+    kbd { font-family: var(--font-mono); background: var(--bg-3); border: 1px solid var(--border); border-radius: 4px; padding: 2px 5px; }
+
+    /* resource sections (cards) */
+    .resource-section {
+      max-width: var(--max-w); margin: 0 auto 8px; padding: 0 24px;
+    }
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 22px; background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--radius); cursor: pointer; margin-bottom: 2px;
+    }
+    .section-title-group { display: flex; align-items: center; gap: 14px; }
+    .section-index { font-size: 11px; color: var(--accent); opacity: 0.7; }
+    .section-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; }
+    .section-badge {
+      font-size: 10px; background: var(--bg-3); border: 1px solid var(--border);
+      border-radius: 100px; padding: 2px 8px; color: var(--text-dim);
+    }
+    .section-toggle { background: transparent; border: none; color: var(--text-muted); cursor: pointer; }
+    .toggle-icon { transition: transform 0.2s; }
+    .section-toggle[aria-expanded="false"] .toggle-icon { transform: rotate(180deg); }
+    .section-body {
+      overflow: hidden; transition: max-height 0.4s ease;
+      max-height: 9999px; padding-bottom: 20px;
+    }
+    .section-body.collapsed { max-height: 0; padding-bottom: 0; }
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 16px; padding-top: 16px;
+    }
+    /* tool card */
+    .tool-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); transition: all 0.2s var(--ease);
+      overflow: hidden;
+    }
+    .tool-card:hover { border-color: var(--border-hover); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 20px var(--accent-glow); }
+    .card-inner { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+    .card-logo-wrap {
+      width: 44px; height: 44px; border-radius: 10px; background: var(--bg-3);
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+    }
+    .card-logo { width: 100%; height: 100%; object-fit: contain; }
+    .card-name { font-family: var(--font-display); font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+    .card-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-bottom: 10px; }
+    .card-meta { display: flex; justify-content: space-between; align-items: center; }
+    .platform-tag { font-size: 15px; opacity: 0.85; margin-right: 4px; }
+    .safety-tag { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 100px; border: 1px solid transparent; }
+    .safety-tag.safe { color: var(--safe); background: var(--safe-bg); border-color: rgba(0,230,118,0.2); }
+    .safety-tag.caution { color: var(--caution); background: var(--caution-bg); border-color: rgba(255,179,0,0.2); }
+    .safety-tag.danger { color: var(--danger); background: var(--danger-bg); border-color: rgba(255,77,77,0.2); }
+    .card-actions { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); margin-top: auto; }
+    .card-link {
+      display: inline-flex; align-items: center; gap: 5px; font-size: 11px;
+      color: var(--accent); text-decoration: none; background: var(--accent-dim);
+      border: 1px solid var(--accent-dim); border-radius: 6px; padding: 5px 10px;
+    }
+    .card-updated { font-size: 10px; color: var(--text-dim); }
+    .fav-btn-card {
+      background: transparent; border: none; color: var(--text-muted);
+      cursor: pointer; font-size: 16px; margin-right: 6px;
+      transition: color 0.1s;
+    }
+    .fav-btn-card.active { color: #f9e2af; }
+    .command-block {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+      padding: 6px 10px; display: flex; align-items: center; gap: 8px;
+      font-size: 10.5px; margin-top: 8px;
+    }
+    .copy-btn { background: transparent; border: none; cursor: pointer; color: var(--text-muted); }
+
+    /* misc */
+    .back-to-top {
+      position: fixed; bottom: 28px; right: 28px; z-index: 90;
+      width: 44px; height: 44px; background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text-muted); cursor: pointer;
+      opacity: 0; visibility: hidden; transition: all 0.2s;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .site-footer {
+      margin-top: 64px; border-top: 1px solid var(--border); background: var(--bg-2);
+      padding: 48px 24px 32px; text-align: center;
+    }
+    .footer-bottom { font-size: 11px; color: var(--text-dim); margin-top: 20px; }
+
+    /* search overlay */
+    .search-overlay {
+      position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px); display: flex; justify-content: center; padding-top: 100px;
+      opacity: 0; visibility: hidden; transition: 0.2s;
+    }
+    .search-overlay.open { opacity: 1; visibility: visible; }
+    .search-box { max-width: 620px; width: 90%; background: var(--bg-2); border-radius: var(--radius-lg); overflow: hidden; }
+    .search-input-wrap { display: flex; align-items: center; padding: 16px 20px; gap: 12px; border-bottom: 1px solid var(--border); }
+    #global-search-input { flex:1; background: transparent; border: none; outline: none; color: var(--text); font-family: var(--font-mono); }
+    .search-results { max-height: 400px; overflow-y: auto; padding: 8px 0; }
+    .search-result-item { padding: 10px 20px; cursor: pointer; color: var(--text); display: flex; justify-content: space-between; }
+    .search-result-item:hover { background: var(--accent-dim); }
+
+    /* inline search field */
+    .inline-search {
+      background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px;
+      padding: 10px 16px; width: 240px; font-family: var(--font-mono);
+      color: var(--text); outline: none;
+    }
+    .no-results { text-align: center; padding: 3rem; color: var(--text-muted); display: none; }
+    @media (max-width: 640px) { .cards-grid { grid-template-columns: 1fr; } }
+    
+    .advanced-controls {
+      max-width: var(--max-w);
+      margin: 0 auto 20px;
+      padding: 0 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .filters-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .filter-badge {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-badge.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    select, .random-btn {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .random-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .trusted-section {
+      margin-top: 32px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+    .subreddit-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .subreddit-link {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: 0.15s;
+    }
+    .subreddit-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    @media (max-width: 640px) {
+      .advanced-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .filters-group {
+        justify-content: space-between;
+      }
+    }
+  </style>
 </head>
 <body>
+<div class="scanlines" aria-hidden="true"></div>
+<canvas id="hero-canvas" aria-hidden="true"></canvas>
 
-  <!-- ─── SCAN LINE OVERLAY ─── -->
-  <div class="scanlines" aria-hidden="true"></div>
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo"><span class="logo-bracket">[</span>PIRACY<span class="logo-accent">.</span>RES<span class="logo-bracket">]</span></a>
+    <ul class="nav-links">
+      <li><a href="#" class="nav-link" data-section="basics">Basics</a></li>
+      <li><a href="#" class="nav-link" data-section="security">Security</a></li>
+      <li><a href="#" class="nav-link" data-section="gaming">Gaming</a></li>
+      <li><a href="#" class="nav-link" data-section="media">Media</a></li>
+      <li><a href="#" class="nav-link" data-section="os">OS</a></li>
+      <li><a href="Game_page.html" class="nav-link" target="_blank" rel="noopener">Games</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-icon" id="search-toggle-overlay" aria-label="Global search">🔍</button>
+      <button class="btn-icon" id="theme-toggle"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    </div>
+  </div>
+</header>
 
-  <!-- ─── PARTICLE CANVAS ─── -->
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="search" id="global-search-input" placeholder="Search tools..."><kbd>ESC</kbd></div>
+    <div class="search-results" id="global-search-results"></div>
+  </div>
+</div>
 
-  <!-- ─── STICKY NAV ─── -->
-  <header class="site-nav" id="site-nav">
-    <nav class="nav-inner">
-      <a href="#hero" class="nav-logo" aria-label="Home">
-        <span class="logo-bracket">[</span>PIRACY<span class="logo-accent">.</span>RES<span class="logo-bracket">]</span>
-      </a>
+<main>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="badge-dot"></span>Community Curated Resources</div>
+      <h1 class="hero-title"><span class="title-line">Piracy</span><span class="title-line title-accent">Resources</span></h1>
+      <p class="hero-subtitle">Safe & Efficient Tools + Guides</p>
+      <p class="hero-warning">⚠ Use at your own risk — <strong>VPN recommended</strong> for all downloads</p>
+      <div class="hero-actions"><a href="#basics" class="btn-primary">Explore Resources</a><button class="btn-ghost" id="expand-all-hero">Expand All</button></div>
+      <div class="hero-stats"><div class="stat"><span class="stat-num" id="stat-tools">58</span><span class="stat-label">Tools</span></div><div class="stat-divider"></div><div class="stat"><span class="stat-num">14</span><span class="stat-label">Categories</span></div></div>
+    </div>
+  </section>
 
-      <ul class="nav-links" id="nav-links" role="list">
-        <li><a href="#basics" class="nav-link" data-section="basics">Basics</a></li>
-        <li><a href="#security" class="nav-link" data-section="security">Security</a></li>
-        <li><a href="#extensions" class="nav-link" data-section="extensions">Extensions</a></li>
-        <li><a href="#media" class="nav-link" data-section="media">Media</a></li>
-        <li><a href="#gaming" class="nav-link" data-section="gaming">Gaming</a></li>
-        <li><a href="#system" class="nav-link" data-section="system">System</a></li>
-        <li><a href="#os" class="nav-link" data-section="os">OS</a></li>
-        <li><a href="#misc" class="nav-link" data-section="misc">Misc</a></li>
-        <li>
-          <a href="Game_page.html" class="nav-link" target="_blank" rel="noopener">Games </a>
-        </li>
-       
-      </ul>
-
-      <div class="nav-actions">
-        <button class="btn-icon" id="search-toggle" aria-label="Open search (Ctrl+K)" title="Search (Ctrl+K)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-        <button class="btn-icon" id="theme-toggle" aria-label="Toggle light mode" title="Toggle theme">
-          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <button class="btn-icon nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
+  <!-- New advanced controls -->
+  <div class="advanced-controls">
+    <div class="filters-group">
+      <select id="sort-select">
+        <option value="name-asc">Sort by: Name (A–Z)</option>
+        <option value="name-desc">Sort by: Name (Z–A)</option>
+        <option value="safety">Sort by: Safety (Safe → Caution → Danger)</option>
+        <option value="updated">Sort by: Last Updated (Newest)</option>
+      </select>
+      <div id="platform-filters" class="filters-group">
+        <span class="filter-badge" data-platform="windows">🪟 Windows</span>
+        <span class="filter-badge" data-platform="macos">🍎 macOS</span>
+        <span class="filter-badge" data-platform="linux">🐧 Linux</span>
+        <span class="filter-badge" data-platform="web">🌐 Web</span>
       </div>
-    </nav>
-  </header>
-
-  <!-- ─── SEARCH OVERLAY ─── -->
-  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search tools">
-    <div class="search-box">
-      <div class="search-input-wrap">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="search" id="search-input" placeholder="Search tools, categories..." autocomplete="off" spellcheck="false" />
-        <kbd>ESC</kbd>
+      <div id="safety-filters" class="filters-group">
+        <span class="filter-badge" data-safety="safe">● Safe</span>
+        <span class="filter-badge" data-safety="caution">● Caution</span>
+        <span class="filter-badge" data-safety="danger">● High Risk</span>
       </div>
-      <div class="search-results" id="search-results" role="listbox" aria-live="polite"></div>
+      <button id="random-tool-btn" class="random-btn">🎲 Random Tool</button>
     </div>
   </div>
 
-  <!-- ─── SHORTCUTS PANEL ─── -->
-  <div class="shortcuts-panel" id="shortcuts-panel" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
-    <div class="shortcuts-content">
-      <div class="shortcuts-header">
-        <span>Keyboard Shortcuts</span>
-        <button class="btn-icon" id="shortcuts-close" aria-label="Close shortcuts">✕</button>
+  <div class="global-controls">
+    <button class="ctrl-btn" id="expand-all-btn">▾ Expand All</button>
+    <button class="ctrl-btn" id="collapse-all-btn">▴ Collapse All</button>
+    <span class="ctrl-divider"></span>
+    <input type="text" id="search-input-local" class="inline-search" placeholder="🔍 Filter tools... (Ctrl+K)" autocomplete="off">
+    <button class="ctrl-btn" id="fav-filter-btn">★ Favorites (<span id="fav-count">0</span>)</button>
+    <span class="ctrl-hint"><kbd>Ctrl+E</kbd> expand · <kbd>?</kbd> help</span>
+  </div>
+
+  <div id="no-results-message" class="no-results">No matching tools — try another keyword</div>
+  <div id="sections-container"></div>
+
+  <!-- Trusted Uploaders & Repackers section -->
+  <div class="resource-section trusted-section" id="trusted">
+    <div class="section-header">
+      <div class="section-title-group">
+        <span class="section-index">⭐</span>
+        <h2 class="section-title">Trusted Uploaders & Repackers</h2>
+        <span class="section-badge">5 groups</span>
       </div>
-      <ul class="shortcuts-list">
-        <li><kbd>Ctrl</kbd><kbd>K</kbd> <span>Focus Search</span></li>
-        <li><kbd>Ctrl</kbd><kbd>E</kbd> <span>Expand All Sections</span></li>
-        <li><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>E</kbd> <span>Collapse All Sections</span></li>
-        <li><kbd>Esc</kbd> <span>Clear Search / Close</span></li>
-        <li><kbd>?</kbd> <span>Toggle This Guide</span></li>
-      </ul>
+      <button class="section-toggle" aria-expanded="true"><svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
+    </div>
+    <div class="section-body">
+      <div class="cards-grid" id="trusted-grid"></div>
     </div>
   </div>
 
-  <main id="main">
-
-    <!-- ─── HERO ─── -->
-    <section class="hero" id="hero" aria-label="Hero">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
-          <span>Community Curated Resources</span>
-        </div>
-        <h1 class="hero-title">
-          <span class="title-line">Piracy</span>
-          <span class="title-line title-accent">Resources</span>
-        </h1>
-        <p class="hero-subtitle">Safe &amp; Efficient Tools + Guides</p>
-        <p class="hero-warning">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Use at your own risk — <strong>VPN recommended</strong> for all downloads
-        </p>
-        <div class="hero-actions">
-          <a href="#basics" class="btn-primary">Explore Resources</a>
-          <button class="btn-ghost" id="expand-all-hero">Expand All</button>
-        </div>
-        <div class="hero-stats">
-          <div class="stat"><span class="stat-num" id="stat-tools">45</span><span class="stat-label">Tools</span></div>
-          <div class="stat-divider"></div>
-          <div class="stat"><span class="stat-num">14</span><span class="stat-label">Categories</span></div>
-          <div class="stat-divider"></div>
-          <div class="stat"><span class="stat-num" id="stat-safe">32</span><span class="stat-label">Safe-rated</span></div>
-        </div>
+  <!-- Community & Resources (subreddits) -->
+  <div class="resource-section" id="community">
+    <div class="section-header">
+      <div class="section-title-group">
+        <span class="section-index">💬</span>
+        <h2 class="section-title">Community & Resources</h2>
+        <span class="section-badge">4 subreddits</span>
       </div>
-      <div class="hero-scroll-hint" aria-hidden="true">
-        <span>scroll</span>
-        <div class="scroll-line"></div>
-      </div>
-    </section>
-
-    <!-- ─── GLOBAL CONTROLS ─── -->
-    <div class="global-controls">
-      <button class="ctrl-btn" id="expand-all">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
-        Expand All
-      </button>
-      <button class="ctrl-btn" id="collapse-all">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
-        Collapse All
-      </button>
-      <span class="ctrl-divider"></span>
-      <button class="ctrl-btn" id="show-shortcuts-btn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
-        Shortcuts
-      </button>
-      <span class="ctrl-hint">Press <kbd>?</kbd> for help</span>
+      <button class="section-toggle" aria-expanded="true"><svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
     </div>
-
-    <!-- ─────────────────────────────────────────── -->
-    <!--  SECTION: BASICS                            -->
-    <!-- ─────────────────────────────────────────── -->
-    <section class="resource-section reveal" id="basics">
-      <div class="section-header" data-toggle="basics">
-        <div class="section-title-group">
-          <span class="section-index">01</span>
-          <h2 class="section-title">Basics</h2>
-          <span class="section-badge">6 tools</span>
-        </div>
-        <button class="section-toggle" aria-expanded="true" aria-controls="basics-body">
-          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </button>
-      </div>
-      <div class="section-body" id="basics-body">
-        <div class="cards-grid">
-
-          <article class="tool-card" data-search="ublock origin browser extension adblocker windows macos linux">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/ublock.png" alt="uBlock Origin" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">uBlock Origin</h3>
-                <p class="card-desc">The most effective ad and tracker blocker. Essential first install.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="macOS">🍎</span>
-                    <span class="platform-tag" title="Linux">🐧</span>
-                  </div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/" class="card-link" target="_blank" rel="noopener" aria-label="Download uBlock Origin">
-                  Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card tool-card--warning" data-search="vpn torrent protection privacy">
-            <div class="card-inner">
-              <div class="card-logo-wrap card-logo-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">VPN (Required)</h3>
-                <p class="card-desc">Bind your VPN to your torrent client. Always use when downloading.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="All platforms">🌐</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <span class="card-note">Required for torrenting</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="IDM internet download manager large downloads windows">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/IDM.PNG" alt="IDM" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">IDM</h3>
-                <p class="card-desc">Internet Download Manager — fastest download speeds for large files.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://steamrip.com/idm-internet-download-manager-free-download-1a/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="qbittorrent torrent client windows macos linux">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/torrent.png" alt="qBittorrent" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">qBittorrent</h3>
-                <p class="card-desc">Open-source torrent client. Clean, no bloatware, bind to VPN.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="macOS">🍎</span>
-                    <span class="platform-tag" title="Linux">🐧</span>
-                  </div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.qbittorrent.org/download" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="winrar archive extraction windows">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/winrar.png" alt="WinRAR" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">WinRAR</h3>
-                <p class="card-desc">Extract RAR, ZIP, and other archives. The classic extraction tool.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.win-rar.com/start.html?&L=0" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="jdownloader download manager alternative idm windows macos linux">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/jdownloader.jpg" alt="JDownloader" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">JDownloader</h3>
-                <p class="card-desc">Cross-platform IDM alternative. Great for hosting sites and batch downloads.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="macOS">🍎</span>
-                    <span class="platform-tag" title="Linux">🐧</span>
-                  </div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://jdownloader.org/download/index" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ─────────────────────────────────────────── -->
-    <!--  SECTION: SECURITY                          -->
-    <!-- ─────────────────────────────────────────── -->
-    <section class="resource-section reveal" id="security">
-      <div class="section-header" data-toggle="security">
-        <div class="section-title-group">
-          <span class="section-index">02</span>
-          <h2 class="section-title">Virus Protection</h2>
-          <span class="section-badge">3 tools</span>
-        </div>
-        <button class="section-toggle" aria-expanded="true" aria-controls="security-body">
-          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </button>
-      </div>
-      <div class="section-body" id="security-body">
-        <div class="cards-grid">
-
-          <article class="tool-card" data-search="malwarebytes antivirus malware protection windows macos">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/malwarebytes-logo-1-3657666643.png" alt="Malwarebytes" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Malwarebytes</h3>
-                <p class="card-desc">Best-in-class malware scanner. Run it after every suspicious download.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="macOS">🍎</span>
-                  </div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.malwarebytes.com" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="haveibeenpwned pwned email password breach check web">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/pwned.png" alt="HaveIBeenPwned" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">HaveIBeenPwned</h3>
-                <p class="card-desc">Check if your email or password appears in known data breaches.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://haveibeenpwned.com/" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="virustotal scan file url malware check web new">
-            <div class="card-inner">
-              <div class="card-logo-wrap card-logo-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">VirusTotal</h3>
-                <p class="card-desc">Scan files and URLs with 70+ antivirus engines before running anything.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.virustotal.com/" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated new-tag">New!</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ─────────────────────────────────────────── -->
-    <!--  SECTION: BROWSER EXTENSIONS                -->
-    <!-- ─────────────────────────────────────────── -->
-    <section class="resource-section reveal" id="extensions">
-      <div class="section-header" data-toggle="extensions">
-        <div class="section-title-group">
-          <span class="section-index">03</span>
-          <h2 class="section-title">Browser Extensions</h2>
-          <span class="section-badge new-badge">New! · 4 tools</span>
-        </div>
-        <button class="section-toggle" aria-expanded="true" aria-controls="extensions-body">
-          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </button>
-      </div>
-      <div class="section-body" id="extensions-body">
-        <div class="cards-grid">
-
-          <article class="tool-card" data-search="sponsorblock skip youtube sponsors ads browser extension web">
-            <div class="card-inner">
-              <div class="card-logo-wrap card-logo-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/><line x1="19" y1="3" x2="19" y2="21"/></svg>
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">SponsorBlock</h3>
-                <p class="card-desc">Community-driven YouTube sponsor segment skipper. Never watch an ad read again.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://sponsor.ajay.app/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated new-tag">New!</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="privacy badger tracker blocker eff web browser extension">
-            <div class="card-inner">
-              <div class="card-logo-wrap card-logo-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Privacy Badger</h3>
-                <p class="card-desc">EFF's auto-learning tracker blocker. Learns as you browse, blocks as it learns.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://privacybadger.org/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated new-tag">New!</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="return youtube dislike dislikes extension web browser">
-            <div class="card-inner">
-              <div class="card-logo-wrap card-logo-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3z"/><path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Return YouTube Dislike</h3>
-                <p class="card-desc">Restore the dislike count to YouTube using community data.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://returnyoutubedislike.com/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated new-tag">New!</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="dark reader dark mode every site browser extension web">
-            <div class="card-inner">
-              <div class="card-logo-wrap card-logo-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Dark Reader</h3>
-                <p class="card-desc">Force dark mode on any website. Eyes will thank you.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://darkreader.org/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated new-tag">New!</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ─────────────────────────────────────────── -->
-    <!--  SECTION: MEDIA (Anime + TV + Music)        -->
-    <!-- ─────────────────────────────────────────── -->
-    <section class="resource-section reveal" id="media">
-      <div class="section-header" data-toggle="media">
-        <div class="section-title-group">
-          <span class="section-index">04</span>
-          <h2 class="section-title">Media &amp; Streaming</h2>
-          <span class="section-badge">7 tools</span>
-        </div>
-        <button class="section-toggle" aria-expanded="true" aria-controls="media-body">
-          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </button>
-      </div>
-      <div class="section-body" id="media-body">
-
-        <div class="subsection-label">Anime</div>
-        <div class="cards-grid">
-          <article class="tool-card" data-search="hianime anime streaming web">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/hianime.png" alt="HiAnime" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">HiAnime</h3>
-                <p class="card-desc">Premium anime streaming with sub and dub. Large library, fast servers.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://hianime.pe" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="subsection-label">TV Shows &amp; Movies</div>
-        <div class="cards-grid">
-
-          <article class="tool-card" data-search="1337x torrent movies tv shows web">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/1337x.png" alt="1337x" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">1337x</h3>
-                <p class="card-desc">Top-tier torrent index for movies, TV series, and more. Wide selection.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://1337x.to/movie-library/1/" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="rivestream streaming movies tv shows web">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/rive.png" alt="RiveStream" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">RiveStream</h3>
-                <p class="card-desc">Stream movies and TV shows directly in browser. No account required.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://rivestream.org" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="cineby streaming movies tv web">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/cineby.PNG" alt="Cineby" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Cineby</h3>
-                <p class="card-desc">Clean UI streaming site for movies and series. Regularly updated catalog.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.cineby.app" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="lookmovie streaming movies tv web">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/lookmovie.png" alt="LookMovie" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">LookMovie</h3>
-                <p class="card-desc">High quality streams for movies and TV. Good search and filter options.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.lookmovie2.to" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-
-        <div class="subsection-label">Music</div>
-        <div class="cards-grid">
-
-          <article class="tool-card" data-search="spotx spotify ad free mod windows music">
-            <div class="card-inner">
-              <div class="card-logo-wrap card-logo-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12a4 4 0 0 1 4-4m4 8a4 4 0 0 1-4-4"/><path d="M7 9a7 7 0 0 1 10 0M5 17a10 10 0 0 1 14-14"/></svg>
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">SpotX</h3>
-                <p class="card-desc">Ad-free Spotify patcher for Windows. No account changes needed.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://github.com/SpotX-Official/SpotX" class="card-link" target="_blank" rel="noopener">GitHub <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="shazam browser extension music identify web">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/shazam.png" alt="Shazam" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Shazam Extension</h3>
-                <p class="card-desc">Identify any song playing in your browser with one click.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://chromewebstore.google.com/detail/shazam-find-song-names-fr/mmioliijnhnoblpgimnlajmefafdfilb" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ─────────────────────────────────────────── -->
-    <!--  SECTION: GAMING                            -->
-    <!-- ─────────────────────────────────────────── -->
-    <section class="resource-section reveal" id="gaming">
-      <div class="section-header" data-toggle="gaming">
-        <div class="section-title-group">
-          <span class="section-index">05</span>
-          <h2 class="section-title">Gaming</h2>
-          <span class="section-badge">4 tools</span>
-        </div>
-        <button class="section-toggle" aria-expanded="true" aria-controls="gaming-body">
-          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </button>
-      </div>
-      <div class="section-body" id="gaming-body">
-        <div class="cards-grid">
-
-          <article class="tool-card" data-search="fitgirl repacks game torrent compressed windows">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/repacks.png" alt="FitGirl Repacks" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">FitGirl Repacks</h3>
-                <p class="card-desc">Highly compressed game repacks. Official site only — beware fakes.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://fitgirl-repacks.site" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="steamrip steam game download preinstalled windows">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/steamrip.png" alt="SteamRip" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">SteamRip</h3>
-                <p class="card-desc">Pre-installed Steam game downloads. Fast direct links, no compression wait.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://steamrip.com" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="vimms lair retro rom emulation web">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/vims_lair.jpg" alt="Vimm's Lair" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Vimm's Lair</h3>
-                <p class="card-desc">Retro ROM vault — NES to PS3. Trusted preservation archive.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://vimm.net/vault" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="retroarch emulator retro gaming windows macos linux">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/retro_arch.png" alt="RetroArch" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">RetroArch</h3>
-                <p class="card-desc">All-in-one emulator frontend. Run any retro system from one app.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="macOS">🍎</span>
-                    <span class="platform-tag" title="Linux">🐧</span>
-                  </div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.retroarch.com/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ─────────────────────────────────────────── -->
-    <!--  SECTION: SYSTEM                            -->
-    <!-- ─────────────────────────────────────────── -->
-    <section class="resource-section reveal" id="system">
-      <div class="section-header" data-toggle="system">
-        <div class="section-title-group">
-          <span class="section-index">06</span>
-          <h2 class="section-title">Clearing Space &amp; System</h2>
-          <span class="section-badge">5 tools</span>
-        </div>
-        <button class="section-toggle" aria-expanded="true" aria-controls="system-body">
-          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </button>
-      </div>
-      <div class="section-body" id="system-body">
-        <div class="cards-grid">
-
-          <article class="tool-card" data-search="ccleaner clean junk windows macos">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/ccleaner.png" alt="CCleaner" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">CCleaner</h3>
-                <p class="card-desc">Quick junk file cleaner for browsers, temp files and registry.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="macOS">🍎</span>
-                  </div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.ccleaner.com/ccleaner/download" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="bleachbit deep clean linux windows system">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/bleachbit.png" alt="BleachBit" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">BleachBit</h3>
-                <p class="card-desc">Open-source deep cleaner. Nuclear option for thorough system wipes.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="Linux">🐧</span>
-                  </div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.bleachbit.org" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="wiztree disk analyzer large files windows">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/wiztree.png" alt="WizTree" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">WizTree</h3>
-                <p class="card-desc">Instant disk space analyser. Finds large files in seconds, not minutes.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://diskanalyzer.com/download" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="wizfile file search windows fast">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/wizfile.png" alt="WizFile" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">WizFile</h3>
-                <p class="card-desc">Fastest Windows file search tool. Find any file in under a second.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://antibody-software.com/wizfile/download" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card tool-card--danger" data-search="christitus powershell tweaks windows winutil">
-            <div class="card-inner">
-              <div class="card-logo-wrap card-logo-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">CTT WinUtil (PowerShell)</h3>
-                <p class="card-desc">Chris Titus Tech's Windows utility. Debloat, tweaks, installs — run as admin.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
-                  <span class="safety-tag danger">● High Risk</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <div class="code-snippet">
-                  <code>iwr -useb https://christitus.com/win | iex</code>
-                  <button class="copy-btn" data-copy="iwr -useb https://christitus.com/win | iex" aria-label="Copy command">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ─────────────────────────────────────────── -->
-    <!--  SECTION: BROWSERS                          -->
-    <!-- ─────────────────────────────────────────── -->
-    <section class="resource-section reveal" id="browsers">
-      <div class="section-header" data-toggle="browsers">
-        <div class="section-title-group">
-          <span class="section-index">07</span>
-          <h2 class="section-title">Browsers</h2>
-          <span class="section-badge">3 tools</span>
-        </div>
-        <button class="section-toggle" aria-expanded="true" aria-controls="browsers-body">
-          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </button>
-      </div>
-      <div class="section-body" id="browsers-body">
-        <div class="cards-grid">
-
-          <article class="tool-card" data-search="firefox browser privacy windows macos linux recommended">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/firefox.png" alt="Firefox" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Firefox</h3>
-                <p class="card-desc">Recommended for privacy. Best extension support including uBlock Origin.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="macOS">🍎</span>
-                    <span class="platform-tag" title="Linux">🐧</span>
-                  </div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.firefox.com/en-US/browsers/desktop/windows/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card tool-card--muted" data-search="chrome google browser windows macos linux not recommended privacy">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/circle.png" alt="Chrome" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Google Chrome</h3>
-                <p class="card-desc">Not recommended for privacy. Google telemetry, limited ad-blocking on Manifest V3.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="macOS">🍎</span>
-                    <span class="platform-tag" title="Linux">🐧</span>
-                  </div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <span class="card-note">⚠ Not recommended</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="tor browser anonymous privacy windows macos linux">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/tor.png" alt="TOR Browser" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">TOR Browser</h3>
-                <p class="card-desc">Maximum anonymity browser. Routes through the Tor network. Slow but private.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="macOS">🍎</span>
-                    <span class="platform-tag" title="Linux">🐧</span>
-                  </div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.torproject.org/download/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ─────────────────────────────────────────── -->
-    <!--  SECTION: OS                                -->
-    <!-- ─────────────────────────────────────────── -->
-    <section class="resource-section reveal" id="os">
-      <div class="section-header" data-toggle="os">
-        <div class="section-title-group">
-          <span class="section-index">08</span>
-          <h2 class="section-title">Operating Systems</h2>
-          <span class="section-badge">4 tools</span>
-        </div>
-        <button class="section-toggle" aria-expanded="true" aria-controls="os-body">
-          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </button>
-      </div>
-      <div class="section-body" id="os-body">
-
-        <div class="subsection-label">Windows Keys</div>
-        <div class="cards-grid">
-          <article class="tool-card" data-search="windows activation key license windows">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/windows.png" alt="Windows" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Windows Activation Keys</h3>
-                <p class="card-desc">Generic/KMS keys for Windows activation. Use at own risk.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
-                  <span class="safety-tag caution">● Caution</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://gist.github.com/rvrsh3ll/0810c6ed60e44cf7932e4fbae25880df" class="card-link" target="_blank" rel="noopener">View keys <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="subsection-label">Linux Distributions</div>
-        <div class="cards-grid">
-
-          <article class="tool-card tool-card--danger" data-search="arch linux distribution advanced linux">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/arch.png" alt="Arch Linux" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Arch Linux</h3>
-                <p class="card-desc">Rolling release, ultra-customisable. For experienced users. RTFM required.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Linux">🐧</span></div>
-                  <span class="safety-tag danger">● Advanced</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://archlinux.org/download/" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="linux mint distribution beginner friendly linux">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/mint.png" alt="Linux Mint" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Linux Mint</h3>
-                <p class="card-desc">Best beginner Linux distro. Windows-like feel, stable, well-supported.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Linux">🐧</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.linuxmint.com/download.php" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-
-        <div class="subsection-label">Tools</div>
-        <div class="cards-grid">
-          <article class="tool-card" data-search="rufus bootable usb drive windows linux">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/rufus.png" alt="Rufus" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Rufus</h3>
-                <p class="card-desc">Create bootable USB drives from ISO images. Fast and reliable.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://rufus.ie/en/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─────────────────────────────────────────── -->
-    <!--  SECTION: MISC                              -->
-    <!-- ─────────────────────────────────────────── -->
-    <section class="resource-section reveal" id="misc">
-      <div class="section-header" data-toggle="misc">
-        <div class="section-title-group">
-          <span class="section-index">09</span>
-          <h2 class="section-title">Misc &amp; Utilities</h2>
-          <span class="section-badge">5 tools</span>
-        </div>
-        <button class="section-toggle" aria-expanded="true" aria-controls="misc-body">
-          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
-        </button>
-      </div>
-      <div class="section-body" id="misc-body">
-
-        <div class="subsection-label">Wallpapers</div>
-        <div class="cards-grid">
-          <article class="tool-card" data-search="wallhaven wallpapers web">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/wallpaper.png" alt="Wallhaven" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Wallhaven</h3>
-                <p class="card-desc">Massive community wallpaper database. Filter by resolution, ratio, style.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://wallhaven.cc" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="subsection-label">Minecraft</div>
-        <div class="cards-grid">
-          <article class="tool-card" data-search="minecraft server auto-mcs manager windows linux">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/minecraft.png" alt="Auto-MCS" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">Auto-MCS</h3>
-                <p class="card-desc">GUI tool for setting up and managing Minecraft servers. One-click setup.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="Linux">🐧</span>
-                  </div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://www.auto-mcs.com" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="subsection-label">Password Managers</div>
-        <div class="cards-grid">
-
-          <article class="tool-card" data-search="lastpass password manager web browser extension">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/lastpass.png" alt="LastPass" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">LastPass</h3>
-                <p class="card-desc">Cloud-based password manager. Syncs across all devices via browser extension.</p>
-                <div class="card-meta">
-                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="tool-card" data-search="keepass offline password manager windows macos linux">
-            <div class="card-inner">
-              <div class="card-logo-wrap">
-                <img src="https://barnacle040.github.io/what-I-use-piracy/keepass.png" alt="KeePass" class="card-logo" loading="lazy" />
-              </div>
-              <div class="card-content">
-                <h3 class="card-name">KeePass</h3>
-                <p class="card-desc">Offline open-source password manager. Zero cloud, max privacy.</p>
-                <div class="card-meta">
-                  <div class="card-platforms">
-                    <span class="platform-tag" title="Windows">🪟</span>
-                    <span class="platform-tag" title="macOS">🍎</span>
-                    <span class="platform-tag" title="Linux">🐧</span>
-                  </div>
-                  <span class="safety-tag safe">● Safe</span>
-                </div>
-              </div>
-              <div class="card-actions">
-                <a href="https://keepass.info/download.html" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-                <span class="card-updated">Sep 2025</span>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ─── BACK TO TOP ─── -->
-  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-  </button>
-
-  <!-- ─── FOOTER ─── -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="footer-logo">[PIRACY.RES]</span>
-        <p class="footer-disclaimer">This site is for educational purposes only. The author does not endorse or encourage copyright infringement. Always comply with your local laws. Use a VPN. Use your brain.</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <span class="footer-col-title">Pages</span>
-          <a href="https://barnacle040.github.io/what-I-use-piracy/Game_page.html" target="_blank" rel="noopener">Games</a>
-          <a href="https://barnacle040.github.io/what-I-use-piracy/Help.html" target="_blank" rel="noopener">Help</a>
-          <a href="https://barnacle040.github.io/what-I-use-piracy/Software_Library.html" target="_blank" rel="noopener">Software</a>
-        </div>
-        <div class="footer-col">
-          <span class="footer-col-title">Contact</span>
-          <a href="https://x.com/BJ0RN9" target="_blank" rel="noopener">Twitter / X</a>
-          <a href="https://github.com/barnacle040?tab=repositories" target="_blank" rel="noopener">GitHub</a>
-        </div>
-      </div>
+    <div class="section-body">
+      <div class="subreddit-list" id="subreddit-list"></div>
     </div>
-    <div class="footer-bottom">
-      <span>© Barnacle. All rights reserved.</span>
-      <span class="footer-sep">·</span>
-      <span>Last updated: September 2025</span>
-      <span class="footer-sep">·</span>
-      <span>Icons by <a href="https://flaticon.com" target="_blank" rel="noopener">Flaticon</a></span>
-    </div>
-  </footer>
+  </div>
+</main>
 
-  <script src="script.js"></script>
+<button class="back-to-top" id="back-to-top">↑</button>
+<footer class="site-footer"><div class="footer-bottom">© Barnacle · Last updated March 2026 · Educational purposes only · Use VPN & your brain</div></footer>
+
+<script>
+  // ---------- DATA ----------
+  const toolsData = [
+    // (same as before, no changes needed)
+    { name: "uBlock Origin", desc: "Best ad/tracker blocker, essential first install.", platforms: "windows macos linux", safety: "safe", url: "https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/", category: "basics", tags: "browser extension adblock", icon: "https://barnacle040.github.io/what-I-use-piracy/ublock.png", updated: "2025-09" },
+    { name: "qBittorrent", desc: "Open-source torrent client, bind to VPN.", platforms: "windows macos linux", safety: "safe", url: "https://www.qbittorrent.org/download", category: "basics", tags: "torrent client", icon: "https://barnacle040.github.io/what-I-use-piracy/torrent.png", updated: "2025-09" },
+    { name: "JDownloader 2", desc: "Free download manager for hosters and direct links.", platforms: "windows macos linux", safety: "safe", url: "https://jdownloader.org/download/index", category: "basics", tags: "download manager", icon: "https://barnacle040.github.io/what-I-use-piracy/jdownloader.jpg", updated: "2025-09" },
+    { name: "yt-dlp", desc: "Download video/audio from 1000+ sites (CLI).", platforms: "windows macos linux", safety: "safe", url: "https://github.com/yt-dlp/yt-dlp", category: "basics", tags: "youtube downloader", icon: "", updated: "2025-09" },
+    { name: "7-Zip", desc: "Open-source archive tool (ZIP, RAR, 7z).", platforms: "windows linux", safety: "safe", url: "https://www.7-zip.org/download.html", category: "basics", tags: "archive", icon: "", updated: "2025-09" },
+    { name: "VPN (Mullvad/Proton)", desc: "No-log VPN, bind to qBittorrent. Mandatory for torrenting.", platforms: "windows macos linux", safety: "caution", url: "https://mullvad.net", category: "basics", tags: "vpn privacy", icon: "", updated: "2025-09" },
+    { name: "VirusTotal", desc: "Scan files with 70+ antivirus engines.", platforms: "web", safety: "safe", url: "https://www.virustotal.com/", category: "security", tags: "scan malware", icon: "", updated: "2025-09" },
+    { name: "Malwarebytes", desc: "Second-opinion malware scanner.", platforms: "windows macos", safety: "safe", url: "https://www.malwarebytes.com", category: "security", tags: "antivirus", icon: "https://barnacle040.github.io/what-I-use-piracy/malwarebytes-logo-1-3657666643.png", updated: "2025-09" },
+    { name: "HaveIBeenPwned", desc: "Check email/password breaches.", platforms: "web", safety: "safe", url: "https://haveibeenpwned.com/", category: "security", tags: "breach check", icon: "https://barnacle040.github.io/what-I-use-piracy/pwned.png", updated: "2025-09" },
+    { name: "FitGirl Repacks", desc: "Highly compressed game repacks.", platforms: "windows", safety: "caution", url: "https://fitgirl-repacks.site", category: "gaming", tags: "repack torrent", icon: "https://barnacle040.github.io/what-I-use-piracy/repacks.png", updated: "2025-09" },
+    { name: "DODI Repacks", desc: "Alternative repacker, faster installs.", platforms: "windows", safety: "caution", url: "https://dodi-repacks.site", category: "gaming", tags: "repack", icon: "", updated: "2025-09" },
+    { name: "SteamRip", desc: "Pre-installed Steam games direct download.", platforms: "windows", safety: "caution", url: "https://steamrip.com", category: "gaming", tags: "direct download", icon: "https://barnacle040.github.io/what-I-use-piracy/steamrip.png", updated: "2025-09" },
+    { name: "Myrient", desc: "Massive ROM archive (direct downloads).", platforms: "web", safety: "safe", url: "https://myrient.erista.me", category: "gaming", tags: "roms emulation", icon: "", updated: "2025-09" },
+    { name: "Vimm's Lair", desc: "Retro ROM vault (NES to PS3).", platforms: "web", safety: "safe", url: "https://vimm.net/vault", category: "gaming", tags: "retro roms", icon: "https://barnacle040.github.io/what-I-use-piracy/vims_lair.jpg", updated: "2025-09" },
+    { name: "RetroArch", desc: "All-in-one emulator frontend.", platforms: "windows macos linux", safety: "safe", url: "https://www.retroarch.com/", category: "gaming", tags: "emulator", icon: "https://barnacle040.github.io/what-I-use-piracy/retro_arch.png", updated: "2025-09" },
+    { name: "1337x", desc: "Torrent index for movies, TV, music.", platforms: "web", safety: "caution", url: "https://1337x.to/movie-library/1/", category: "media", tags: "torrent movies", icon: "https://barnacle040.github.io/what-I-use-piracy/1337x.png", updated: "2025-09" },
+    { name: "RiveStream", desc: "Stream movies and TV shows (no account).", platforms: "web", safety: "caution", url: "https://rivestream.org", category: "media", tags: "streaming", icon: "https://barnacle040.github.io/what-I-use-piracy/rive.png", updated: "2025-09" },
+    { name: "Cineby", desc: "Clean UI streaming site.", platforms: "web", safety: "caution", url: "https://www.cineby.app", category: "media", tags: "movies", icon: "https://barnacle040.github.io/what-I-use-piracy/cineby.PNG", updated: "2025-09" },
+    { name: "HiAnime", desc: "Anime streaming (sub/dub).", platforms: "web", safety: "caution", url: "https://hianime.pe", category: "media", tags: "anime", icon: "https://barnacle040.github.io/what-I-use-piracy/hianime.png", updated: "2025-09" },
+    { name: "SpotX", desc: "Ad-free Spotify patcher for Windows.", platforms: "windows", safety: "caution", url: "https://github.com/SpotX-Official/SpotX", category: "media", tags: "music", icon: "", updated: "2025-09" },
+    { name: "Anna's Archive", desc: "Largest shadow library (books, papers).", platforms: "web", safety: "safe", url: "https://annas-archive.org", category: "media", tags: "ebooks", icon: "", updated: "2025-09" },
+    { name: "Firefox", desc: "Recommended privacy browser, uBlock ready.", platforms: "windows macos linux", safety: "safe", url: "https://www.mozilla.org/firefox/new/", category: "browsers", tags: "browser", icon: "https://barnacle040.github.io/what-I-use-piracy/firefox.png", updated: "2025-09" },
+    { name: "Brave", desc: "Chromium with built-in adblock.", platforms: "windows macos linux", safety: "safe", url: "https://brave.com/download/", category: "browsers", tags: "browser", icon: "", updated: "2025-09" },
+    { name: "Tor Browser", desc: "Anonymity via Tor network.", platforms: "windows macos linux", safety: "safe", url: "https://www.torproject.org/download/", category: "browsers", tags: "anonymous", icon: "https://barnacle040.github.io/what-I-use-piracy/tor.png", updated: "2025-09" },
+    { name: "Linux Mint", desc: "Beginner-friendly Linux distro.", platforms: "linux", safety: "safe", url: "https://www.linuxmint.com/download.php", category: "os", tags: "linux", icon: "https://barnacle040.github.io/what-I-use-piracy/mint.png", updated: "2025-09" },
+    { name: "Rufus", desc: "Create bootable USB drives.", platforms: "windows", safety: "safe", url: "https://rufus.ie/en/", category: "os", tags: "usb", icon: "https://barnacle040.github.io/what-I-use-piracy/rufus.png", updated: "2025-09" },
+    { name: "BleachBit", desc: "Open-source deep cleaner.", platforms: "windows linux", safety: "caution", url: "https://www.bleachbit.org", category: "system", tags: "cleaner", icon: "https://barnacle040.github.io/what-I-use-piracy/bleachbit.png", updated: "2025-09" },
+    { name: "WizTree", desc: "Instant disk space analyzer.", platforms: "windows", safety: "safe", url: "https://diskanalyzer.com/download", category: "system", tags: "disk analyzer", icon: "https://barnacle040.github.io/what-I-use-piracy/wiztree.png", updated: "2025-09" },
+    { name: "CTT WinUtil", desc: "PowerShell debloat tool (run as admin).", platforms: "windows", safety: "danger", url: "https://christitus.com/win", category: "system", tags: "tweaks", icon: "", command: "iwr -useb https://christitus.com/win | iex", updated: "2025-09" },
+    { name: "Bitwarden", desc: "Open-source password manager (cloud sync).", platforms: "web", safety: "safe", url: "https://bitwarden.com/download/", category: "misc", tags: "password", icon: "", updated: "2025-09" },
+    { name: "Wallhaven", desc: "Massive wallpaper database.", platforms: "web", safety: "safe", url: "https://wallhaven.cc", category: "misc", tags: "wallpaper", icon: "https://barnacle040.github.io/what-I-use-piracy/wallpaper.png", updated: "2025-09" }
+  ];
+
+  const trustedUploaders = [
+    { name: "FitGirl Repacks", desc: "Most trusted repacker. Highly compressed games, safe if you use the official site.", platforms: "windows", safety: "caution", url: "https://fitgirl-repacks.site", icon: "https://barnacle040.github.io/what-I-use-piracy/repacks.png" },
+    { name: "DODI Repacks", desc: "Reliable alternative to FitGirl. Often faster installs.", platforms: "windows", safety: "caution", url: "https://dodi-repacks.site", icon: "" },
+    { name: "SteamRip", desc: "Direct downloads, no repack wait. Trusted pre-installed games.", platforms: "windows", safety: "caution", url: "https://steamrip.com", icon: "https://barnacle040.github.io/what-I-use-piracy/steamrip.png" },
+    { name: "Masquerade", desc: "High-quality scene releases. Trusted for software and games.", platforms: "windows", safety: "caution", url: "https://masquerade.site", icon: "" },
+    { name: "CS.RIN.RU", desc: "Community forum for cracked games, tools, and emulators. Vast knowledge base.", platforms: "web", safety: "caution", url: "https://cs.rin.ru", icon: "" }
+  ];
+
+  const subreddits = [
+    { name: "r/Piracy", url: "https://www.reddit.com/r/Piracy/", desc: "General piracy discussion and megathread." },
+    { name: "r/FREEMEDIAHECKYEAH", url: "https://www.reddit.com/r/FREEMEDIAHECKYEAH/", desc: "Curated list of free media resources." },
+    { name: "r/OpenDirectories", url: "https://www.reddit.com/r/opendirectories/", desc: "Public file directories for direct downloads." },
+    { name: "r/CrackWatch", url: "https://www.reddit.com/r/CrackWatch/", desc: "News about game cracks and scene releases." }
+  ];
+
+  // ---------- STATE ----------
+  let favorites = new Set(JSON.parse(localStorage.getItem('piracy_favs') || '[]'));
+  let activeFavFilter = false;
+  let currentSearch = '';
+  let platformFilters = { windows: false, macos: false, linux: false, web: false };
+  let safetyFilters = { safe: false, caution: false, danger: false };
+  let sortOption = 'name-asc';
+  let sectionCollapseState = JSON.parse(localStorage.getItem('section_collapse_state') || '{}');
+
+  // ---------- HELPER FUNCTIONS ----------
+  function saveFavs() {
+    localStorage.setItem('piracy_favs', JSON.stringify([...favorites]));
+    document.getElementById('fav-count').innerText = favorites.size;
+  }
+
+  function toggleFavorite(name, btnElement) {
+    if (favorites.has(name)) favorites.delete(name);
+    else favorites.add(name);
+    saveFavs();
+    if (btnElement) btnElement.classList.toggle('active', favorites.has(name));
+    renderAll();
+  }
+
+  function filterTools(tools) {
+    // Search
+    if (currentSearch) {
+      tools = tools.filter(t => (t.name + ' ' + t.desc + ' ' + (t.tags || '')).toLowerCase().includes(currentSearch));
+    }
+    // Favorites
+    if (activeFavFilter) {
+      tools = tools.filter(t => favorites.has(t.name));
+    }
+    // Platform
+    const activePlatforms = Object.entries(platformFilters).filter(([_, v]) => v).map(([k]) => k);
+    if (activePlatforms.length) {
+      tools = tools.filter(t => t.platforms.split(' ').some(p => activePlatforms.includes(p)));
+    }
+    // Safety
+    const activeSafety = Object.entries(safetyFilters).filter(([_, v]) => v).map(([k]) => k);
+    if (activeSafety.length) {
+      tools = tools.filter(t => activeSafety.includes(t.safety));
+    }
+    return tools;
+  }
+
+  function sortTools(tools) {
+    const s = sortOption;
+    if (s === 'name-asc') return [...tools].sort((a,b) => a.name.localeCompare(b.name));
+    if (s === 'name-desc') return [...tools].sort((a,b) => b.name.localeCompare(a.name));
+    if (s === 'safety') {
+      const order = { safe: 1, caution: 2, danger: 3 };
+      return [...tools].sort((a,b) => order[a.safety] - order[b.safety]);
+    }
+    if (s === 'updated') {
+      return [...tools].sort((a,b) => (b.updated || '').localeCompare(a.updated || ''));
+    }
+    return tools;
+  }
+
+  function renderAll() {
+    // Group by category
+    const categories = { basics: 'Basics', security: 'Virus Protection', gaming: 'Gaming', media: 'Media & Streaming', browsers: 'Browsers', os: 'Operating Systems', system: 'System Utilities', misc: 'Misc' };
+    let html = '';
+    for (let [key, title] of Object.entries(categories)) {
+      let filtered = toolsData.filter(t => t.category === key);
+      filtered = filterTools(filtered);
+      filtered = sortTools(filtered);
+      if (filtered.length === 0 && (activeFavFilter || currentSearch || Object.values(platformFilters).some(v=>v) || Object.values(safetyFilters).some(v=>v))) continue;
+
+      const collapsed = sectionCollapseState[key] === true;
+      html += `<section class="resource-section" id="sec-${key}"><div class="section-header" data-section="${key}"><div class="section-title-group"><span class="section-index">${Object.keys(categories).indexOf(key)+1}</span><h2 class="section-title">${title}</h2><span class="section-badge">${filtered.length} tools</span></div><button class="section-toggle" aria-expanded="${!collapsed}"><svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button></div><div class="section-body ${collapsed ? 'collapsed' : ''}"><div class="cards-grid">`;
+      for (let t of filtered) {
+        const isFav = favorites.has(t.name);
+        const iconHtml = t.icon ? `<img class="card-logo" src="${t.icon}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2300ff9d%22%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%2216%22%20height%3D%2216%22%2F%3E%3C%2Fsvg%3E'">` : `<div class="card-logo-icon" style="font-size:22px;">📦</div>`;
+        html += `<article class="tool-card" data-name="${t.name.toLowerCase()}"><div class="card-inner"><div class="card-logo-wrap">${iconHtml}</div><div class="card-content"><div class="card-name">${t.name}</div><div class="card-desc">${t.desc}</div><div class="card-meta"><div class="card-platforms">${t.platforms.split(' ').map(p => `<span class="platform-tag" title="${p}">${p === 'windows' ? '🪟' : p === 'macos' ? '🍎' : p === 'linux' ? '🐧' : '🌐'}</span>`).join('')}</div><span class="safety-tag ${t.safety}">● ${t.safety==='safe'?'Safe':t.safety==='caution'?'Caution':'High Risk'}</span></div></div><div class="card-actions"><button class="fav-btn-card ${isFav ? 'active' : ''}" data-fav="${t.name}">${isFav ? '★' : '☆'}</button>`;
+        if (t.command) {
+          html += `<div class="command-block"><code>${t.command}</code><button class="copy-btn" data-copy="${t.command}">📋 Copy</button></div>`;
+        } else {
+          html += `<a href="${t.url}" class="card-link" target="_blank" rel="noopener">Get it →</a><button class="copy-btn" data-copy="${t.url}" style="margin-left:auto;">📋 Link</button>`;
+        }
+        html += `<span class="card-updated">${t.updated || 'Mar 2026'}</span></div></div></article>`;
+      }
+      html += `</div></div></section>`;
+    }
+    document.getElementById('sections-container').innerHTML = html;
+    attachCardEventListeners();
+    document.getElementById('no-results-message').style.display = (document.querySelectorAll('.tool-card').length === 0) ? 'block' : 'none';
+    updateStats();
+  }
+
+  function renderTrusted() {
+    const grid = document.getElementById('trusted-grid');
+    if (!grid) return;
+    let html = '';
+    for (let u of trustedUploaders) {
+      const iconHtml = u.icon ? `<img class="card-logo" src="${u.icon}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2300ff9d%22%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%2216%22%20height%3D%2216%22%2F%3E%3C%2Fsvg%3E'">` : `<div class="card-logo-icon" style="font-size:22px;">⭐</div>`;
+      html += `<article class="tool-card"><div class="card-inner"><div class="card-logo-wrap">${iconHtml}</div><div class="card-content"><div class="card-name">${u.name}</div><div class="card-desc">${u.desc}</div><div class="card-meta"><div class="card-platforms">${u.platforms.split(' ').map(p => `<span class="platform-tag">${p === 'windows' ? '🪟' : '🌐'}</span>`).join('')}</div><span class="safety-tag ${u.safety}">● ${u.safety==='safe'?'Safe':'Caution'}</span></div></div><div class="card-actions"><a href="${u.url}" class="card-link" target="_blank" rel="noopener">Visit →</a><button class="copy-btn" data-copy="${u.url}">📋 Link</button><span class="card-updated">Trusted</span></div></div></article>`;
+    }
+    grid.innerHTML = html;
+    // attach copy buttons
+    document.querySelectorAll('#trusted-grid .copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => { navigator.clipboard.writeText(btn.dataset.copy); btn.textContent = '✓'; setTimeout(()=>btn.textContent='📋 Link',1200); });
+    });
+  }
+
+  function renderSubreddits() {
+    const container = document.getElementById('subreddit-list');
+    if (!container) return;
+    container.innerHTML = subreddits.map(s => `<a class="subreddit-link" href="${s.url}" target="_blank" rel="noopener">${s.name}</a>`).join('');
+  }
+
+  function attachCardEventListeners() {
+    document.querySelectorAll('.fav-btn-card').forEach(btn => {
+      const name = btn.dataset.fav;
+      btn.addEventListener('click', (e) => { e.stopPropagation(); toggleFavorite(name, btn); });
+    });
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(btn.dataset.copy);
+        const original = btn.textContent;
+        btn.textContent = '✓ Copied';
+        setTimeout(() => btn.textContent = original, 1200);
+      });
+    });
+    attachSectionToggles();
+  }
+
+  function attachSectionToggles() {
+    document.querySelectorAll('.section-header').forEach(header => {
+      const body = header.nextElementSibling;
+      const btn = header.querySelector('.section-toggle');
+      if (!btn) return;
+      const sectionId = header.dataset.section;
+      header.addEventListener('click', (e) => {
+        if (e.target.closest('.fav-btn-card') || e.target.closest('.card-link') || e.target.closest('.copy-btn')) return;
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !expanded);
+        if (body) body.classList.toggle('collapsed', expanded);
+        if (sectionId) {
+          sectionCollapseState[sectionId] = expanded;
+          localStorage.setItem('section_collapse_state', JSON.stringify(sectionCollapseState));
+        }
+      });
+      if (sectionCollapseState[sectionId] === true) {
+        btn.setAttribute('aria-expanded', 'false');
+        if (body) body.classList.add('collapsed');
+      } else {
+        btn.setAttribute('aria-expanded', 'true');
+        if (body) body.classList.remove('collapsed');
+      }
+    });
+  }
+
+  function updateStats() {
+    document.getElementById('stat-tools').innerText = toolsData.length;
+  }
+
+  function expandAll() {
+    document.querySelectorAll('.section-body').forEach(b => b.classList.remove('collapsed'));
+    document.querySelectorAll('.section-toggle').forEach(b => b.setAttribute('aria-expanded','true'));
+    // update state
+    for (let key of Object.keys(sectionCollapseState)) sectionCollapseState[key] = false;
+    localStorage.setItem('section_collapse_state', JSON.stringify(sectionCollapseState));
+  }
+  function collapseAll() {
+    document.querySelectorAll('.section-body').forEach(b => b.classList.add('collapsed'));
+    document.querySelectorAll('.section-toggle').forEach(b => b.setAttribute('aria-expanded','false'));
+    for (let key of Object.keys(sectionCollapseState)) sectionCollapseState[key] = true;
+    localStorage.setItem('section_collapse_state', JSON.stringify(sectionCollapseState));
+  }
+
+  function applyFiltersAndRender() {
+    renderAll();
+  }
+
+  // ---------- EVENT LISTENERS ----------
+  document.getElementById('expand-all-btn').addEventListener('click', expandAll);
+  document.getElementById('collapse-all-btn').addEventListener('click', collapseAll);
+  document.getElementById('expand-all-hero').addEventListener('click', expandAll);
+  document.getElementById('search-input-local').addEventListener('input', (e) => {
+    currentSearch = e.target.value.toLowerCase();
+    activeFavFilter = false;
+    document.getElementById('fav-filter-btn').classList.remove('active');
+    applyFiltersAndRender();
+  });
+  document.getElementById('fav-filter-btn').addEventListener('click', () => {
+    activeFavFilter = !activeFavFilter;
+    document.getElementById('fav-filter-btn').classList.toggle('active', activeFavFilter);
+    applyFiltersAndRender();
+  });
+  document.getElementById('sort-select').addEventListener('change', (e) => {
+    sortOption = e.target.value;
+    applyFiltersAndRender();
+  });
+  document.querySelectorAll('#platform-filters .filter-badge').forEach(badge => {
+    badge.addEventListener('click', () => {
+      const platform = badge.dataset.platform;
+      platformFilters[platform] = !platformFilters[platform];
+      badge.classList.toggle('active', platformFilters[platform]);
+      applyFiltersAndRender();
+    });
+  });
+  document.querySelectorAll('#safety-filters .filter-badge').forEach(badge => {
+    badge.addEventListener('click', () => {
+      const safety = badge.dataset.safety;
+      safetyFilters[safety] = !safetyFilters[safety];
+      badge.classList.toggle('active', safetyFilters[safety]);
+      applyFiltersAndRender();
+    });
+  });
+  document.getElementById('random-tool-btn').addEventListener('click', () => {
+    const allVisible = document.querySelectorAll('.tool-card:not([style*="display: none"])');
+    if (allVisible.length) {
+      const randomIndex = Math.floor(Math.random() * allVisible.length);
+      allVisible[randomIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      allVisible[randomIndex].style.transition = '0.2s';
+      allVisible[randomIndex].style.boxShadow = '0 0 0 2px var(--accent), 0 0 20px var(--accent-glow)';
+      setTimeout(() => allVisible[randomIndex].style.boxShadow = '', 1500);
+    }
+  });
+
+  // Theme toggle, search overlay, back to top, canvas particles (same as before)
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  });
+  const searchOverlay = document.getElementById('search-overlay');
+  document.getElementById('search-toggle-overlay').addEventListener('click', () => searchOverlay.classList.add('open'));
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey||e.metaKey) && e.key === 'k') { e.preventDefault(); document.getElementById('search-input-local').focus(); }
+    if (e.key === 'Escape') searchOverlay.classList.remove('open');
+  });
+  document.getElementById('global-search-input').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    const results = toolsData.filter(t => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q)).slice(0,10);
+    const resultsDiv = document.getElementById('global-search-results');
+    resultsDiv.innerHTML = results.map(r => `<div class="search-result-item" data-name="${r.name}"><span>${r.name}</span><span style="font-size:11px;">${r.category}</span></div>`).join('');
+    document.querySelectorAll('.search-result-item').forEach(el => el.addEventListener('click', () => {
+      document.getElementById(`sec-${el.dataset.name.split(' ')[0].toLowerCase()}`)?.scrollIntoView({behavior:'smooth'});
+      searchOverlay.classList.remove('open');
+    }));
+  });
+  const backTop = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => backTop.classList.toggle('visible', window.scrollY > 400));
+  backTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+  // canvas particles (unchanged)
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resizeCanvas); resizeCanvas();
+  let particles = Array(50).fill().map(() => ({ x: Math.random(), y: Math.random(), r: Math.random()*2+1, vx: (Math.random()-0.5)*0.002, vy: (Math.random()-0.5)*0.002 }));
+  function draw() { if(!ctx) return; ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = '#00ff9d'; particles.forEach(p => { p.x += p.vx; p.y += p.vy; if(p.x<0) p.x=1; if(p.x>1) p.x=0; if(p.y<0) p.y=1; if(p.y>1) p.y=0; ctx.beginPath(); ctx.arc(p.x*canvas.width, p.y*canvas.height, p.r, 0, Math.PI*2); ctx.fill(); }); requestAnimationFrame(draw); }
+  draw();
+
+  // Initial renders
+  renderAll();
+  renderTrusted();
+  renderSubreddits();
+  document.getElementById('fav-count').innerText = favorites.size;
+  // Restore filter badges from localStorage? Not necessary, but we can set initial active states if needed.
+</script>
 </body>
 </html>
