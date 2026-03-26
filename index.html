@@ -1,1192 +1,1245 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-
-    <!-- Optimization: Preconnect to CDN to reduce DNS/TCP/TLS latency for FontAwesome (~100-300ms) -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Curated piracy tools and resources for safe downloading.">
-    <meta name="keywords" content="piracy, torrents, repacks, adblock, VPN, software">
-    <meta property="og:title" content="Piracy Resources">
-    <meta property="og:image" content="./pirate_ship.png">
-    <meta property="og:description" content="A collection of tools and resources for piracy, including adblockers, VPNs, software, and more.">
-
-
-    <!-- Optimization: Preload critical assets to improve LCP and establish early connections -->
-    <link rel="preload" href="./pirate_ship.png" as="image">
-    <link rel="preload" href="./ublock.png" as="image" fetchpriority="high">
-        <!--
-    Performance Optimization Metrics (Estimated):
-    - Preconnect: Saves ~150ms connection overhead for FontAwesome CDN.
-    - Lazy Loading: Deferring 30+ below-fold images reduces initial payload by ~250KB.
-    - Layout Shift: Added dimensions to external assets reduces CLS to 0.0.
-    -->
-    <title>Piracy Resources - Home Page</title>
-    <link rel="icon" href="./pirate_ship.png" sizes="32x32" type="image/png">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Only changed the background and header styles */
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo i {
-            margin-right: 10px;
-            color: #3498db;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav li {
-            margin-left: 1.5rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-
-        nav a:hover, nav a.active {
-            color: #3498db;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            nav ul {
-                margin-top: 1rem;
-                justify-content: center;
-            }
-
-            nav li {
-                margin: 0 0.5rem;
-            }
-        }
-
-        /* Keep all your original layout styles intact */
-        /* ... your existing CSS for the main content ... */
-
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Piracy Resources</title>
+  <meta name="description" content="Safe & efficient piracy tools and guides. Curated resources with safety ratings, platform info, and direct links." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="logo">
-                <i class="fas fa-box-open"></i>
-                <span>Piracy Resources</span>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="./Game_page.html">Games</a></li>
-                    <li><a href="Help.html">Help</a></li>
-                    <li><a href="./Software_Library.html">Software</a></li>
-                </ul>
-            </nav>
+
+  <!-- ─── SCAN LINE OVERLAY ─── -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ─── PARTICLE CANVAS ─── -->
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <!-- ─── STICKY NAV ─── -->
+  <header class="site-nav" id="site-nav">
+    <nav class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="Home">
+        <span class="logo-bracket">[</span>PIRACY<span class="logo-accent">.</span>RES<span class="logo-bracket">]</span>
+      </a>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#basics" class="nav-link" data-section="basics">Basics</a></li>
+        <li><a href="#security" class="nav-link" data-section="security">Security</a></li>
+        <li><a href="#extensions" class="nav-link" data-section="extensions">Extensions</a></li>
+        <li><a href="#media" class="nav-link" data-section="media">Media</a></li>
+        <li><a href="#gaming" class="nav-link" data-section="gaming">Gaming</a></li>
+        <li><a href="#system" class="nav-link" data-section="system">System</a></li>
+        <li><a href="#os" class="nav-link" data-section="os">OS</a></li>
+        <li><a href="#misc" class="nav-link" data-section="misc">Misc</a></li>
+        <li>
+          <a href="https://barnacle040.github.io/what-I-use-piracy/Game_page.html" class="nav-link nav-external" target="_blank" rel="noopener">Games ↗</a>
+        </li>
+        <li>
+          <a href="https://barnacle040.github.io/what-I-use-piracy/Software_Library.html" class="nav-link nav-external" target="_blank" rel="noopener">Software ↗</a>
+        </li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-icon" id="search-toggle" aria-label="Open search (Ctrl+K)" title="Search (Ctrl+K)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="btn-icon" id="theme-toggle" aria-label="Toggle light mode" title="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="btn-icon nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ─── SEARCH OVERLAY ─── -->
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search tools">
+    <div class="search-box">
+      <div class="search-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="search-input" placeholder="Search tools, categories..." autocomplete="off" spellcheck="false" />
+        <kbd>ESC</kbd>
+      </div>
+      <div class="search-results" id="search-results" role="listbox" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- ─── SHORTCUTS PANEL ─── -->
+  <div class="shortcuts-panel" id="shortcuts-panel" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+    <div class="shortcuts-content">
+      <div class="shortcuts-header">
+        <span>Keyboard Shortcuts</span>
+        <button class="btn-icon" id="shortcuts-close" aria-label="Close shortcuts">✕</button>
+      </div>
+      <ul class="shortcuts-list">
+        <li><kbd>Ctrl</kbd><kbd>K</kbd> <span>Focus Search</span></li>
+        <li><kbd>Ctrl</kbd><kbd>E</kbd> <span>Expand All Sections</span></li>
+        <li><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>E</kbd> <span>Collapse All Sections</span></li>
+        <li><kbd>Esc</kbd> <span>Clear Search / Close</span></li>
+        <li><kbd>?</kbd> <span>Toggle This Guide</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ─── HERO ─── -->
+    <section class="hero" id="hero" aria-label="Hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>Community Curated Resources</span>
         </div>
-    </header>
-
-    <main class="container">
-        <section id="shortcuts">
-            <h1> Keyboard Shortcuts <button class="toggle-btn" data-section="shortcuts" aria-expanded="false" aria-controls="shortcuts-content" aria-label="Toggle Shortcuts guide">
-                <span class="toggle-icon" aria-hidden="true">+</span>
-            </button></h1>
-            <div class="section-content hidden" id="shortcuts-content">
-                <ul style="list-style:none; padding:0; margin:0.5rem 0;">
-                    <li style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);">
-                        <span>Focus Search</span> <span class="platform-badges">Ctrl+K</span>
-                    </li>
-                    <li style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);">
-                        <span>Expand/Collapse All</span> <span class="platform-badges">Ctrl+E / Ctrl+Shift+E</span>
-                    </li>
-                    <li style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border);">
-                        <span>Clear Search / Close</span> <span class="platform-badges">Esc</span>
-                    </li>
-                    <li style="display:flex; justify-content:space-between; padding:8px 0;">
-                        <span>Toggle this guide</span> <span class="platform-badges">?</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="move">
-            <h1>Tips and Piracy Stuff</h1>
-            <p>A collection of useful resources and tools. <strong>Use at your own risk—VPN recommended for all downloads.</strong></p>
-
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search resources... (Ctrl+K)" aria-label="Search resources" autocomplete="off">
-                <button id="clearSearch" style="display: none;" aria-label="Clear search">✕</button>
-            </div>
-            <div id="searchResults" role="status" aria-live="polite"></div>
-            <div class="control-buttons">
-                <button id="expandAll">Expand All</button>
-                <button id="collapseAll">Collapse All</button>
-                <button id="showFavorites" aria-pressed="false">★ Favorites (<span id="favCount">0</span>)</button>
-                <button id="shortcutsToggle" aria-label="Show keyboard shortcuts">⌨️ Shortcuts</button>
-            </div>
-        </section>
-
-
-
-        <section id="basics">
-            <h1> Basics <button class="toggle-btn" data-section="basics" aria-expanded="true" aria-controls="basics-content" aria-label="Toggle Basics section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="basics-content">
-                <ul>
-                    <li data-favorite="ublock">
-                        <button class="fav-btn" data-id="ublock" aria-label="Add to favorites">☆</button>
-                        <img src="./ublock.png" alt="uBlock Origin browser extension logo" width="48" height="48" fetchpriority="high" decoding="async">
-                        <span class="resource-info">
-                            <span class="resource-name">uBlock Origin</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Mac">🍎</span>
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/" target="_blank" rel="noopener" data-tooltip="Ad-blocker for browsers"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li>
-                        <span class="resource-info">
-                            <span class="resource-name">VPN if torrenting (bind your VPN to your torrent client)</span>
-                            <span class="risk-badge risk-caution" title="Use VPN required">🟡 </span>
-                        </span>
-                    </li>
-                    <li data-favorite="idm">
-                        <button class="fav-btn" data-id="idm" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./IDM.PNG" loading="lazy" alt="Internet Download Manager application icon" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">IDM for large downloads</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="Third-party download">🟡 </span>
-                        </span>
-                        <a href="https://steamrip.com/idm-internet-download-manager-free-download-1a/" target="_blank" rel="noopener" data-tooltip="Download manager for large files"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://steamrip.com/idm-internet-download-manager-free-download-1a/" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="qbittorrent">
-                        <button class="fav-btn" data-id="qbittorrent" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./torrent.png" loading="lazy" alt="qBittorrent application logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">qBittorrent</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Mac">🍎</span>
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://www.qbittorrent.org/download" target="_blank" rel="noopener" data-tooltip="Free torrent client"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.qbittorrent.org/download" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li>
-                        <span class="resource-info">
-                            <span class="resource-name">Windows Defender exclusion folder</span>
-                            <span class="risk-badge risk-caution" title="Use with caution">🟡 </span>
-                        </span>
-                    </li>
-                    <li data-favorite="winrar">
-                        <button class="fav-btn" data-id="winrar" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./winrar.png" loading="lazy" alt="WinRAR file compression tool logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">WinRAR</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://www.win-rar.com/start.html?&L=0" target="_blank" rel="noopener" data-tooltip="File compression tool"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.win-rar.com/start.html?&L=0" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="jdownloader">
-                        <button class="fav-btn" data-id="jdownloader" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./jdownloader.jpg" loading="lazy" alt="JDownloader download manager logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">JDownloader (alternative to IDM)</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Mac">🍎</span>
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://jdownloader.org/download/index" target="_blank" rel="noopener" data-tooltip="Open-source download manager"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://jdownloader.org/download/index" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="virus-protection">
-            <h1> Virus Protection <button class="toggle-btn" data-section="virus-protection" aria-expanded="true" aria-controls="virus-protection-content" aria-label="Toggle Virus Protection section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="virus-protection-content">
-                <ul>
-                    <li data-favorite="malwarebytes">
-                        <button class="fav-btn" data-id="malwarebytes" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./malwarebytes-logo-1-3657666643.png" loading="lazy" alt="Malwarebytes antivirus software logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">Malwarebytes</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Mac">🍎</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://www.malwarebytes.com" target="_blank" rel="noopener" data-tooltip="Anti-malware software"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.malwarebytes.com" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="hibp">
-                        <button class="fav-btn" data-id="hibp" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./pwned.png" loading="lazy" alt="Have I Been Pwned security check logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">HaveIBeenPwned</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Web">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://haveibeenpwned.com/" target="_blank" rel="noopener" data-tooltip="Check for data breaches"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://haveibeenpwned.com/" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="virustotal">
-                        <button class="fav-btn" data-id="virustotal" aria-label="Add to favorites">☆</button>
-                        <span class="resource-info">
-                            <span class="resource-name">VirusTotal - Scan downloads before running</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Web">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://www.virustotal.com/" target="_blank" rel="noopener" data-tooltip="Multi-engine malware scanner"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.virustotal.com/" aria-label="Copy link">📋</button>
-                        <span class="status badge-new">New!</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="browser-extensions">
-            <h1> Browser Extensions <span class="badge-new">New Section!</span> <button class="toggle-btn" data-section="browser-extensions" aria-expanded="true" aria-controls="browser-extensions-content" aria-label="Toggle Browser Extensions section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="browser-extensions-content">
-                <ul>
-                    <li data-favorite="sponsorblock">
-                        <button class="fav-btn" data-id="sponsorblock" aria-label="Add to favorites">☆</button>
-                        <span class="resource-info">
-                            <span class="resource-name">SponsorBlock - Skip YouTube sponsors</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Browser Extension">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://sponsor.ajay.app/" target="_blank" rel="noopener" data-tooltip="Auto-skip YouTube sponsorships"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://sponsor.ajay.app/" aria-label="Copy link">📋</button>
-                        <span class="status badge-new">New!</span>
-                    </li>
-                    <li data-favorite="privacybadger">
-                        <button class="fav-btn" data-id="privacybadger" aria-label="Add to favorites">☆</button>
-                        <span class="resource-info">
-                            <span class="resource-name">Privacy Badger - Auto-block trackers</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Browser Extension">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://privacybadger.org/" target="_blank" rel="noopener" data-tooltip="Automatically learns to block trackers"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://privacybadger.org/" aria-label="Copy link">📋</button>
-                        <span class="status badge-new">New!</span>
-                    </li>
-                    <li data-favorite="returnyt">
-                        <button class="fav-btn" data-id="returnyt" aria-label="Add to favorites">☆</button>
-                        <span class="resource-info">
-                            <span class="resource-name">Return YouTube Dislike - See dislikes again</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Browser Extension">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://returnyoutubedislike.com/" target="_blank" rel="noopener" data-tooltip="Restore YouTube dislike counter"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://returnyoutubedislike.com/" aria-label="Copy link">📋</button>
-                        <span class="status badge-new">New!</span>
-                    </li>
-                    <li data-favorite="darkreader">
-                        <button class="fav-btn" data-id="darkreader" aria-label="Add to favorites">☆</button>
-                        <span class="resource-info">
-                            <span class="resource-name">Dark Reader - Dark mode for every site</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Browser Extension">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://darkreader.org/" target="_blank" rel="noopener" data-tooltip="Apply dark theme to all websites"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://darkreader.org/" aria-label="Copy link">📋</button>
-                        <span class="status badge-new">New!</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="anime">
-            <h1> Anime <button class="toggle-btn" data-section="anime" aria-expanded="true" aria-controls="anime-content" aria-label="Toggle Anime section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="anime-content">
-                <ul>
-                    <li data-favorite="hianime">
-                        <button class="fav-btn" data-id="hianime" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./hianime.png" loading="lazy" alt="HiAnime streaming website logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">HiAnime</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Web">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="Use adblocker">🟡 </span>
-                        </span>
-                        <a href="https://hianime.pe" target="_blank" rel="noopener" data-tooltip="Anime streaming site"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://hianime.pe" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="gaming">
-            <h1> Gaming <button class="toggle-btn" data-section="gaming" aria-expanded="true" aria-controls="gaming-content" aria-label="Toggle Gaming section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="gaming-content">
-                <ul>
-                    <li data-favorite="fitgirl">
-                        <button class="fav-btn" data-id="fitgirl" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./repacks.png" loading="lazy" alt="FitGirl Repacks game torrents logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
-                        <span class="resource-info">
-                            <span class="resource-name">FitGirl Repacks</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="VPN required">🟡 </span>
-                        </span>
-                        <a href="https://fitgirl-repacks.site" target="_blank" rel="noopener" data-tooltip="Compressed game torrents"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://fitgirl-repacks.site" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="steamrip">
-                        <button class="fav-btn" data-id="steamrip" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./steamrip.png" loading="lazy" alt="SteamRip game downloads logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
-                        <span class="resource-info">
-                            <span class="resource-name">SteamRip</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="Use VPN">🟡 </span>
-                        </span>
-                        <a href="https://steamrip.com" target="_blank" rel="noopener" data-tooltip="Direct game downloads"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://steamrip.com" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="vimms">
-                        <button class="fav-btn" data-id="vimms" aria-label="Add to favorites">☆</button>
-                        <img src="./vims_lair.jpg" loading="lazy" alt="Vimm's Lair retro game ROMs logo" width="48" height="48" onerror="this.src='./pirate_ship.png'" decoding="async">
-                        <span class="resource-info">
-                            <span class="resource-name">Vimms Lair</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Web">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://vimm.net/vault" target="_blank" rel="noopener" data-tooltip="Retro game ROMs"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://vimm.net/vault" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="retroarch">
-                        <button class="fav-btn" data-id="retroarch" aria-label="Add to favorites">☆</button>
-                        <img src="./retro_arch.png" loading="lazy" alt="RetroArch emulator frontend logo" width="48" height="48" onerror="this.src='./pirate_ship.png'" decoding="async">
-                        <span class="resource-info">
-                            <span class="resource-name">RetroArch</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Mac">🍎</span>
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://www.retroarch.com/" target="_blank" rel="noopener" data-tooltip="Emulator frontend"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.retroarch.com/" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="tv-movies">
-            <h1>TV Shows & Movies <button class="toggle-btn" data-section="tv-movies" aria-expanded="true" aria-controls="tv-movies-content" aria-label="Toggle TV Shows & Movies section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="tv-movies-content">
-                <ul>
-                    <li data-favorite="1337x">
-                        <button class="fav-btn" data-id="1337x" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./1337x.png" loading="lazy" alt="1337x torrent website logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
-                        <span class="resource-info">
-                            <span class="resource-name">1337x</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Web">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="VPN required">🟡  </span>
-                        </span>
-                        <a href="https://1337x.to/movie-library/1/" target="_blank" rel="noopener" data-tooltip="Torrent site for movies"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://1337x.to/movie-library/1/" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="rivestream">
-                        <button class="fav-btn" data-id="rivestream" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./rive.png" loading="lazy" alt="RiveStream streaming platform logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
-                        <span class="resource-info">
-                            <span class="resource-name">RiveStream</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Web">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="Use adblocker">🟡 </span>
-                        </span>
-                        <a href="https://rivestream.org" target="_blank" rel="noopener" data-tooltip="Streaming platform"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://rivestream.org" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="cineby">
-                        <button class="fav-btn" data-id="cineby" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./cineby.PNG" loading="lazy" alt="Cineby movie streaming website logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
-                        <span class="resource-info">
-                            <span class="resource-name">Cineby</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Web">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="Use adblocker">🟡 </span>
-                        </span>
-                        <a href="https://www.cineby.app" target="_blank" rel="noopener" data-tooltip="Free movie streaming"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.cineby.app" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="lookmovie">
-                        <button class="fav-btn" data-id="lookmovie" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./lookmovie.png" loading="lazy" alt="LookMovie streaming service logo" width="48" height="48" onerror="this.src='./pirate_ship.png'">
-                        <span class="resource-info">
-                            <span class="resource-name">LookMovie</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Web">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="Use adblocker">🟡 </span>
-                        </span>
-                        <a href="https://www.lookmovie2.to" target="_blank" rel="noopener" data-tooltip="Movies and TV shows"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.lookmovie2.to" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="pc-cleaning">
-            <h1> Clearing Space on PC <button class="toggle-btn" data-section="pc-cleaning" aria-expanded="true" aria-controls="pc-cleaning-content" aria-label="Toggle Clearing Space on PC section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="pc-cleaning-content">
-                <ul>
-                    <li data-favorite="ccleaner">
-                        <button class="fav-btn" data-id="ccleaner" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./ccleaner.png" loading="lazy" alt="CCleaner system cleanup tool logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">CCleaner for basic clean</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Mac">🍎</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://www.ccleaner.com/ccleaner/download" target="_blank" rel="noopener" data-tooltip="System cleanup tool"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.ccleaner.com/ccleaner/download" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="bleachbit">
-                        <button class="fav-btn" data-id="bleachbit" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./bleachbit.png" loading="lazy" alt="BleachBit advanced cleaner logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">BleachBit for deep clean</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="Advanced users">🟡 </span>
-                        </span>
-                        <a href="https://www.bleachbit.org" target="_blank" rel="noopener" data-tooltip="Advanced system cleaner"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.bleachbit.org" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="wiztree">
-                        <button class="fav-btn" data-id="wiztree" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./wiztree.png" loading="lazy" alt="WizTree disk analyzer logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">WizTree to find large files</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://diskanalyzer.com/download" target="_blank" rel="noopener" data-tooltip="Disk space analyzer"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://diskanalyzer.com/download" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="wizfile">
-                        <button class="fav-btn" data-id="wizfile" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./wizfile.png" loading="lazy" alt="WizFile search tool logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">WizFile for better file searching</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://antibody-software.com/wizfile/download" target="_blank" rel="noopener" data-tooltip="Fast file finder"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://antibody-software.com/wizfile/download" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="tweaks">
-            <h1><!-- Optimization: Lazy load below-fold image to save initial bandwidth -->
-            <img decoding="async" src="./powershell.png" loading="lazy" alt="PowerShell scripting tool logo" width="32" height="32"> Tweaks Using PowerShell <button class="toggle-btn" data-section="tweaks" aria-expanded="true" aria-controls="tweaks-content" aria-label="Toggle Tweaks Using PowerShell section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="tweaks-content">
-                <ul>
-                    <li>
-                        <span class="resource-info">
-                            <span class="resource-name">Paste this command into PowerShell:</span>
-                            <span class="risk-badge risk-danger" title="Advanced users only">🔴 </span>
-                        </span>
-                    </li>
-                    <li>
-                        <code id="powershellCmd">iwr -useb https://christitus.com/win | iex</code>
-                        <button class="copy-btn" data-text="iwr -useb https://christitus.com/win | iex" aria-label="Copy command">📋</button>
-                    </li>
-                    <li>Choose the tweaks you'd like to perform</li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="music">
-            <h1> Music <button class="toggle-btn" data-section="music" aria-expanded="true" aria-controls="music-content" aria-label="Toggle Music section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="music-content">
-                <ul>
-                    <li data-favorite="spotx">
-                        <button class="fav-btn" data-id="spotx" aria-label="Add to favorites">☆</button>
-                        <span class="resource-info">
-                            <span class="resource-name">SpotX for ad-free Spotify</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="Use with caution">🟡 </span>
-                        </span>
-                        <a href="https://github.com/SpotX-Official/SpotX" target="_blank" rel="noopener" data-tooltip="Ad-free Spotify mod"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://github.com/SpotX-Official/SpotX" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="shazam">
-                        <button class="fav-btn" data-id="shazam" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./shazam.png" loading="lazy" alt="Shazam music identifier extension logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">Shazam browser extension</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Browser Extension">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://chromewebstore.google.com/detail/shazam-find-song-names-fr/mmioliijnhnoblpgimnlajmefafdfilb" target="_blank" rel="noopener" data-tooltip="Song identifier"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://chromewebstore.google.com/detail/shazam-find-song-names-fr/mmioliijnhnoblpgimnlajmefafdfilb" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="browsers">
-            <h1> Browsers <button class="toggle-btn" data-section="browsers" aria-expanded="true" aria-controls="browsers-content" aria-label="Toggle Browsers section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="browsers-content">
-                <ul>
-                    <li data-favorite="firefox">
-                        <button class="fav-btn" data-id="firefox" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./firefox.png" loading="lazy" alt="Mozilla Firefox browser logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">Firefox</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Mac">🍎</span>
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://www.firefox.com/en-US/browsers/desktop/windows/" target="_blank" rel="noopener" data-tooltip="Privacy-focused browser"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.firefox.com/en-US/browsers/desktop/windows/" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li>
-                        <img decoding="async" src="./circle.png" loading="lazy" alt="Google Chrome browser logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">Google Chrome (not recommended for privacy)</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Mac">🍎</span>
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="Privacy concerns">🟡 </span>
-                        </span>
-                    </li>
-                    <li data-favorite="tor">
-                        <button class="fav-btn" data-id="tor" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./tor.png" loading="lazy" alt="Tor Browser anonymous browsing logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">TOR Browser</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Mac">🍎</span>
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://www.torproject.org/download/" target="_blank" rel="noopener" data-tooltip="Anonymous browsing"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.torproject.org/download/" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="wallpapers">
-            <h1> Wallpapers <button class="toggle-btn" data-section="wallpapers" aria-expanded="true" aria-controls="wallpapers-content" aria-label="Toggle Wallpapers section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="wallpapers-content">
-                <ul>
-                    <li data-favorite="wallhaven">
-                        <button class="fav-btn" data-id="wallhaven" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./wallpaper.png" loading="lazy" alt="Wallhaven wallpaper site logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">Wallhaven</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Web">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://wallhaven.cc" target="_blank" rel="noopener" data-tooltip="High-quality wallpapers"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://wallhaven.cc" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="windows-keys">
-            <h1> OS <button class="toggle-btn" data-section="windows-keys" aria-expanded="true" aria-controls="windows-keys-content" aria-label="Toggle OS section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="windows-keys-content">
-                <h2>Windows Keys</h2>
-                <ul>
-                    <li data-favorite="winkeys">
-                        <button class="fav-btn" data-id="winkeys" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./windows.png" loading="lazy" alt="Microsoft Windows operating system logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">Windows activation keys</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                            </span>
-                            <span class="risk-badge risk-caution" title="Use with caution">🟡 </span>
-                        </span>
-                        <a href="https://gist.github.com/rvrsh3ll/0810c6ed60e44cf7932e4fbae25880df" target="_blank" rel="noopener" data-tooltip="Windows activation keys"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://gist.github.com/rvrsh3ll/0810c6ed60e44cf7932e4fbae25880df" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-                <h2>Linux Distributions</h2>
-                <ul>
-                    <li data-favorite="arch">
-                        <button class="fav-btn" data-id="arch" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./arch.png" loading="lazy" alt="Arch Linux distribution logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">Arch Linux</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-danger" title="Advanced users only">🔴 </span>
-                        </span>
-                        <a href="https://archlinux.org/download/" target="_blank" rel="noopener" data-tooltip="Lightweight Linux distro"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://archlinux.org/download/" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li data-favorite="mint">
-                        <button class="fav-btn" data-id="mint" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./mint.png" loading="lazy" alt="Linux Mint distribution logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">Linux Mint</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://www.linuxmint.com/download.php" target="_blank" rel="noopener" data-tooltip="User-friendly Linux distro"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.linuxmint.com/download.php" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-                <h2>Tools</h2>
-                <ul>
-                    <li data-favorite="rufus">
-                        <button class="fav-btn" data-id="rufus" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./rufus.png" loading="lazy" alt="Rufus bootable USB creator logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">Rufus for creating bootable USB drives</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://rufus.ie/en/" target="_blank" rel="noopener" data-tooltip="Bootable USB creator"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://rufus.ie/en/" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="minecraft-server">
-            <h1> Minecraft Server <button class="toggle-btn" data-section="minecraft-server" aria-expanded="true" aria-controls="minecraft-server-content" aria-label="Toggle Minecraft Server section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="minecraft-server-content">
-                <ul>
-                    <li data-favorite="automcs">
-                        <button class="fav-btn" data-id="automcs" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./minecraft.png" loading="lazy" alt="Minecraft game logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">Auto-MCS for Minecraft servers</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://www.auto-mcs.com" target="_blank" rel="noopener" data-tooltip="Minecraft server setup"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://www.auto-mcs.com" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                    <li>Copy and paste IP into MC server list</li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="password-manager">
-            <h1> Password Manager <button class="toggle-btn" data-section="password-manager" aria-expanded="true" aria-controls="password-manager-content" aria-label="Toggle Password Manager section">
-                <span class="toggle-icon" aria-hidden="true">−</span>
-            </button></h1>
-            <div class="section-content" id="password-manager-content">
-                <ul>
-                    <li data-favorite="lastpass">
-                        <button class="fav-btn" data-id="lastpass" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./lastpass.png" loading="lazy" alt="LastPass password manager logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">LastPass</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Browser Extension">🌐</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" target="_blank" rel="noopener" data-tooltip="Cloud-based password manager"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-                <h2>Offline Password Manager</h2>
-                <ul>
-                    <li data-favorite="keepass">
-                        <button class="fav-btn" data-id="keepass" aria-label="Add to favorites">☆</button>
-                        <img decoding="async" src="./keepass.png" loading="lazy" alt="KeePass offline password manager logo" width="48" height="48">
-                        <span class="resource-info">
-                            <span class="resource-name">KeePass</span>
-                            <span class="platform-badges">
-                                <span class="platform" title="Windows">🪟</span>
-                                <span class="platform" title="Mac">🍎</span>
-                                <span class="platform" title="Linux">🐧</span>
-                            </span>
-                            <span class="risk-badge risk-safe" title="Safe to use">🟢 </span>
-                        </span>
-                        <a href="https://keepass.info/download.html" target="_blank" rel="noopener" data-tooltip="Offline password manager"><span class="link-highlight">here</span></a>
-                        <button class="copy-btn" data-url="https://keepass.info/download.html" aria-label="Copy link">📋</button>
-                        <span class="status">Last checked: Sep 2025</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <div class="button-container">
-            <button id="backToTop" style="display: none;">Back To Top</button>
+        <h1 class="hero-title">
+          <span class="title-line">Piracy</span>
+          <span class="title-line title-accent">Resources</span>
+        </h1>
+        <p class="hero-subtitle">Safe &amp; Efficient Tools + Guides</p>
+        <p class="hero-warning">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Use at your own risk — <strong>VPN recommended</strong> for all downloads
+        </p>
+        <div class="hero-actions">
+          <a href="#basics" class="btn-primary">Explore Resources</a>
+          <button class="btn-ghost" id="expand-all-hero">Expand All</button>
         </div>
-    </main>
-
-    <footer>
-        <p>&copy; Barnacle. All rights reserved. Last updated: September 2025. Icons by <a href="https://flaticon.com" target="_blank" rel="noopener">Flaticon</a>.</p>
-        <div class="social-links">
-            <a href="https://x.com/BJ0RN9" target="_blank" rel="noopener">Twitter</a>
-            <a href="https://github.com/barnacle040?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num" id="stat-tools">45</span><span class="stat-label">Tools</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num">14</span><span class="stat-label">Categories</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-num" id="stat-safe">32</span><span class="stat-label">Safe-rated</span></div>
         </div>
-    </footer>
+      </div>
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
 
+    <!-- ─── GLOBAL CONTROLS ─── -->
+    <div class="global-controls">
+      <button class="ctrl-btn" id="expand-all">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
+        Expand All
+      </button>
+      <button class="ctrl-btn" id="collapse-all">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+        Collapse All
+      </button>
+      <span class="ctrl-divider"></span>
+      <button class="ctrl-btn" id="show-shortcuts-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg>
+        Shortcuts
+      </button>
+      <span class="ctrl-hint">Press <kbd>?</kbd> for help</span>
+    </div>
 
-    <script>
-        // Theme state and favorites stored in memory
-        let isDarkTheme = true;
-        let favorites = [];
-        let showingFavoritesOnly = false;
-        let searchIndex = [];
+    <!-- ─────────────────────────────────────────── -->
+    <!--  SECTION: BASICS                            -->
+    <!-- ─────────────────────────────────────────── -->
+    <section class="resource-section reveal" id="basics">
+      <div class="section-header" data-toggle="basics">
+        <div class="section-title-group">
+          <span class="section-index">01</span>
+          <h2 class="section-title">Basics</h2>
+          <span class="section-badge">6 tools</span>
+        </div>
+        <button class="section-toggle" aria-expanded="true" aria-controls="basics-body">
+          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+      <div class="section-body" id="basics-body">
+        <div class="cards-grid">
 
-        /**
-         * Debounce utility to prevent excessive calls to expensive functions.
-         * Impact: Reduces DOM updates and string processing overhead during rapid typing.
-         */
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
+          <article class="tool-card" data-search="ublock origin browser extension adblocker windows macos linux">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/ublock.png" alt="uBlock Origin" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">uBlock Origin</h3>
+                <p class="card-desc">The most effective ad and tracker blocker. Essential first install.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="macOS">🍎</span>
+                    <span class="platform-tag" title="Linux">🐧</span>
+                  </div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/" class="card-link" target="_blank" rel="noopener" aria-label="Download uBlock Origin">
+                  Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-        window.onscroll = function() {
-            document.getElementById('backToTop').style.display = window.scrollY > 200 ? 'block' : 'none';
-        };
+          <article class="tool-card tool-card--warning" data-search="vpn torrent protection privacy">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">VPN (Required)</h3>
+                <p class="card-desc">Bind your VPN to your torrent client. Always use when downloading.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="All platforms">🌐</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <span class="card-note">Required for torrenting</span>
+              </div>
+            </div>
+          </article>
 
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+          <article class="tool-card" data-search="IDM internet download manager large downloads windows">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/IDM.PNG" alt="IDM" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">IDM</h3>
+                <p class="card-desc">Internet Download Manager — fastest download speeds for large files.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://steamrip.com/idm-internet-download-manager-free-download-1a/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-        /**
-         * Filters sections based on search query using the pre-built index.
-         * Impact: Eliminates expensive DOM queries and textContent processing on every keystroke.
-         */
-        function performSearch() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const clearBtn = document.getElementById('clearSearch');
-            const resultsDiv = document.getElementById('searchResults');
+          <article class="tool-card" data-search="qbittorrent torrent client windows macos linux">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/torrent.png" alt="qBittorrent" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">qBittorrent</h3>
+                <p class="card-desc">Open-source torrent client. Clean, no bloatware, bind to VPN.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="macOS">🍎</span>
+                    <span class="platform-tag" title="Linux">🐧</span>
+                  </div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.qbittorrent.org/download" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            let visibleCount = 0;
+          <article class="tool-card" data-search="winrar archive extraction windows">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/winrar.png" alt="WinRAR" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">WinRAR</h3>
+                <p class="card-desc">Extract RAR, ZIP, and other archives. The classic extraction tool.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.win-rar.com/start.html?&L=0" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            searchIndex.forEach(item => {
-                const isVisible = item.text.includes(query);
-                item.element.style.display = isVisible ? 'block' : 'none';
-                if (isVisible) visibleCount++;
-            });
+          <article class="tool-card" data-search="jdownloader download manager alternative idm windows macos linux">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/jdownloader.jpg" alt="JDownloader" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">JDownloader</h3>
+                <p class="card-desc">Cross-platform IDM alternative. Great for hosting sites and batch downloads.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="macOS">🍎</span>
+                    <span class="platform-tag" title="Linux">🐧</span>
+                  </div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://jdownloader.org/download/index" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            clearBtn.style.display = query ? 'inline-block' : 'none';
+        </div>
+      </div>
+    </section>
 
-            if (query) {
-                resultsDiv.textContent = `${visibleCount} section${visibleCount !== 1 ? 's' : ''} found`;
-            } else {
-                resultsDiv.textContent = '';
-            }
-        }
+    <!-- ─────────────────────────────────────────── -->
+    <!--  SECTION: SECURITY                          -->
+    <!-- ─────────────────────────────────────────── -->
+    <section class="resource-section reveal" id="security">
+      <div class="section-header" data-toggle="security">
+        <div class="section-title-group">
+          <span class="section-index">02</span>
+          <h2 class="section-title">Virus Protection</h2>
+          <span class="section-badge">3 tools</span>
+        </div>
+        <button class="section-toggle" aria-expanded="true" aria-controls="security-body">
+          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+      <div class="section-body" id="security-body">
+        <div class="cards-grid">
 
-        // Use debounced version for active typing to reduce DOM thrashing
-        const debouncedSearch = debounce(performSearch, 250);
+          <article class="tool-card" data-search="malwarebytes antivirus malware protection windows macos">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/malwarebytes-logo-1-3657666643.png" alt="Malwarebytes" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Malwarebytes</h3>
+                <p class="card-desc">Best-in-class malware scanner. Run it after every suspicious download.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="macOS">🍎</span>
+                  </div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.malwarebytes.com" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-        function clearSearch() {
-            document.getElementById('searchInput').value = '';
-            performSearch(); // Immediate execution for responsive UX when clearing
-            document.getElementById('searchInput').focus();
-        }
+          <article class="tool-card" data-search="haveibeenpwned pwned email password breach check web">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/pwned.png" alt="HaveIBeenPwned" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">HaveIBeenPwned</h3>
+                <p class="card-desc">Check if your email or password appears in known data breaches.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://haveibeenpwned.com/" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-        function toggleSection(button) {
-            const sectionId = button.getAttribute('data-section');
-            const content = document.querySelector(`#${sectionId} .section-content`);
-            const icon = button.querySelector('.toggle-icon');
-            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+          <article class="tool-card" data-search="virustotal scan file url malware check web new">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">VirusTotal</h3>
+                <p class="card-desc">Scan files and URLs with 70+ antivirus engines before running anything.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.virustotal.com/" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated new-tag">New!</span>
+              </div>
+            </div>
+          </article>
 
-            content.classList.toggle('hidden');
-            button.setAttribute('aria-expanded', !isExpanded);
-            icon.textContent = isExpanded ? '+' : '−';
-        }
+        </div>
+      </div>
+    </section>
 
-        function expandAll() {
-            const allContents = document.querySelectorAll('.section-content');
-            const allButtons = document.querySelectorAll('.toggle-btn');
+    <!-- ─────────────────────────────────────────── -->
+    <!--  SECTION: BROWSER EXTENSIONS                -->
+    <!-- ─────────────────────────────────────────── -->
+    <section class="resource-section reveal" id="extensions">
+      <div class="section-header" data-toggle="extensions">
+        <div class="section-title-group">
+          <span class="section-index">03</span>
+          <h2 class="section-title">Browser Extensions</h2>
+          <span class="section-badge new-badge">New! · 4 tools</span>
+        </div>
+        <button class="section-toggle" aria-expanded="true" aria-controls="extensions-body">
+          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+      <div class="section-body" id="extensions-body">
+        <div class="cards-grid">
 
-            allContents.forEach(content => content.classList.remove('hidden'));
-            allButtons.forEach(button => {
-                button.setAttribute('aria-expanded', 'true');
-                const icon = button.querySelector('.toggle-icon');
-                if (icon) icon.textContent = '−';
-            });
-        }
+          <article class="tool-card" data-search="sponsorblock skip youtube sponsors ads browser extension web">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/><line x1="19" y1="3" x2="19" y2="21"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">SponsorBlock</h3>
+                <p class="card-desc">Community-driven YouTube sponsor segment skipper. Never watch an ad read again.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://sponsor.ajay.app/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated new-tag">New!</span>
+              </div>
+            </div>
+          </article>
 
-        function collapseAll() {
-            const allContents = document.querySelectorAll('.section-content');
-            const allButtons = document.querySelectorAll('.toggle-btn');
+          <article class="tool-card" data-search="privacy badger tracker blocker eff web browser extension">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Privacy Badger</h3>
+                <p class="card-desc">EFF's auto-learning tracker blocker. Learns as you browse, blocks as it learns.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://privacybadger.org/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated new-tag">New!</span>
+              </div>
+            </div>
+          </article>
 
-            allContents.forEach(content => content.classList.add('hidden'));
-            allButtons.forEach(button => {
-                button.setAttribute('aria-expanded', 'false');
-                const icon = button.querySelector('.toggle-icon');
-                if (icon) icon.textContent = '+';
-            });
-        }
+          <article class="tool-card" data-search="return youtube dislike dislikes extension web browser">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3z"/><path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Return YouTube Dislike</h3>
+                <p class="card-desc">Restore the dislike count to YouTube using community data.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://returnyoutubedislike.com/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated new-tag">New!</span>
+              </div>
+            </div>
+          </article>
 
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification('Copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy:', err);
-            });
-        }
+          <article class="tool-card" data-search="dark reader dark mode every site browser extension web">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Dark Reader</h3>
+                <p class="card-desc">Force dark mode on any website. Eyes will thank you.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://darkreader.org/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated new-tag">New!</span>
+              </div>
+            </div>
+          </article>
 
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.textContent = message;
-            document.body.appendChild(notification);
+        </div>
+      </div>
+    </section>
 
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 10);
+    <!-- ─────────────────────────────────────────── -->
+    <!--  SECTION: MEDIA (Anime + TV + Music)        -->
+    <!-- ─────────────────────────────────────────── -->
+    <section class="resource-section reveal" id="media">
+      <div class="section-header" data-toggle="media">
+        <div class="section-title-group">
+          <span class="section-index">04</span>
+          <h2 class="section-title">Media &amp; Streaming</h2>
+          <span class="section-badge">7 tools</span>
+        </div>
+        <button class="section-toggle" aria-expanded="true" aria-controls="media-body">
+          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+      <div class="section-body" id="media-body">
 
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
-            }, 2000);
-        }
+        <div class="subsection-label">Anime</div>
+        <div class="cards-grid">
+          <article class="tool-card" data-search="hianime anime streaming web">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/hianime.png" alt="HiAnime" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">HiAnime</h3>
+                <p class="card-desc">Premium anime streaming with sub and dub. Large library, fast servers.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://hianime.pe" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
+        </div>
 
-        function toggleFavorite(id) {
-            const index = favorites.indexOf(id);
-            const btn = document.querySelector(`[data-id="${id}"]`);
+        <div class="subsection-label">TV Shows &amp; Movies</div>
+        <div class="cards-grid">
 
-            if (index > -1) {
-                favorites.splice(index, 1);
-                btn.textContent = '☆';
-                btn.classList.remove('active');
-                btn.setAttribute('aria-label', 'Add to favorites');
-            } else {
-                favorites.push(id);
-                btn.textContent = '★';
-                btn.classList.add('active');
-                btn.setAttribute('aria-label', 'Remove from favorites');
-            }
+          <article class="tool-card" data-search="1337x torrent movies tv shows web">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/1337x.png" alt="1337x" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">1337x</h3>
+                <p class="card-desc">Top-tier torrent index for movies, TV series, and more. Wide selection.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://1337x.to/movie-library/1/" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            updateFavCount();
-        }
+          <article class="tool-card" data-search="rivestream streaming movies tv shows web">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/rive.png" alt="RiveStream" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">RiveStream</h3>
+                <p class="card-desc">Stream movies and TV shows directly in browser. No account required.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://rivestream.org" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-        function updateFavCount() {
-            document.getElementById('favCount').textContent = favorites.length;
-        }
+          <article class="tool-card" data-search="cineby streaming movies tv web">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/cineby.PNG" alt="Cineby" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Cineby</h3>
+                <p class="card-desc">Clean UI streaming site for movies and series. Regularly updated catalog.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.cineby.app" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-        function showFavorites() {
-            showingFavoritesOnly = !showingFavoritesOnly;
-            const btn = document.getElementById('showFavorites');
-            btn.setAttribute('aria-pressed', showingFavoritesOnly);
-            const allListItems = document.querySelectorAll('li[data-favorite]');
+          <article class="tool-card" data-search="lookmovie streaming movies tv web">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/lookmovie.png" alt="LookMovie" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">LookMovie</h3>
+                <p class="card-desc">High quality streams for movies and TV. Good search and filter options.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.lookmovie2.to" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            if (showingFavoritesOnly) {
-                btn.textContent = '← Show All';
-                allListItems.forEach(item => {
-                    const id = item.getAttribute('data-favorite');
-                    item.style.display = favorites.includes(id) ? 'flex' : 'none';
-                });
+        </div>
 
-                // Hide sections with no favorites
-                document.querySelectorAll('section[id]').forEach(section => {
-                    if (section.classList.contains('move')) return;
-                    const visibleItems = section.querySelectorAll('li[data-favorite]');
-                    const hasVisible = Array.from(visibleItems).some(item => item.style.display !== 'none');
-                    section.style.display = hasVisible ? 'block' : 'none';
-                });
-            } else {
-                btn.textContent = `★ Favorites (${favorites.length})`;
-                allListItems.forEach(item => item.style.display = 'flex');
-                document.querySelectorAll('section[id]').forEach(section => {
-                    section.style.display = 'block';
-                });
-            }
-        }
+        <div class="subsection-label">Music</div>
+        <div class="cards-grid">
 
-        function toggleShortcuts() {
-            const btn = document.querySelector('.toggle-btn[data-section="shortcuts"]');
-            if (btn) toggleSection(btn);
-        }
+          <article class="tool-card" data-search="spotx spotify ad free mod windows music">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12a4 4 0 0 1 4-4m4 8a4 4 0 0 1-4-4"/><path d="M7 9a7 7 0 0 1 10 0M5 17a10 10 0 0 1 14-14"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">SpotX</h3>
+                <p class="card-desc">Ad-free Spotify patcher for Windows. No account changes needed.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://github.com/SpotX-Official/SpotX" class="card-link" target="_blank" rel="noopener">GitHub <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-        document.addEventListener('click', (e) => {
-            const dropdown = document.querySelector('.dropdown-content');
-            if (!e.target.closest('.dropdown') && dropdown) {
-                dropdown.style.display = 'none';
-            }
-        });
+          <article class="tool-card" data-search="shazam browser extension music identify web">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/shazam.png" alt="Shazam" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Shazam Extension</h3>
+                <p class="card-desc">Identify any song playing in your browser with one click.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://chromewebstore.google.com/detail/shazam-find-song-names-fr/mmioliijnhnoblpgimnlajmefafdfilb" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            // Ctrl+K to focus search
-            if (e.ctrlKey && e.key === 'k') {
-                e.preventDefault();
-                document.getElementById('searchInput').focus();
-            }
+        </div>
+      </div>
+    </section>
 
-            // Ctrl+E to expand all
-            if (e.ctrlKey && e.key === 'e' && !e.shiftKey) {
-                e.preventDefault();
-                expandAll();
-            }
+    <!-- ─────────────────────────────────────────── -->
+    <!--  SECTION: GAMING                            -->
+    <!-- ─────────────────────────────────────────── -->
+    <section class="resource-section reveal" id="gaming">
+      <div class="section-header" data-toggle="gaming">
+        <div class="section-title-group">
+          <span class="section-index">05</span>
+          <h2 class="section-title">Gaming</h2>
+          <span class="section-badge">4 tools</span>
+        </div>
+        <button class="section-toggle" aria-expanded="true" aria-controls="gaming-body">
+          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+      <div class="section-body" id="gaming-body">
+        <div class="cards-grid">
 
-            // Ctrl+Shift+E to collapse all
-            if (e.ctrlKey && e.shiftKey && e.key === 'E') {
-                e.preventDefault();
-                collapseAll();
-            }
+          <article class="tool-card" data-search="fitgirl repacks game torrent compressed windows">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/repacks.png" alt="FitGirl Repacks" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">FitGirl Repacks</h3>
+                <p class="card-desc">Highly compressed game repacks. Official site only — beware fakes.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://fitgirl-repacks.site" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            // Escape to clear search or close shortcuts
-            if (e.key === 'Escape') {
-                if (document.getElementById('searchInput').value) {
-                    clearSearch();
-                } else if (!document.getElementById('shortcuts-content').classList.contains('hidden')) {
-                    toggleShortcuts();
-                }
-            }
+          <article class="tool-card" data-search="steamrip steam game download preinstalled windows">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/steamrip.png" alt="SteamRip" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">SteamRip</h3>
+                <p class="card-desc">Pre-installed Steam game downloads. Fast direct links, no compression wait.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://steamrip.com" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            // ? to toggle shortcuts
-            if (e.key === '?' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
-                toggleShortcuts();
-            }
-        });
+          <article class="tool-card" data-search="vimms lair retro rom emulation web">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/vims_lair.jpg" alt="Vimm's Lair" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Vimm's Lair</h3>
+                <p class="card-desc">Retro ROM vault — NES to PS3. Trusted preservation archive.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://vimm.net/vault" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const items = document.querySelectorAll('li, .image-item');
-            items.forEach((item, index) => {
-                item.style.animationDelay = `${index * 0.1}s`;
-            });
+          <article class="tool-card" data-search="retroarch emulator retro gaming windows macos linux">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/retro_arch.png" alt="RetroArch" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">RetroArch</h3>
+                <p class="card-desc">All-in-one emulator frontend. Run any retro system from one app.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="macOS">🍎</span>
+                    <span class="platform-tag" title="Linux">🐧</span>
+                  </div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.retroarch.com/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            const sections = document.querySelectorAll('section[id]');
-            sections.forEach((section, index) => {
-                if (!section.classList.contains('move')) {
-                    section.style.animationDelay = `${0.5 + index * 0.2}s`;
+        </div>
+      </div>
+    </section>
 
-                    // Optimization: Build search index to avoid repeated DOM queries and textContent processing
-                    searchIndex.push({
-                        element: section,
-                        text: section.textContent.toLowerCase()
-                    });
-                }
-            });
+    <!-- ─────────────────────────────────────────── -->
+    <!--  SECTION: SYSTEM                            -->
+    <!-- ─────────────────────────────────────────── -->
+    <section class="resource-section reveal" id="system">
+      <div class="section-header" data-toggle="system">
+        <div class="section-title-group">
+          <span class="section-index">06</span>
+          <h2 class="section-title">Clearing Space &amp; System</h2>
+          <span class="section-badge">5 tools</span>
+        </div>
+        <button class="section-toggle" aria-expanded="true" aria-controls="system-body">
+          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+      <div class="section-body" id="system-body">
+        <div class="cards-grid">
 
-            // Search functionality - using 'input' for better cross-browser consistency
-            document.getElementById('searchInput').addEventListener('input', debouncedSearch);
-            document.getElementById('clearSearch').addEventListener('click', clearSearch);
+          <article class="tool-card" data-search="ccleaner clean junk windows macos">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/ccleaner.png" alt="CCleaner" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">CCleaner</h3>
+                <p class="card-desc">Quick junk file cleaner for browsers, temp files and registry.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="macOS">🍎</span>
+                  </div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.ccleaner.com/ccleaner/download" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            // Theme toggle
-            document.getElementById('themeToggle')?.addEventListener('click', () => {
-                isDarkTheme = !isDarkTheme;
-                document.body.classList.toggle('light');
-                document.getElementById('themeToggle').textContent = isDarkTheme ? '🌙' : '☀️';
-            });
+          <article class="tool-card" data-search="bleachbit deep clean linux windows system">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/bleachbit.png" alt="BleachBit" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">BleachBit</h3>
+                <p class="card-desc">Open-source deep cleaner. Nuclear option for thorough system wipes.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="Linux">🐧</span>
+                  </div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.bleachbit.org" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            // Back to top
-            document.getElementById('backToTop').addEventListener('click', scrollToTop);
+          <article class="tool-card" data-search="wiztree disk analyzer large files windows">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/wiztree.png" alt="WizTree" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">WizTree</h3>
+                <p class="card-desc">Instant disk space analyser. Finds large files in seconds, not minutes.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://diskanalyzer.com/download" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            // Toggle buttons
-            document.querySelectorAll('.toggle-btn').forEach(button => {
-                button.addEventListener('click', () => toggleSection(button));
-            });
+          <article class="tool-card" data-search="wizfile file search windows fast">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/wizfile.png" alt="WizFile" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">WizFile</h3>
+                <p class="card-desc">Fastest Windows file search tool. Find any file in under a second.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://antibody-software.com/wizfile/download" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            // Expand/Collapse all buttons
-            document.getElementById('expandAll').addEventListener('click', expandAll);
-            document.getElementById('collapseAll').addEventListener('click', collapseAll);
+          <article class="tool-card tool-card--danger" data-search="christitus powershell tweaks windows winutil">
+            <div class="card-inner">
+              <div class="card-logo-wrap card-logo-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">CTT WinUtil (PowerShell)</h3>
+                <p class="card-desc">Chris Titus Tech's Windows utility. Debloat, tweaks, installs — run as admin.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="safety-tag danger">● High Risk</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <div class="code-snippet">
+                  <code>iwr -useb https://christitus.com/win | iex</code>
+                  <button class="copy-btn" data-copy="iwr -useb https://christitus.com/win | iex" aria-label="Copy command">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
 
-            // Copy buttons
-            document.querySelectorAll('.copy-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const url = btn.getAttribute('data-url');
-                    const text = btn.getAttribute('data-text');
-                    copyToClipboard(url || text);
-                });
-            });
+        </div>
+      </div>
+    </section>
 
-            // Favorite buttons
-            document.querySelectorAll('.fav-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const id = btn.getAttribute('data-id');
-                    toggleFavorite(id);
-                });
-            });
+    <!-- ─────────────────────────────────────────── -->
+    <!--  SECTION: BROWSERS                          -->
+    <!-- ─────────────────────────────────────────── -->
+    <section class="resource-section reveal" id="browsers">
+      <div class="section-header" data-toggle="browsers">
+        <div class="section-title-group">
+          <span class="section-index">07</span>
+          <h2 class="section-title">Browsers</h2>
+          <span class="section-badge">3 tools</span>
+        </div>
+        <button class="section-toggle" aria-expanded="true" aria-controls="browsers-body">
+          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+      <div class="section-body" id="browsers-body">
+        <div class="cards-grid">
 
-            // Show favorites button
-            document.getElementById('showFavorites').addEventListener('click', showFavorites);
+          <article class="tool-card" data-search="firefox browser privacy windows macos linux recommended">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/firefox.png" alt="Firefox" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Firefox</h3>
+                <p class="card-desc">Recommended for privacy. Best extension support including uBlock Origin.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="macOS">🍎</span>
+                    <span class="platform-tag" title="Linux">🐧</span>
+                  </div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.firefox.com/en-US/browsers/desktop/windows/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
 
-            // Shortcuts toggle
-            document.getElementById('shortcutsToggle')?.addEventListener('click', toggleShortcuts);
-        });
-    </script>
+          <article class="tool-card tool-card--muted" data-search="chrome google browser windows macos linux not recommended privacy">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/circle.png" alt="Chrome" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Google Chrome</h3>
+                <p class="card-desc">Not recommended for privacy. Google telemetry, limited ad-blocking on Manifest V3.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="macOS">🍎</span>
+                    <span class="platform-tag" title="Linux">🐧</span>
+                  </div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <span class="card-note">⚠ Not recommended</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tool-card" data-search="tor browser anonymous privacy windows macos linux">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/tor.png" alt="TOR Browser" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">TOR Browser</h3>
+                <p class="card-desc">Maximum anonymity browser. Routes through the Tor network. Slow but private.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="macOS">🍎</span>
+                    <span class="platform-tag" title="Linux">🐧</span>
+                  </div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.torproject.org/download/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────── -->
+    <!--  SECTION: OS                                -->
+    <!-- ─────────────────────────────────────────── -->
+    <section class="resource-section reveal" id="os">
+      <div class="section-header" data-toggle="os">
+        <div class="section-title-group">
+          <span class="section-index">08</span>
+          <h2 class="section-title">Operating Systems</h2>
+          <span class="section-badge">4 tools</span>
+        </div>
+        <button class="section-toggle" aria-expanded="true" aria-controls="os-body">
+          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+      <div class="section-body" id="os-body">
+
+        <div class="subsection-label">Windows Keys</div>
+        <div class="cards-grid">
+          <article class="tool-card" data-search="windows activation key license windows">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/windows.png" alt="Windows" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Windows Activation Keys</h3>
+                <p class="card-desc">Generic/KMS keys for Windows activation. Use at own risk.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="safety-tag caution">● Caution</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://gist.github.com/rvrsh3ll/0810c6ed60e44cf7932e4fbae25880df" class="card-link" target="_blank" rel="noopener">View keys <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="subsection-label">Linux Distributions</div>
+        <div class="cards-grid">
+
+          <article class="tool-card tool-card--danger" data-search="arch linux distribution advanced linux">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/arch.png" alt="Arch Linux" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Arch Linux</h3>
+                <p class="card-desc">Rolling release, ultra-customisable. For experienced users. RTFM required.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Linux">🐧</span></div>
+                  <span class="safety-tag danger">● Advanced</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://archlinux.org/download/" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tool-card" data-search="linux mint distribution beginner friendly linux">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/mint.png" alt="Linux Mint" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Linux Mint</h3>
+                <p class="card-desc">Best beginner Linux distro. Windows-like feel, stable, well-supported.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Linux">🐧</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.linuxmint.com/download.php" class="card-link" target="_blank" rel="noopener">Download <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="subsection-label">Tools</div>
+        <div class="cards-grid">
+          <article class="tool-card" data-search="rufus bootable usb drive windows linux">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/rufus.png" alt="Rufus" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Rufus</h3>
+                <p class="card-desc">Create bootable USB drives from ISO images. Fast and reliable.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Windows">🪟</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://rufus.ie/en/" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────── -->
+    <!--  SECTION: MISC                              -->
+    <!-- ─────────────────────────────────────────── -->
+    <section class="resource-section reveal" id="misc">
+      <div class="section-header" data-toggle="misc">
+        <div class="section-title-group">
+          <span class="section-index">09</span>
+          <h2 class="section-title">Misc &amp; Utilities</h2>
+          <span class="section-badge">5 tools</span>
+        </div>
+        <button class="section-toggle" aria-expanded="true" aria-controls="misc-body">
+          <svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+      <div class="section-body" id="misc-body">
+
+        <div class="subsection-label">Wallpapers</div>
+        <div class="cards-grid">
+          <article class="tool-card" data-search="wallhaven wallpapers web">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/wallpaper.png" alt="Wallhaven" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Wallhaven</h3>
+                <p class="card-desc">Massive community wallpaper database. Filter by resolution, ratio, style.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://wallhaven.cc" class="card-link" target="_blank" rel="noopener">Visit <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="subsection-label">Minecraft</div>
+        <div class="cards-grid">
+          <article class="tool-card" data-search="minecraft server auto-mcs manager windows linux">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/minecraft.png" alt="Auto-MCS" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">Auto-MCS</h3>
+                <p class="card-desc">GUI tool for setting up and managing Minecraft servers. One-click setup.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="Linux">🐧</span>
+                  </div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://www.auto-mcs.com" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="subsection-label">Password Managers</div>
+        <div class="cards-grid">
+
+          <article class="tool-card" data-search="lastpass password manager web browser extension">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/lastpass.png" alt="LastPass" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">LastPass</h3>
+                <p class="card-desc">Cloud-based password manager. Syncs across all devices via browser extension.</p>
+                <div class="card-meta">
+                  <div class="card-platforms"><span class="platform-tag" title="Web">🌐</span></div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://chromewebstore.google.com/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="tool-card" data-search="keepass offline password manager windows macos linux">
+            <div class="card-inner">
+              <div class="card-logo-wrap">
+                <img src="https://barnacle040.github.io/what-I-use-piracy/keepass.png" alt="KeePass" class="card-logo" loading="lazy" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-name">KeePass</h3>
+                <p class="card-desc">Offline open-source password manager. Zero cloud, max privacy.</p>
+                <div class="card-meta">
+                  <div class="card-platforms">
+                    <span class="platform-tag" title="Windows">🪟</span>
+                    <span class="platform-tag" title="macOS">🍎</span>
+                    <span class="platform-tag" title="Linux">🐧</span>
+                  </div>
+                  <span class="safety-tag safe">● Safe</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <a href="https://keepass.info/download.html" class="card-link" target="_blank" rel="noopener">Get it <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+                <span class="card-updated">Sep 2025</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── BACK TO TOP ─── -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">[PIRACY.RES]</span>
+        <p class="footer-disclaimer">This site is for educational purposes only. The author does not endorse or encourage copyright infringement. Always comply with your local laws. Use a VPN. Use your brain.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <span class="footer-col-title">Pages</span>
+          <a href="https://barnacle040.github.io/what-I-use-piracy/Game_page.html" target="_blank" rel="noopener">Games</a>
+          <a href="https://barnacle040.github.io/what-I-use-piracy/Help.html" target="_blank" rel="noopener">Help</a>
+          <a href="https://barnacle040.github.io/what-I-use-piracy/Software_Library.html" target="_blank" rel="noopener">Software</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Contact</span>
+          <a href="https://x.com/BJ0RN9" target="_blank" rel="noopener">Twitter / X</a>
+          <a href="https://github.com/barnacle040?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Barnacle. All rights reserved.</span>
+      <span class="footer-sep">·</span>
+      <span>Last updated: September 2025</span>
+      <span class="footer-sep">·</span>
+      <span>Icons by <a href="https://flaticon.com" target="_blank" rel="noopener">Flaticon</a></span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
+</html>
