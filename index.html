@@ -690,6 +690,7 @@
       <li><a href="#" class="nav-link" data-section="security">Security</a></li>
       <li><a href="#" class="nav-link" data-section="gaming">Gaming</a></li>
       <li><a href="#" class="nav-link" data-section="media">Media</a></li>
+      <li><a href="#" class="nav-link" data-section="android">Android</a></li>
       <li><a href="#" class="nav-link" data-section="os">OS</a></li>
     </ul>
     <div class="nav-actions">
@@ -714,7 +715,7 @@
       <p class="hero-subtitle">Safe & Efficient Tools + Guides</p>
       <p class="hero-warning">⚠ Use at your own risk — <strong>VPN recommended</strong> for all downloads</p>
       <div class="hero-actions"><a href="#basics" class="btn-primary">Explore Resources</a><button class="btn-ghost" id="expand-all-hero">Expand All</button></div>
-      <div class="hero-stats"><div class="stat"><span class="stat-num" id="stat-tools">58</span><span class="stat-label">Tools</span></div><div class="stat-divider"></div><div class="stat"><span class="stat-num">14</span><span class="stat-label">Categories</span></div></div>
+      <div class="hero-stats"><div class="stat"><span class="stat-num" id="stat-tools">34</span><span class="stat-label">Tools</span></div><div class="stat-divider"></div><div class="stat"><span class="stat-num">15</span><span class="stat-label">Categories</span></div></div>
     </div>
   </section>
 
@@ -809,6 +810,7 @@
     { name: "HiAnime", desc: "Anime streaming (sub/dub).", platforms: "web", safety: "caution", url: "https://hianime.pe", category: "media", tags: "anime", icon: "https://barnacle040.github.io/what-I-use-piracy/hianime.png", updated: "2025-09" },
     { name: "SpotX", desc: "Ad-free Spotify patcher for Windows.", platforms: "windows", safety: "caution", url: "https://github.com/SpotX-Official/SpotX", category: "media", tags: "music", icon: "", updated: "2025-09" },
     { name: "Anna's Archive", desc: "Largest shadow library (books, papers).", platforms: "web", safety: "safe", url: "https://annas-archive.org", category: "media", tags: "ebooks", icon: "", updated: "2025-09" },
+    { name: "Nicotine+", desc: "Graphical client for Soulseek P2P network, ideal for discovering and sharing music.", platforms: "windows macos linux", safety: "safe", url: "https://nicotine-plus.org/", category: "media", tags: "music soulseek p2p", icon: "", updated: "2026-03" },
     { name: "Firefox", desc: "Recommended privacy browser, uBlock ready.", platforms: "windows macos linux", safety: "safe", url: "https://www.mozilla.org/firefox/new/", category: "browsers", tags: "browser", icon: "https://barnacle040.github.io/what-I-use-piracy/firefox.png", updated: "2025-09" },
     { name: "Brave", desc: "Chromium with built-in adblock.", platforms: "windows macos linux", safety: "safe", url: "https://brave.com/download/", category: "browsers", tags: "browser", icon: "", updated: "2025-09" },
     { name: "Tor Browser", desc: "Anonymity via Tor network.", platforms: "windows macos linux", safety: "safe", url: "https://www.torproject.org/download/", category: "browsers", tags: "anonymous", icon: "https://barnacle040.github.io/what-I-use-piracy/tor.png", updated: "2025-09" },
@@ -817,6 +819,9 @@
     { name: "BleachBit", desc: "Open-source deep cleaner.", platforms: "windows linux", safety: "caution", url: "https://www.bleachbit.org", category: "system", tags: "cleaner", icon: "https://barnacle040.github.io/what-I-use-piracy/bleachbit.png", updated: "2025-09" },
     { name: "WizTree", desc: "Instant disk space analyzer.", platforms: "windows", safety: "safe", url: "https://diskanalyzer.com/download", category: "system", tags: "disk analyzer", icon: "https://barnacle040.github.io/what-I-use-piracy/wiztree.png", updated: "2025-09" },
     { name: "CTT WinUtil", desc: "PowerShell debloat tool (run as admin).", platforms: "windows", safety: "danger", url: "https://christitus.com/win", category: "system", tags: "tweaks", icon: "", command: "iwr -useb https://christitus.com/win | iex", updated: "2025-09" },
+    // NEW: Android Tools
+    { name: "ReVanced Manager", desc: "Patch YouTube, Reddit, and other apps to remove ads and add features. Requires installing APK manually.", platforms: "android", safety: "safe", url: "https://github.com/ReVanced/revanced-manager", category: "android", tags: "youtube patcher adblock", icon: "", updated: "2026-03" },
+    { name: "Mobilism", desc: "Community-driven forum for APK mods, cracked apps, and ebooks. One of the largest Android modding communities.", platforms: "android web", safety: "caution", url: "https://forum.mobilism.org", category: "android", tags: "apk mods apps", icon: "", updated: "2026-03" },
     { name: "Bitwarden", desc: "Open-source password manager (cloud sync).", platforms: "web", safety: "safe", url: "https://bitwarden.com/download/", category: "misc", tags: "password", icon: "", updated: "2025-09" },
     { name: "Wallhaven", desc: "Massive wallpaper database.", platforms: "web", safety: "safe", url: "https://wallhaven.cc", category: "misc", tags: "wallpaper", icon: "https://barnacle040.github.io/what-I-use-piracy/wallpaper.png", updated: "2025-09" }
   ];
@@ -840,7 +845,7 @@
   let favorites = new Set(JSON.parse(localStorage.getItem('piracy_favs') || '[]'));
   let activeFavFilter = false;
   let currentSearch = '';
-  let platformFilters = { windows: false, macos: false, linux: false, web: false };
+  let platformFilters = { windows: false, macos: false, linux: false, web: false, android: false };
   let safetyFilters = { safe: false, caution: false, danger: false };
   let sortOption = 'name-asc';
   let sectionCollapseState = JSON.parse(localStorage.getItem('section_collapse_state') || '{}');
@@ -892,7 +897,7 @@
   }
 
   function renderAll() {
-    const categories = { basics: 'Basics', security: 'Virus Protection', gaming: 'Gaming', media: 'Media & Streaming', browsers: 'Browsers', os: 'Operating Systems', system: 'System Utilities', misc: 'Misc' };
+    const categories = { basics: 'Basics', security: 'Virus Protection', gaming: 'Gaming', media: 'Media & Streaming', browsers: 'Browsers', os: 'Operating Systems', system: 'System Utilities', android: 'Android', misc: 'Misc' };
     let html = '';
     for (let [key, title] of Object.entries(categories)) {
       let filtered = toolsData.filter(t => t.category === key);
@@ -905,7 +910,7 @@
       for (let t of filtered) {
         const isFav = favorites.has(t.name);
         const iconHtml = t.icon ? `<img class="card-logo" src="${t.icon}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2300ff9d%22%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%2216%22%20height%3D%2216%22%2F%3E%3C%2Fsvg%3E'">` : `<div class="card-logo-icon" style="font-size:22px;">📦</div>`;
-        html += `<article class="tool-card" data-name="${t.name.toLowerCase()}"><div class="card-inner"><div class="card-logo-wrap">${iconHtml}</div><div class="card-content"><div class="card-name">${t.name}</div><div class="card-desc">${t.desc}</div><div class="card-meta"><div class="card-platforms">${t.platforms.split(' ').map(p => `<span class="platform-tag" title="${p}">${p === 'windows' ? '🪟' : p === 'macos' ? '🍎' : p === 'linux' ? '🐧' : '🌐'}</span>`).join('')}</div><span class="safety-tag ${t.safety}">● ${t.safety==='safe'?'Safe':t.safety==='caution'?'Caution':'High Risk'}</span></div></div><div class="card-actions"><button class="fav-btn-card ${isFav ? 'active' : ''}" data-fav="${t.name}">${isFav ? '★' : '☆'}</button>`;
+        html += `<article class="tool-card" data-name="${t.name.toLowerCase()}"><div class="card-inner"><div class="card-logo-wrap">${iconHtml}</div><div class="card-content"><div class="card-name">${t.name}</div><div class="card-desc">${t.desc}</div><div class="card-meta"><div class="card-platforms">${t.platforms.split(' ').map(p => `<span class="platform-tag" title="${p}">${p === 'windows' ? '🪟' : p === 'macos' ? '🍎' : p === 'linux' ? '🐧' : p === 'android' ? '📱' : '🌐'}</span>`).join('')}</div><span class="safety-tag ${t.safety}">● ${t.safety==='safe'?'Safe':t.safety==='caution'?'Caution':'High Risk'}</span></div></div><div class="card-actions"><button class="fav-btn-card ${isFav ? 'active' : ''}" data-fav="${t.name}">${isFav ? '★' : '☆'}</button>`;
         if (t.command) {
           html += `<div class="command-block"><code>${t.command}</code><button class="copy-btn" data-copy="${t.command}">📋 Copy</button></div>`;
         } else {
