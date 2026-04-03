@@ -449,6 +449,29 @@
       border-radius: 6px;
       padding: 5px 10px;
     }
+    .ublock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(229, 77, 46, 0.12);
+      border: 1px solid rgba(229, 77, 46, 0.3);
+      border-radius: 100px;
+      padding: 2px 7px 2px 4px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #e54d2e;
+      letter-spacing: 0.03em;
+      cursor: default;
+      white-space: nowrap;
+    }
+    .ublock-badge img {
+      width: 13px;
+      height: 13px;
+      border-radius: 2px;
+    }
+    .ublock-badge:hover {
+      background: rgba(229, 77, 46, 0.2);
+    }
     .card-updated {
       font-size: 10px;
       color: var(--text-dim);
@@ -801,13 +824,13 @@
     { name: "FitGirl Repacks", desc: "Highly compressed game repacks.", platforms: "windows", safety: "caution", url: "https://fitgirl-repacks.site", category: "gaming", tags: "repack torrent", icon: "https://barnacle040.github.io/what-I-use-piracy/repacks.png", updated: "2025-09" },
     { name: "DODI Repacks", desc: "Alternative repacker, faster installs.", platforms: "windows", safety: "caution", url: "https://dodi-repacks.site", category: "gaming", tags: "repack", icon: "", updated: "2025-09" },
     { name: "SteamRip", desc: "Pre-installed Steam games direct download.", platforms: "windows", safety: "caution", url: "https://steamrip.com", category: "gaming", tags: "direct download", icon: "https://barnacle040.github.io/what-I-use-piracy/steamrip.png", updated: "2025-09" },
-    { name: "Myrient", desc: "Massive ROM archive (direct downloads).", platforms: "web", safety: "safe", url: "https://myrient.erista.me", category: "gaming", tags: "roms emulation", icon: "", updated: "2025-09" },
-    { name: "Vimm's Lair", desc: "Retro ROM vault (NES to PS3).", platforms: "web", safety: "safe", url: "https://vimm.net/vault", category: "gaming", tags: "retro roms", icon: "https://barnacle040.github.io/what-I-use-piracy/vims_lair.jpg", updated: "2025-09" },
+    { name: "Myrient", desc: "Massive ROM archive (direct downloads).", platforms: "web", safety: "safe", url: "https://myrient.erista.me", category: "gaming", tags: "roms emulation", icon: "", updated: "2025-09", ublock: true },
+    { name: "Vimm's Lair", desc: "Retro ROM vault (NES to PS3).", platforms: "web", safety: "safe", url: "https://vimm.net/vault", category: "gaming", tags: "retro roms", icon: "https://barnacle040.github.io/what-I-use-piracy/vims_lair.jpg", updated: "2025-09", ublock: true },
     { name: "RetroArch", desc: "All-in-one emulator frontend.", platforms: "windows macos linux", safety: "safe", url: "https://www.retroarch.com/", category: "gaming", tags: "emulator", icon: "https://barnacle040.github.io/what-I-use-piracy/retro_arch.png", updated: "2025-09" },
-    { name: "1337x", desc: "Torrent index for movies, TV, music.", platforms: "web", safety: "caution", url: "https://1337x.to/movie-library/1/", category: "media", tags: "torrent movies", icon: "https://barnacle040.github.io/what-I-use-piracy/1337x.png", updated: "2025-09" },
-    { name: "RiveStream", desc: "Stream movies and TV shows (no account).", platforms: "web", safety: "caution", url: "https://rivestream.org", category: "media", tags: "streaming", icon: "https://barnacle040.github.io/what-I-use-piracy/rive.png", updated: "2025-09" },
-    { name: "Cineby", desc: "Clean UI streaming site.", platforms: "web", safety: "caution", url: "https://www.cineby.app", category: "media", tags: "movies", icon: "https://barnacle040.github.io/what-I-use-piracy/cineby.PNG", updated: "2025-09" },
-    { name: "HiAnime", desc: "Anime streaming (sub/dub).", platforms: "web", safety: "caution", url: "https://hianime.pe", category: "media", tags: "anime", icon: "https://barnacle040.github.io/what-I-use-piracy/hianime.png", updated: "2025-09" },
+    { name: "1337x", desc: "Torrent index for movies, TV, music.", platforms: "web", safety: "caution", url: "https://1337x.to/movie-library/1/", category: "media", tags: "torrent movies", icon: "https://barnacle040.github.io/what-I-use-piracy/1337x.png", updated: "2025-09", ublock: true },
+    { name: "RiveStream", desc: "Stream movies and TV shows (no account).", platforms: "web", safety: "caution", url: "https://rivestream.org", category: "media", tags: "streaming", icon: "https://barnacle040.github.io/what-I-use-piracy/rive.png", updated: "2025-09", ublock: true },
+    { name: "Cineby", desc: "Clean UI streaming site.", platforms: "web", safety: "caution", url: "https://www.cineby.app", category: "media", tags: "movies", icon: "https://barnacle040.github.io/what-I-use-piracy/cineby.PNG", updated: "2025-09", ublock: true },
+    { name: "HiAnime", desc: "Anime streaming (sub/dub).", platforms: "web", safety: "caution", url: "https://hianime.pe", category: "media", tags: "anime", icon: "https://barnacle040.github.io/what-I-use-piracy/hianime.png", updated: "2025-09", ublock: true },
     { name: "SpotX", desc: "Ad-free Spotify patcher for Windows.", platforms: "windows", safety: "caution", url: "https://github.com/SpotX-Official/SpotX", category: "media", tags: "music", icon: "", updated: "2025-09" },
     { name: "Anna's Archive", desc: "Largest shadow library (books, papers).", platforms: "web", safety: "safe", url: "https://annas-archive.org", category: "media", tags: "ebooks", icon: "", updated: "2025-09" },
     { name: "Nicotine+", desc: "Graphical client for Soulseek P2P network, ideal for discovering and sharing music.", platforms: "windows macos linux", safety: "safe", url: "https://nicotine-plus.org/", category: "media", tags: "music soulseek p2p", icon: "", updated: "2026-03" },
@@ -821,17 +844,31 @@
     { name: "CTT WinUtil", desc: "PowerShell debloat tool (run as admin).", platforms: "windows", safety: "danger", url: "https://christitus.com/win", category: "system", tags: "tweaks", icon: "", command: "iwr -useb https://christitus.com/win | iex", updated: "2025-09" },
     // NEW: Android Tools
     { name: "ReVanced Manager", desc: "Patch YouTube, Reddit, and other apps to remove ads and add features. Requires installing APK manually.", platforms: "android", safety: "safe", url: "https://github.com/ReVanced/revanced-manager", category: "android", tags: "youtube patcher adblock", icon: "", updated: "2026-03" },
-    { name: "Mobilism", desc: "Community-driven forum for APK mods, cracked apps, and ebooks. One of the largest Android modding communities.", platforms: "android web", safety: "caution", url: "https://forum.mobilism.org", category: "android", tags: "apk mods apps", icon: "", updated: "2026-03" },
+    { name: "Mobilism", desc: "Community-driven forum for APK mods, cracked apps, and ebooks. One of the largest Android modding communities.", platforms: "android web", safety: "caution", url: "https://forum.mobilism.org", category: "android", tags: "apk mods apps", icon: "", updated: "2026-03", ublock: true },
     { name: "Bitwarden", desc: "Open-source password manager (cloud sync).", platforms: "web", safety: "safe", url: "https://bitwarden.com/download/", category: "misc", tags: "password", icon: "", updated: "2025-09" },
-    { name: "Wallhaven", desc: "Massive wallpaper database.", platforms: "web", safety: "safe", url: "https://wallhaven.cc", category: "misc", tags: "wallpaper", icon: "https://barnacle040.github.io/what-I-use-piracy/wallpaper.png", updated: "2025-09" }
+    { name: "Wallhaven", desc: "Massive wallpaper database.", platforms: "web", safety: "safe", url: "https://wallhaven.cc", category: "misc", tags: "wallpaper", icon: "https://barnacle040.github.io/what-I-use-piracy/wallpaper.png", updated: "2025-09" },
+    // NEW SITES
+    { name: "FMHY", desc: "The largest curated free media wiki on the internet. Your first stop for everything.", platforms: "web", safety: "safe", url: "https://fmhy.net", category: "basics", tags: "wiki index megathread", icon: "", updated: "2026-04", ublock: true },
+    { name: "Stremio + Torrentio", desc: "Stream torrents directly — add the Torrentio addon for instant access to movies/TV via RealDebrid or Debrid-Link.", platforms: "windows macos linux", safety: "caution", url: "https://www.stremio.com/downloads", category: "media", tags: "streaming torrent debrid", icon: "", updated: "2026-04" },
+    { name: "Sonarr", desc: "Automatic TV show downloader. Monitors RSS feeds and grabs episodes as they release.", platforms: "windows macos linux", safety: "safe", url: "https://sonarr.tv/#download", category: "media", tags: "automation tv shows arr", icon: "", updated: "2026-04" },
+    { name: "Radarr", desc: "Automatic movie downloader — the Sonarr equivalent for films.", platforms: "windows macos linux", safety: "safe", url: "https://radarr.video/#downloads", category: "media", tags: "automation movies arr", icon: "", updated: "2026-04" },
+    { name: "Prowlarr", desc: "Indexer manager for Sonarr/Radarr. Connects all your torrent/Usenet indexers in one place.", platforms: "windows macos linux", safety: "safe", url: "https://github.com/Prowlarr/Prowlarr", category: "media", tags: "indexer arr automation", icon: "", updated: "2026-04" },
+    { name: "qBittorrent", desc: "Best open-source torrent client. No ads, no bloat, sequential downloading supported.", platforms: "windows macos linux", safety: "safe", url: "https://www.qbittorrent.org/download.php", category: "basics", tags: "torrent client download", icon: "", updated: "2026-04" },
+    { name: "ProtonVPN", desc: "Free tier available. No logs, based in Switzerland. Good for basic torrent protection.", platforms: "windows macos linux android", safety: "safe", url: "https://protonvpn.com/download", category: "security", tags: "vpn privacy", icon: "", updated: "2026-04" },
+    { name: "Redlib", desc: "Privacy-friendly Reddit frontend — no JS, no tracking. Great for r/Piracy browsing.", platforms: "web", safety: "safe", url: "https://github.com/redlib-org/redlib", category: "misc", tags: "reddit privacy frontend", icon: "", updated: "2026-04" },
+    { name: "Libgen", desc: "Library Genesis — books, textbooks, scientific papers. Millions of titles.", platforms: "web", safety: "safe", url: "https://libgen.is", category: "media", tags: "ebooks books textbooks", icon: "", updated: "2026-04", ublock: true },
+    { name: "Emudeck", desc: "All-in-one emulator setup for Steam Deck and Linux. Installs and configures everything automatically.", platforms: "linux", safety: "safe", url: "https://www.emudeck.com/#download", category: "gaming", tags: "emulator steam deck", icon: "", updated: "2026-04" },
+    { name: "Heroic Games Launcher", desc: "Open-source Epic Games & GOG launcher for Linux. Integrates with Proton for native-like gaming.", platforms: "linux macos windows", safety: "safe", url: "https://heroicgameslauncher.com/downloads", category: "gaming", tags: "epic gog linux proton", icon: "", updated: "2026-04" },
+    { name: "yt-dlp", desc: "Download videos from YouTube, Twitch, and 1000+ sites. CLI tool, highly scriptable.", platforms: "windows macos linux", safety: "safe", url: "https://github.com/yt-dlp/yt-dlp/releases", category: "media", tags: "youtube downloader video", icon: "", updated: "2026-04" },
+    { name: "Mullvad Browser", desc: "Firefox hardened by Mullvad + Tor Project. Best fingerprinting resistance without Tor network.", platforms: "windows macos linux", safety: "safe", url: "https://mullvad.net/en/browser", category: "browsers", tags: "browser privacy fingerprint", icon: "", updated: "2026-04" }
   ];
 
   const trustedUploaders = [
-    { name: "FitGirl Repacks", desc: "Most trusted repacker. Highly compressed games, safe if you use the official site.", platforms: "windows", safety: "caution", url: "https://fitgirl-repacks.site", icon: "https://barnacle040.github.io/what-I-use-piracy/repacks.png" },
-    { name: "DODI Repacks", desc: "Reliable alternative to FitGirl. Often faster installs.", platforms: "windows", safety: "caution", url: "https://dodi-repacks.site", icon: "" },
-    { name: "SteamRip", desc: "Direct downloads, no repack wait. Trusted pre-installed games.", platforms: "windows", safety: "caution", url: "https://steamrip.com", icon: "https://barnacle040.github.io/what-I-use-piracy/steamrip.png" },
-    { name: "Masquerade", desc: "High-quality scene releases. Trusted for software and games.", platforms: "windows", safety: "caution", url: "https://masquerade.site", icon: "" },
-    { name: "CS.RIN.RU", desc: "Community forum for cracked games, tools, and emulators. Vast knowledge base.", platforms: "web", safety: "caution", url: "https://cs.rin.ru", icon: "" }
+    { name: "FitGirl Repacks", desc: "Most trusted repacker. Highly compressed games, safe if you use the official site.", platforms: "windows", safety: "caution", url: "https://fitgirl-repacks.site", icon: "https://barnacle040.github.io/what-I-use-piracy/repacks.png", ublock: true },
+    { name: "DODI Repacks", desc: "Reliable alternative to FitGirl. Often faster installs.", platforms: "windows", safety: "caution", url: "https://dodi-repacks.site", icon: "", ublock: true },
+    { name: "SteamRip", desc: "Direct downloads, no repack wait. Trusted pre-installed games.", platforms: "windows", safety: "caution", url: "https://steamrip.com", icon: "https://barnacle040.github.io/what-I-use-piracy/steamrip.png", ublock: true },
+    { name: "Masquerade", desc: "High-quality scene releases. Trusted for software and games.", platforms: "windows", safety: "caution", url: "https://masquerade.site", icon: "", ublock: true },
+    { name: "CS.RIN.RU", desc: "Community forum for cracked games, tools, and emulators. Vast knowledge base.", platforms: "web", safety: "caution", url: "https://cs.rin.ru", icon: "", ublock: true }
   ];
 
   const subreddits = [
@@ -910,7 +947,8 @@
       for (let t of filtered) {
         const isFav = favorites.has(t.name);
         const iconHtml = t.icon ? `<img class="card-logo" src="${t.icon}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2300ff9d%22%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%2216%22%20height%3D%2216%22%2F%3E%3C%2Fsvg%3E'">` : `<div class="card-logo-icon" style="font-size:22px;">📦</div>`;
-        html += `<article class="tool-card" data-name="${t.name.toLowerCase()}"><div class="card-inner"><div class="card-logo-wrap">${iconHtml}</div><div class="card-content"><div class="card-name">${t.name}</div><div class="card-desc">${t.desc}</div><div class="card-meta"><div class="card-platforms">${t.platforms.split(' ').map(p => `<span class="platform-tag" title="${p}">${p === 'windows' ? '🪟' : p === 'macos' ? '🍎' : p === 'linux' ? '🐧' : p === 'android' ? '📱' : '🌐'}</span>`).join('')}</div><span class="safety-tag ${t.safety}">● ${t.safety==='safe'?'Safe':t.safety==='caution'?'Caution':'High Risk'}</span></div></div><div class="card-actions"><button class="fav-btn-card ${isFav ? 'active' : ''}" data-fav="${t.name}">${isFav ? '★' : '☆'}</button>`;
+        const ublockBadge = t.ublock ? `<span class="ublock-badge" title="Use uBlock Origin on this site"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/uBlock0@128.png" alt="uBO"> uBlock</span>` : '';
+        html += `<article class="tool-card" data-name="${t.name.toLowerCase()}"><div class="card-inner"><div class="card-logo-wrap">${iconHtml}</div><div class="card-content"><div class="card-name">${t.name}${ublockBadge ? ' ' + ublockBadge : ''}</div><div class="card-desc">${t.desc}</div><div class="card-meta"><div class="card-platforms">${t.platforms.split(' ').map(p => `<span class="platform-tag" title="${p}">${p === 'windows' ? '🪟' : p === 'macos' ? '🍎' : p === 'linux' ? '🐧' : p === 'android' ? '📱' : '🌐'}</span>`).join('')}</div><span class="safety-tag ${t.safety}">● ${t.safety==='safe'?'Safe':t.safety==='caution'?'Caution':'High Risk'}</span></div></div><div class="card-actions"><button class="fav-btn-card ${isFav ? 'active' : ''}" data-fav="${t.name}">${isFav ? '★' : '☆'}</button>`;
         if (t.command) {
           html += `<div class="command-block"><code>${t.command}</code><button class="copy-btn" data-copy="${t.command}">📋 Copy</button></div>`;
         } else {
@@ -932,7 +970,8 @@
     let html = '';
     for (let u of trustedUploaders) {
       const iconHtml = u.icon ? `<img class="card-logo" src="${u.icon}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2300ff9d%22%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%2216%22%20height%3D%2216%22%2F%3E%3C%2Fsvg%3E'">` : `<div class="card-logo-icon" style="font-size:22px;">⭐</div>`;
-      html += `<article class="tool-card"><div class="card-inner"><div class="card-logo-wrap">${iconHtml}</div><div class="card-content"><div class="card-name">${u.name}</div><div class="card-desc">${u.desc}</div><div class="card-meta"><div class="card-platforms">${u.platforms.split(' ').map(p => `<span class="platform-tag">${p === 'windows' ? '🪟' : '🌐'}</span>`).join('')}</div><span class="safety-tag ${u.safety}">● ${u.safety==='safe'?'Safe':'Caution'}</span></div></div><div class="card-actions"><a href="${u.url}" class="card-link" target="_blank" rel="noopener">Visit →</a><button class="copy-btn" data-copy="${u.url}">📋 Link</button><span class="card-updated">Trusted</span></div></div></article>`;
+      const ublockBadgeTrusted = u.ublock ? `<span class="ublock-badge" title="Use uBlock Origin on this site"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/uBlock0@128.png" alt="uBO"> uBlock</span>` : '';
+      html += `<article class="tool-card"><div class="card-inner"><div class="card-logo-wrap">${iconHtml}</div><div class="card-content"><div class="card-name">${u.name}${ublockBadgeTrusted ? ' ' + ublockBadgeTrusted : ''}</div><div class="card-desc">${u.desc}</div><div class="card-meta"><div class="card-platforms">${u.platforms.split(' ').map(p => `<span class="platform-tag">${p === 'windows' ? '🪟' : '🌐'}</span>`).join('')}</div><span class="safety-tag ${u.safety}">● ${u.safety==='safe'?'Safe':'Caution'}</span></div></div><div class="card-actions"><a href="${u.url}" class="card-link" target="_blank" rel="noopener">Visit →</a><button class="copy-btn" data-copy="${u.url}">📋 Link</button><span class="card-updated">Trusted</span></div></div></article>`;
     }
     grid.innerHTML = html;
     document.querySelectorAll('#trusted-grid .copy-btn').forEach(btn => {
