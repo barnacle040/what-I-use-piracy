@@ -1036,9 +1036,307 @@ kbd {
 }
 
 /* ════════════════════════════════════════════════════════
-   RESPONSIVE
+   VPN LEAK BANNER
+   ════════════════════════════════════════════════════════ */
+.vpn-leak-banner {
+  position: relative; z-index: 10;
+  width: 100%;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+  min-height: 44px;
+  /* Reserve space so nav push doesn't cause layout shift */
+  contain: layout;
+}
+.vpn-leak-banner.state-checking {
+  color: var(--text-muted);
+}
+.vpn-leak-banner.state-safe {
+  background: var(--safe-bg);
+  border-bottom-color: rgba(0, 230, 118, 0.2);
+  color: var(--safe);
+}
+.vpn-leak-banner.state-exposed {
+  background: var(--danger-bg);
+  border-bottom-color: rgba(255, 77, 77, 0.25);
+  color: var(--danger);
+}
+.vpn-leak-banner.state-caution {
+  background: var(--caution-bg);
+  border-bottom-color: rgba(255, 179, 0, 0.2);
+  color: var(--caution);
+}
+.vpn-banner-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: currentColor;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+.vpn-banner-label { font-weight: 600; white-space: nowrap; }
+.vpn-banner-detail {
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+.vpn-banner-isp {
+  font-weight: 500;
+  color: inherit;
+}
+.vpn-banner-dismiss {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: color var(--t-fast);
+}
+.vpn-banner-dismiss:hover { color: var(--accent); }
+
+/* ════════════════════════════════════════════════════════
+   TRUST SCORE WIDGET
+   ════════════════════════════════════════════════════════ */
+.trust-score-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.trust-score-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  cursor: default;
+  /* Prevent layout shift when score loads */
+  min-width: 52px;
+  text-align: center;
+}
+.trust-score-badge.score-high  { color: var(--safe);    background: var(--safe-bg);    border-color: rgba(0,230,118,0.2); }
+.trust-score-badge.score-mid   { color: var(--caution); background: var(--caution-bg); border-color: rgba(255,179,0,0.2); }
+.trust-score-badge.score-low   { color: var(--danger);  background: var(--danger-bg);  border-color: rgba(255,77,77,0.2); }
+.trust-formula-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.trust-formula-tooltip abbr {
+  text-decoration: none;
+  border-bottom: 1px dashed var(--text-dim);
+  cursor: help;
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+/* On cards, the trust score row */
+.card-trust-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.card-trust-formula {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  /* Use a block-level element so the formula doesn't orphan mid-word */
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ════════════════════════════════════════════════════════
+   LIVE RSS FEED
+   ════════════════════════════════════════════════════════ */
+.rss-feed-section {
+  position: relative; z-index: 2;
+  max-width: var(--max-w);
+  margin: 0 auto 8px;
+  padding: 0 24px;
+}
+.rss-feed-inner {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.rss-feed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rss-feed-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.rss-live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--danger);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.rss-feed-meta {
+  font-size: 10px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.rss-feed-list {
+  list-style: none;
+  /* Fixed height prevents layout shift during load — shows ~5 items at 56px each */
+  min-height: 56px;
+  max-height: 308px;
+  overflow-y: auto;
+}
+.rss-feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+  transition: background var(--t-fast);
+}
+.rss-feed-item:last-child { border-bottom: none; }
+.rss-feed-item:hover { background: var(--accent-dim); }
+.rss-item-index {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  padding-top: 3px;
+  flex-shrink: 0;
+  width: 18px;
+  text-align: right;
+}
+.rss-item-body { flex: 1; min-width: 0; }
+.rss-item-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  margin-bottom: 3px;
+}
+.rss-item-date {
+  font-size: 10px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.rss-item-arrow {
+  color: var(--text-dim);
+  font-size: 12px;
+  flex-shrink: 0;
+  padding-top: 2px;
+  transition: color var(--t-fast), transform var(--t-fast);
+}
+.rss-feed-item:hover .rss-item-arrow {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+.rss-feed-placeholder {
+  padding: 24px 18px;
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rss-spinner {
+  width: 14px; height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ════════════════════════════════════════════════════════
+   CONNECTIVITY STATUS DOTS
+   ════════════════════════════════════════════════════════ */
+.conn-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+.conn-dot.online  { background: var(--safe);    box-shadow: 0 0 4px var(--safe); }
+.conn-dot.offline { background: var(--danger);  box-shadow: 0 0 4px var(--danger); }
+.conn-dot.pending { background: var(--text-dim); animation: pulse-dot 1.2s ease-in-out infinite; }
+
+/* ════════════════════════════════════════════════════════
+   OFFLINE VAULT EXPORT BUTTON
+   ════════════════════════════════════════════════════════ */
+.vault-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid rgba(0, 255, 157, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+  white-space: nowrap;
+}
+.vault-export-btn:hover {
+  background: rgba(0, 255, 157, 0.18);
+  border-color: rgba(0, 255, 157, 0.4);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+/* ════════════════════════════════════════════════════════
+   RESPONSIVE — 900px (tablet / large mobile)
    ════════════════════════════════════════════════════════ */
 @media (max-width: 900px) {
+  /* ── NAV: collapse links into hamburger drawer ── */
   .nav-links {
     position: fixed;
     top: var(--nav-h);
@@ -1053,6 +1351,8 @@ kbd {
     visibility: hidden;
     transition: transform var(--t-mid) var(--ease), opacity var(--t-mid), visibility var(--t-mid);
     z-index: 99;
+    /* Drawer slides from behind the nav bar — no content jump */
+    will-change: transform;
   }
   .nav-links.mobile-open {
     transform: translateY(0);
@@ -1061,8 +1361,150 @@ kbd {
   }
   .nav-link { padding: 10px 14px; font-size: 13px; border-radius: 8px; }
   .nav-hamburger { display: flex; }
+
+  /* ── VPN Banner: stack label + detail vertically on narrow viewports ── */
+  .vpn-leak-banner {
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .vpn-banner-detail { width: 100%; white-space: normal; }
+
+  /* ── RSS Feed: reduce padding ── */
+  .rss-feed-header { padding: 12px 14px; }
+  .rss-feed-item   { padding: 10px 14px; gap: 10px; }
+  .rss-feed-section { padding: 0 16px; }
+
+  /* ── Cards grid: 2 columns on tablet ── */
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* ── Trust formula: let it wrap gracefully ── */
+  .card-trust-formula { white-space: normal; word-break: break-word; }
 }
 
+/* ════════════════════════════════════════════════════════
+   RESPONSIVE — 430px (iPhone 15 Plus = 430pt wide)
+   Target: zero layout shift, no horizontal overflow
+   ════════════════════════════════════════════════════════ */
+@media (max-width: 430px) {
+  /* ── NAV: tighten horizontal padding ── */
+  .nav-inner {
+    padding: 0 14px;
+    gap: 12px;
+  }
+  .nav-logo { font-size: 13px; }
+
+  /* ── VPN Banner: single-column stacked layout ── */
+  .vpn-leak-banner {
+    padding: 8px 14px;
+    /* Fixed height prevents jitter when ISP string loads */
+    min-height: 56px;
+    align-items: flex-start;
+  }
+  .vpn-banner-label { font-size: 11px; }
+  .vpn-banner-detail {
+    font-size: 11px;
+    /* Allow ISP name to wrap rather than overflow */
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+  .vpn-banner-dismiss {
+    /* Promote to top-right so it doesn't push content */
+    position: absolute;
+    top: 8px; right: 12px;
+  }
+
+  /* ── RSS Feed: full-width, no side padding bleed ── */
+  .rss-feed-section { padding: 0 12px; }
+  .rss-feed-header {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .rss-feed-title { font-size: 10px; }
+  .rss-feed-meta  { font-size: 9px; }
+  .rss-feed-list  {
+    /* Show ~4 items (52px each) without scroll on 430pt */
+    max-height: 240px;
+  }
+  .rss-feed-item {
+    padding: 10px 12px;
+    gap: 8px;
+    /* Prevent title overflow forcing horizontal scroll */
+    min-width: 0;
+  }
+  .rss-item-title { font-size: 11px; }
+  .rss-item-date  { font-size: 9px;  }
+  .rss-item-index { display: none; } /* reclaim 18px gutter on narrow screens */
+
+  /* ── Cards grid: single column ── */
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-top: 10px;
+  }
+
+  /* ── Trust Score: prevent formula from overflowing card ── */
+  .card-trust-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .card-trust-formula {
+    font-size: 9px;
+    white-space: normal;
+    word-break: break-all;
+    max-width: 100%;
+    overflow: visible;
+    text-overflow: unset;
+  }
+  .trust-score-badge { font-size: 10px; min-width: 48px; }
+
+  /* ── Section header: avoid text wrap on tiny screens ── */
+  .section-title { font-size: 15px; }
+  .section-title-group { gap: 8px; }
+  .section-header { padding: 14px 14px; }
+  .resource-section { padding: 0 12px; }
+
+  /* ── Global controls: stack vertically ── */
+  .global-controls { padding: 0 12px 16px; gap: 6px; }
+  .ctrl-hint { display: none; }
+  .inline-search { width: 100%; }
+
+  /* ── Advanced controls: full-width stack ── */
+  .advanced-controls { padding: 0 12px; flex-direction: column; align-items: stretch; }
+  .filters-group { flex-wrap: wrap; gap: 6px; }
+  select { font-size: 11px; }
+
+  /* ── Hero stats: tighten ── */
+  .hero-stats { gap: 16px; }
+  .stat-num { font-size: 22px; }
+  .stat-divider { display: none; }
+
+  /* ── Hero actions: stack buttons full-width ── */
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
+
+  /* ── Hero title ── */
+  .hero-title { letter-spacing: -0.04em; }
+
+  /* ── Footer ── */
+  .footer-inner  { gap: 24px; }
+  .footer-links  { gap: 24px; }
+  .footer-bottom { padding: 12px 14px; font-size: 10px; }
+
+  /* ── Shortcuts panel ── */
+  .shortcuts-panel { right: 12px; left: 12px; min-width: auto; }
+
+  /* ── Back to top: move above bottom safe area ── */
+  .back-to-top { bottom: 16px; right: 14px; }
+
+  /* ── Vault export: full width in mobile controls bar ── */
+  .vault-export-btn { width: 100%; justify-content: center; }
+}
+
+/* ════════════════════════════════════════════════════════
+   RESPONSIVE — 640px (general small breakpoint)
+   ════════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
   .hero-stats { gap: 20px; }
   .stat-num { font-size: 22px; }
@@ -1072,17 +1514,15 @@ kbd {
   .shortcuts-panel { right: 12px; left: 12px; min-width: auto; }
   .global-controls { gap: 6px; }
   .ctrl-hint { display: none; }
+  .rss-feed-section { padding: 0 16px; }
 }
 
-@media (max-width: 480px) {
-  .hero-title { letter-spacing: -0.04em; }
-  .hero-actions { flex-direction: column; align-items: center; }
-  .btn-primary, .btn-ghost { width: 100%; max-width: 280px; justify-content: center; }
-  .back-to-top { bottom: 16px; right: 16px; }
-}
-
-/* ── HIGH CONTRAST PRINT ─────────────────────────────── */
+/* ── HIGH CONTRAST / REDUCED MOTION ─────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
-  .hero-title { animation: none; opacity: 1; transform: none; }
+  .hero-title   { animation: none; opacity: 1; transform: none; }
+  .rss-spinner  { animation: none; border-top-color: var(--accent); }
+  .badge-dot,
+  .rss-live-dot,
+  .vpn-banner-dot { animation: none; opacity: 1; }
 }
