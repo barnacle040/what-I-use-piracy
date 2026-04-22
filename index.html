@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>✦ PIRACY GATEWAY ✦ | Choose Your Flavor</title>
+    <style>
+        /* ----- GLOBAL RESET & 90s HACKER VIBES ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        body {
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', 'VT323', 'Fixedsys', 'Lucida Console', monospace;
+            padding: 1.5rem;
+            position: relative;
+            /* CRT scanlines effect */
+            background-image: repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0px, rgba(0,255,0,0.03) 2px, transparent 2px, transparent 4px);
+        }
+
+        /* pixelated tiled background like old geocities */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40"><rect width="40" height="40" fill="%231a1a1a"/><rect x="0" y="0" width="20" height="20" fill="%23222222"/><rect x="20" y="20" width="20" height="20" fill="%23222222"/></svg>');
+            background-repeat: repeat;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* main splash container — retro terminal feel */
+        .splash-container {
+            max-width: 1100px;
+            width: 100%;
+            background: #0c0c0c;
+            border: 4px ridge #4caf50;
+            padding: 1.8rem 1.8rem 2.2rem 1.8rem;
+            box-shadow: 8px 8px 0px 0px #1e3a1e;
+            position: relative;
+            z-index: 10;
+            transition: all 0.2s ease;
+        }
+
+        /* classic marquee banner */
+        .marquee-banner {
+            background: #000000;
+            border: 1px solid #33ff33;
+            color: #33ff33;
+            padding: 6px 10px;
+            margin-bottom: 1.5rem;
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        marquee {
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
+        /* ascii header */
+        .ascii-header {
+            font-family: monospace;
+            font-size: 0.65rem;
+            line-height: 1.2;
+            color: #6eff6e;
+            text-align: center;
+            white-space: pre;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 3px #00aa00;
+        }
+
+        @media (max-width: 700px) {
+            .ascii-header {
+                font-size: 0.45rem;
+            }
+        }
+
+        .glitch-title {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            color: #f5f5dc;
+            text-shadow: 3px 3px 0px #aa2e1e, -1px -1px 0px #2e8b57;
+            letter-spacing: 2px;
+            word-break: break-word;
+            margin: 0.5rem 0 0.2rem;
+        }
+
+        .sub {
+            text-align: center;
+            color: #b3ffaa;
+            background: #0f1f0f;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 1rem;
+            padding: 6px 16px;
+            font-size: 0.85rem;
+            border-left: 4px solid #33ff33;
+            font-weight: bold;
+        }
+
+        hr.divider {
+            border: none;
+            border-top: 2px dashed #3c9e3c;
+            margin: 1rem 0;
+            box-shadow: 0 1px 0 #0a3a0a;
+        }
+
+        /* CHOICE PANEL — card layout inspired by barnacle's tools grid */
+        .choice-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0 1.5rem;
+        }
+
+        .version-card {
+            flex: 1;
+            min-width: 260px;
+            background: #101810;
+            border: 2px ridge #4c914c;
+            padding: 1.5rem 1.2rem;
+            text-align: center;
+            transition: 0.1s linear;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px 0px #1e3a1e;
+        }
+
+        .version-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px #3c8f3c;
+            background: #152015;
+            border-color: #9eff9e;
+        }
+
+        /* retro card extra grit */
+        .retro-card {
+            border-top: 6px solid #ffaa33;
+            background: #0f0e0a;
+        }
+
+        .modern-card {
+            border-top: 6px solid #33aaff;
+            background: #0c121c;
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            filter: drop-shadow(2px 2px 0px #000);
+            margin-bottom: 0.8rem;
+        }
+
+        .version-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.6rem;
+            font-family: 'Courier New', monospace;
+            letter-spacing: -1px;
+        }
+
+        .modern-title {
+            color: #7bc5ff;
+            text-shadow: 2px 2px 0 #001f3f;
+        }
+
+        .retro-title {
+            color: #ffcc66;
+            text-shadow: 2px 2px 0 #5a2e00;
+        }
+
+        .description {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #c0e0c0;
+            margin: 1rem 0 1.4rem;
+            background: #0b0b0b;
+            padding: 8px;
+            border-left: 3px solid #7db87d;
+            text-align: left;
+            font-family: monospace;
+        }
+
+        .retro-desc {
+            color: #ffdd99;
+        }
+
+        /* button with bevel effect */
+        .select-btn {
+            background: #000000;
+            border: 2px outset #707070;
+            padding: 0.6rem 1.3rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            transition: 0.05s linear;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 0.2rem;
+        }
+
+        .modern-btn {
+            color: #aaffff;
+            border-color: #2288aa;
+            background: #021c2c;
+        }
+
+        .modern-btn:hover {
+            background: #0a3a55;
+            color: white;
+            border-color: #55ddff;
+        }
+
+        .retro-btn {
+            color: #ffcf7a;
+            border-color: #bc7a2e;
+            background: #2a1e0c;
+        }
+
+        .retro-btn:hover {
+            background: #7a4a1a;
+            color: #ffffaa;
+            border-color: #ffbc4a;
+        }
+
+        /* footer with status bar */
+        .status-bar {
+            margin-top: 1.8rem;
+            background: #030303;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            color: #5cb85c;
+            border-top: 1px solid #2f6b2f;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            font-family: monospace;
+        }
+
+        .blink {
+            animation: blink-animation 1s step-start infinite;
+        }
+
+        @keyframes blink-animation {
+            50% { opacity: 0; }
+        }
+
+        /* custom retro scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: #0a1f0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4c914c;
+            border: 1px solid #8bc34a;
+        }
+    </style>
+</head>
+<body>
+<div class="splash-container">
+    <!-- MARQUEE: classic 90s announcement -->
+    <div class="marquee-banner">
+        <marquee behavior="scroll" direction="left" scrollamount="3" onmouseover="this.stop()" onmouseout="this.start()">
+            ⚡ ★彡  WELCOME TO THE GATEWAY  彡★ ⚡   ||  [ SAFE MODE ]  ||  [ RETRO DIMENSION ]  ||  PIRACYRESOURCES // NEOCITIES VIBES  ||  UNDER CONSTRUCTION ⚠️  ||  BEST VIEWED WITH NETSCAPE NAVIGATOR 4.0  ||
+        </marquee>
+    </div>
+
+    <!-- ASCII art header inspired by barnacle.neocities -->
+    <div class="ascii-header">
+        ________________________________________________________________________________<br>
+        |  __     _   _   _   _   _     _   _   _   _     ___     ___   _   _   _   _  |<br>
+        | / _|   / \ | \ | | | \ | |   / \ | \ | | | \ | |_ _|   / _ \ | \ | | | \ | | |<br>
+        | |_    / _ \|  \| | |  \| |  / _ \|  \| | |  \| | | |  | | | ||  \| | |  \| | |<br>
+        |  _|  / ___ \ |\  | | |\  | / ___ \ |\  | | |\  | | |  | |_| || |\  | | |\  | |<br>
+        | |   /_/   \_\_| \_| |_| \_|/_/   \_\_| \_| |_| \_||___| \___/ |_| \_| |_| \_| |<br>
+        |_______________________________________________________________________________|
+    </div>
+
+    <div class="glitch-title">
+        ✦ PIRACY GATEWAY ✦
+    </div>
+    <div style="text-align: center;">
+        <div class="sub">>_ choose your experience . . .</div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="choice-panel">
+        <!-- MODERN (NORMAL) CARD — structured like barnacle040 tools -->
+        <div class="version-card modern-card" id="modernChoiceCard">
+            <div class="card-icon">🖥️💿🔒</div>
+            <div class="version-title modern-title">MODERN NEXUS</div>
+            <div class="description">
+                [ SAFE + EFFICIENT ]<br>
+                • sleek glassmorphic UI<br>
+                • curated tools & resources<br>
+                • clean, fast, responsive<br>
+                • minimal bloat, max privacy<br>
+                ★彡 recommended for daily use 彡★
+            </div>
+            <button class="select-btn modern-btn" id="modernBtn">⟣ ENTER MODERN ⟢</button>
+        </div>
+
+        <!-- RETRO NEOCITIES CARD — full barnacle.neocities & 90s chaos -->
+        <div class="version-card retro-card" id="retroChoiceCard">
+            <div class="card-icon">📼🕹️💾</div>
+            <div class="version-title retro-title">⛧ NEOCITIES RETRO ⛧</div>
+            <div class="description retro-desc">
+                █ 88x31 banners █ blink tags █<br>
+                █ tiled GIFs, marquee chaos █<br>
+                █ under construction since '98 █<br>
+                █ pixel fonts, neon & ascii █<br>
+                <span style="color:#ffaa55;">✧ SEED THE TORRENTS ✧</span>
+            </div>
+            <button class="select-btn retro-btn" id="retroBtn">⌗ ENTER RETRO ⌗</button>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <span>✦ 47 TOOLS | 15 CATEGORIES ✦</span>
+        <span><span class="blink">⚠️</span> VPN REQUIRED FOR TORRENTS <span class="blink">⚠️</span></span>
+        <span>☠️ SAFE · CAUTION · HIGH RISK ☠️</span>
+    </div>
+    <div style="text-align: center; font-size: 0.7rem; margin-top: 0.5rem; color:#3c9e3c;">
+        ★彡  SEED THE TORRENTS · SHARE THE WEALTH · PRIVACY IS A RIGHT · FIGHT THE POWER 彡★
+    </div>
+</div>
+
+<script>
+    (function() {
+        // fully immersive splash: replaces with either MODERN (normal) or RETRO neocities version
+        const splashContainer = document.querySelector('.splash-container');
+
+        function showModernSite() {
+            if (splashContainer && splashContainer.parentNode) {
+                splashContainer.style.transition = "opacity 0.2s";
+                splashContainer.style.opacity = "0";
+                setTimeout(() => {
+                    if (splashContainer.parentNode) splashContainer.remove();
+                    injectModernFullSite();
+                }, 200);
+            } else {
+                injectModernFullSite();
+            }
+        }
+
+        function showRetroSite() {
+            if (splashContainer && splashContainer.parentNode) {
+                splashContainer.style.transition = "opacity 0.2s";
+                splashContainer.style.opacity = "0";
+                setTimeout(() => {
+                    if (splashContainer.parentNode) splashContainer.remove();
+                    injectRetroFullSite();
+                }, 200);
+            } else {
+                injectRetroFullSite();
+            }
+        }
+
+        // ********** MODERN VERSION (normal site - barnacle040 style resource grid) **********
+        function injectModernFullSite() {
+            const existingSite = document.getElementById('dynamic-site-root');
+            if (existingSite) existingSite.remove();
+
+            const modernRoot = document.createElement('div');
+            modernRoot.id = 'dynamic-site-root';
+            modernRoot.style.width = '100%';
+            modernRoot.style.minHeight = '100vh';
+            modernRoot.style.background = '#0c0f1c';
+            modernRoot.style.fontFamily = "'Inter', 'Segoe UI', system-ui, 'Courier New', monospace";
+            modernRoot.style.padding = '1.5rem';
+            modernRoot.style.animation = 'fadeModern 0.4s ease';
+
+            const styleAnim = document.createElement('style');
+            styleAnim.textContent = `
+                @keyframes fadeModern { 0% { opacity: 0; } 100% { opacity: 1; } }
+                .tool-card { background: #151e2c; border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 12px; transition: 0.1s; }
+                .tool-card:hover { background: #1e2a3a; transform: translateY(-2px); }
+                .category { color: #90cdf4; font-weight: bold; border-bottom: 1px solid #2d4a6e; }
+            `;
+            document.head.appendChild(styleAnim);
+
+            modernRoot.innerHTML = `
+                <div style="max-width: 1200px; margin: 0 auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 2rem; border-bottom: 2px solid #2c5282; padding-bottom: 1rem;">
+                        <h1 style="color:#cbd5e6; font-family: monospace;">✦ PIRACYRESOURCES / MODERN ✦</h1>
+                        <button id="resetToSplashModern" style="background:#1f2a3e; border:1px solid #4a7c9c; color:white; padding:6px 14px; font-family: monospace; cursor: pointer;">⤫ BACK TO SPLASH ⤫</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.5rem;">
+                        <div class="tool-card"><span style="font-size:1.8rem;">📦</span><h3>7-Zip</h3><p>Open-source archive tool, high compression.</p><span style="color:#6bb86b;">● Safe</span></div>
+                        <div class="tool-card"><span style="font-size:1.8rem;">🐝</span><h3>qBittorrent</h3><p>Open-source, bind to VPN, no ads.</p><span style="color:#eab308;">● Caution</span></div>
+                        <div class="tool-card"><span style="font-size:1.8rem;">🛡️</span><h3>uBlock Origin</h3><p>Best ad/tracker blocker.</p><span style="color:#6bb86b;">● Safe</span></div>
+                        <div class="tool-card"><span style="font-size:1.8rem;">🎮</span><h3>FitGirl Repacks</h3><p>Highly compressed games.</p><span style="color:#eab308;">● Caution</span></div>
+                        <div class="tool-card"><span style="font-size:1.8rem;">📖</span><h3>Anna's Archive</h3><p>Shadow library, books & papers.</p><span style="color:#6bb86b;">● Safe</span></div>
+                        <div class="tool-card"><span style="font-size:1.8rem;">🎬</span><h3>Stremio + Torrentio</h3><p>Stream torrents directly.</p><span style="color:#eab308;">● Caution</span></div>
+                    </div>
+                    <div class="status-bar" style="margin-top: 2.5rem; background:#0a0f1a; padding:8px;">⚡ 47 Tools • 15 Categories • Always use VPN ⚡</div>
+                </div>
+            `;
+            document.body.innerHTML = '';
+            document.body.appendChild(modernRoot);
+            document.body.style.background = '#0c0f1c';
+            const resetBtn = modernRoot.querySelector('#resetToSplashModern');
+            if (resetBtn) resetBtn.addEventListener('click', () => resetToSplash());
+        }
+
+        // ********** RETRO NEOCITIES VERSION (barnacle.neocities & 90s style) **********
+        function injectRetroFullSite() {
+            const existingSite = document.getElementById('dynamic-site-root');
+            if (existingSite) existingSite.remove();
+
+            const retroRoot = document.createElement('div');
+            retroRoot.id = 'dynamic-site-root';
+            retroRoot.style.background = '#000000';
+            retroRoot.style.backgroundImage = 'repeating-linear-gradient(45deg, #0a2a0a 0px, #0a2a0a 2px, #001a00 2px, #001a00 8px)';
+            retroRoot.style.fontFamily = "'Courier New', 'VT323', monospace";
+            retroRoot.style.color = '#33ff33';
+            retroRoot.style.padding = '1rem';
+            retroRoot.style.border = '10px ridge #bf9b30';
+            retroRoot.style.minHeight = '100vh';
+
+            const retroHtml = `
+                <div style="max-width: 1100px; margin: 0 auto; background: #050d05; border: 3px double #7cb518; padding: 1rem;">
+                    <marquee behavior="alternate" scrollamount="2" style="background: #000; color: #ffff77; padding: 4px;">☠️☠️☠️ WELCOME TO THE NEOCITIES UNDERGROUND ☠️☠️☠️  |  SEED THE TORRENTS  |  POWERED BY HTML 2.0  |  <blink>NEW!</blink>  ANIME STREAMING  |</marquee>
+                    <div class="ascii-header" style="font-size:0.6rem; color:#77ff77;">
+                        <pre>
+  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄  ▄▄   ▄▄  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄   ▄▄▄▄▄▄▄ 
+ █      █ █       █ █  █ █  █ █       █ █       █ █      █ █       █
+ █  ▄    █ █    ▄▄▄█ █  █▄█  █ █    ▄▄▄█ █   ▄   █ █  ▄    █ █    ▄▄▄█
+ █ █ █   █ █   █▄▄▄  █       █ █   █▄▄▄  █  █ █  █ █ █ █   █ █   █▄▄▄ 
+ █ █▄█   █ █    ▄▄▄█ █       █ █    ▄▄▄█ █  █▄█  █ █ █▄█   █ █    ▄▄▄█
+ █       █ █   █▄▄▄  █   ▄   █ █   █▄▄▄  █       █ █       █ █   █▄▄▄ 
+ █▄▄▄▄▄▄▄█ █▄▄▄▄▄▄▄█ █▄▄█ █▄▄█ █▄▄▄▄▄▄▄█ █▄▄▄▄▄▄▄█ █▄▄▄▄▄▄▄█ █▄▄▄▄▄▄▄█
+                        </pre>
+                    </div>
+                    <div style="text-align: center;">
+                        <h1><blink>🔥 PIRACYRESOURCES.NEOCITIES 🔥</blink></h1>
+                        <div style="background:#111; border: 2px groove #b8860b; padding: 10px; margin: 10px 0;">
+                            <span>🎴 <img src="https://raw.githubusercontent.com/sixarm/under-construction-gif/master/under-construction.gif" width="80" alt="under construction" style="image-rendering:pixelated;"> </span>
+                            <span>📼 <img src="https://i.imgur.com/0uKzK6U.gif" width="40" alt="old computer"> </span>
+                            <span>💾 <span style="background: yellow; color:black;">BEST VIEWED WITH NETSCAPE 4.0</span> 💾</span>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0;">
+                            <div style="background:#1e2a0a; padding:6px 12px; border: 1px outset gold;">🎮 FITGIRL REPS</div>
+                            <div style="background:#1e2a0a; padding:6px 12px; border: 1px outset gold;">🎬 CINEBY.ST</div>
+                            <div style="background:#1e2a0a; padding:6px 12px; border: 1px outset gold;">📚 LIBGEN</div>
+                            <div style="background:#1e2a0a; padding:6px 12px; border: 1px outset gold;">⚡ QBITTORRENT</div>
+                        </div>
+                        <div style="font-size: 0.8rem; background: #000000; border-left: 6px solid #ff9933; padding: 12px; text-align: left;">
+                            <span style="color:#ffff88;">★彡 47 TOOLS • 15 CATEGORIES 彡★</span><br>
+                            ⚠️ VPN REQUIRED FOR ALL TORRENTS ⚠️ <br>
+                            <span class="blink">>>> PRIVACY IS A RIGHT <<<</span><br>
+                            <a href="#" id="retroReset" style="color:#ffaa66; text-decoration:none; border: 1px solid #ffaa66; padding: 4px 12px; display: inline-block; margin-top: 12px;">⟳ RESTART SPLASH ⟳</a>
+                        </div>
+                        <div style="margin-top: 20px; font-size: 0.7rem;">
+                            <marquee scrollamount="1" direction="up" height="30">✦ SEED THE TORRENTS ✦ SHARE THE WEALTH ✦ FIGHT THE POWER ✦</marquee>
+                        </div>
+                    </div>
+                </div>
+            `;
+            retroRoot.innerHTML = retroHtml;
+            document.body.innerHTML = '';
+            document.body.appendChild(retroRoot);
+            document.body.style.background = "#000000";
+            const resetRetro = retroRoot.querySelector('#retroReset');
+            if (resetRetro) resetRetro.addEventListener('click', (e) => { e.preventDefault(); resetToSplash(); });
+            // blink polyfill
+            const blinks = retroRoot.querySelectorAll('blink');
+            const styleBlink = document.createElement('style');
+            styleBlink.textContent = `blink { animation: blink-animation 1s step-start infinite; }`;
+            document.head.appendChild(styleBlink);
+        }
+
+        // RESET FUNCTION: brings back original splash screen
+        function resetToSplash() {
+            const dynamicRoot = document.getElementById('dynamic-site-root');
+            if (dynamicRoot) dynamicRoot.remove();
+            document.body.innerHTML = '';
+            document.body.style.background = "#000000";
+            document.body.style.margin = "";
+            document.body.className = "";
+            const newSplash = createOriginalSplash();
+            document.body.appendChild(newSplash);
+            attachEventsToSplash(newSplash);
+            document.body.style.background = "#000000";
+            document.body.style.backgroundImage = "repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0px, rgba(0,255,0,0.03) 2px, transparent 2px, transparent 4px)";
+        }
+
+        function createOriginalSplash() {
+            const container = document.createElement('div');
+            container.className = 'splash-container';
+            container.innerHTML = `
+                <div class="marquee-banner"><marquee behavior="scroll" direction="left" scrollamount="3" onmouseover="this.stop()" onmouseout="this.start()">⚡ ★彡  WELCOME TO THE GATEWAY  彡★ ⚡   ||  [ SAFE MODE ]  ||  [ RETRO DIMENSION ]  ||  PIRACYRESOURCES // NEOCITIES VIBES  ||  UNDER CONSTRUCTION ⚠️  ||  BEST VIEWED WITH NETSCAPE NAVIGATOR 4.0  ||</marquee></div>
+                <div class="ascii-header">________________________________________________________________________________<br>|  __     _   _   _   _   _     _   _   _   _     ___     ___   _   _   _   _  |<br>| / _|   / \\ | \\ | | | \\ | |   / \\ | \\ | | | \\ | |_ _|   / _ \\ | \\ | | | \\ | | |<br>| |_    / _ \\|  \\| | |  \\| |  / _ \\|  \\| | |  \\| | | |  | | | ||  \\| | |  \\| | |<br>|  _|  / ___ \\ |\\  | | |\\  | / ___ \\ |\\  | | |\\  | | |  | |_| || |\\  | | |\\  | |<br>| |   /_/   \\_\\_| \\_| |_| \\_|/_/   \\_\\_| \\_| |_| \\_||___| \\___/ |_| \\_| |_| \\_| |<br>|_______________________________________________________________________________|</div>
+                <div class="glitch-title">✦ PIRACY GATEWAY ✦</div>
+                <div style="text-align: center;"><div class="sub">>_ choose your experience . . .</div></div>
+                <hr class="divider">
+                <div class="choice-panel">
+                    <div class="version-card modern-card" id="modernChoiceCard"><div class="card-icon">🖥️💿🔒</div><div class="version-title modern-title">MODERN NEXUS</div><div class="description">[ SAFE + EFFICIENT ]<br>• sleek glassmorphic UI<br>• curated tools & resources<br>• clean, fast, responsive<br>• minimal bloat, max privacy<br>★彡 recommended for daily use 彡★</div><button class="select-btn modern-btn" id="modernBtn">⟣ ENTER MODERN ⟢</button></div>
+                    <div class="version-card retro-card" id="retroChoiceCard"><div class="card-icon">📼🕹️💾</div><div class="version-title retro-title">⛧ NEOCITIES RETRO ⛧</div><div class="description retro-desc">█ 88x31 banners █ blink tags █<br>█ tiled GIFs, marquee chaos █<br>█ under construction since '98 █<br>█ pixel fonts, neon & ascii █<br><span style="color:#ffaa55;">✧ SEED THE TORRENTS ✧</span></div><button class="select-btn retro-btn" id="retroBtn">⌗ ENTER RETRO ⌗</button></div>
+                </div>
+                <div class="status-bar"><span>✦ 47 TOOLS | 15 CATEGORIES ✦</span><span><span class="blink">⚠️</span> VPN REQUIRED FOR TORRENTS <span class="blink">⚠️</span></span><span>☠️ SAFE · CAUTION · HIGH RISK ☠️</span></div>
+                <div style="text-align: center; font-size: 0.7rem; margin-top: 0.5rem; color:#3c9e3c;">★彡  SEED THE TORRENTS · SHARE THE WEALTH · PRIVACY IS A RIGHT · FIGHT THE POWER 彡★</div>
+            `;
+            return container;
+        }
+
+        function attachEventsToSplash(splashEl) {
+            const modernBtn = splashEl.querySelector('#modernBtn');
+            const retroBtn = splashEl.querySelector('#retroBtn');
+            const modernCard = splashEl.querySelector('#modernChoiceCard');
+            const retroCard = splashEl.querySelector('#retroChoiceCard');
+            if (modernBtn) modernBtn.addEventListener('click', (e) => { e.stopPropagation(); showModernSite(); });
+            if (retroBtn) retroBtn.addEventListener('click', (e) => { e.stopPropagation(); showRetroSite(); });
+            if (modernCard) modernCard.addEventListener('click', (e) => { if(e.target !== modernBtn) showModernSite(); });
+            if (retroCard) retroCard.addEventListener('click', (e) => { if(e.target !== retroBtn) showRetroSite(); });
+        }
+
+        // initial attach
+        const initialContainer = document.querySelector('.splash-container');
+        if (initialContainer) attachEventsToSplash(initialContainer);
+    })();
+</script>
+</body>
+</html>

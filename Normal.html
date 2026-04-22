@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Piracy Resources </title>
+  <meta name="description" content="Curated piracy tools, media sources, gaming repacks, security utils — with safety ratings and live search." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+/* ════════════════════════════════════════════════════════
+   PIRACY RESOURCES — Cyber-noir · Acid green · JetBrains Mono
+   ════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#090b0f;--bg-2:#0d1117;--bg-3:#111820;--bg-card:#0f151e;
+  --border:rgba(0,255,157,0.08);--border-hover:rgba(0,255,157,0.28);
+  --text:#e2e8f0;--text-muted:#6b7a8d;--text-dim:#3d4f63;
+  --accent:#00ff9d;--accent-dim:rgba(0,255,157,0.12);--accent-glow:rgba(0,255,157,0.25);
+  --safe:#00e676;--safe-bg:rgba(0,230,118,0.08);
+  --caution:#ffb300;--caution-bg:rgba(255,179,0,0.08);
+  --danger:#ff4d4d;--danger-bg:rgba(255,77,77,0.08);
+  --font-display:'Syne',sans-serif;--font-mono:'JetBrains Mono',monospace;
+  --nav-h:64px;--max-w:1280px;--radius:10px;--radius-lg:16px;
+  --ease:cubic-bezier(0.16,1,0.3,1);--t-fast:150ms;--t-mid:280ms;
+}
+[data-theme="light"]{
+  --bg:#f0f4f8;--bg-2:#ffffff;--bg-3:#e8edf3;--bg-card:#ffffff;
+  --border:rgba(0,150,100,0.14);--border-hover:rgba(0,150,100,0.4);
+  --text:#0f1923;--text-muted:#4a5568;--text-dim:#a0aec0;
+  --accent:#007a4d;--accent-dim:rgba(0,122,77,0.08);--accent-glow:rgba(0,122,77,0.15);
+  --safe:#00875a;--safe-bg:rgba(0,135,90,0.08);
+  --caution:#b7791f;--caution-bg:rgba(183,121,31,0.08);
+  --danger:#c53030;--danger-bg:rgba(197,48,48,0.08);
+}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 16px)}
+body{background:var(--bg);color:var(--text);font-family:var(--font-mono);font-size:14px;line-height:1.65;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg-2)}::-webkit-scrollbar-thumb{background:var(--accent-dim);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+::selection{background:var(--accent-glow);color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* ── SCANLINES + CANVAS ── */
+.scanlines{position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);opacity:0.5}
+[data-theme="light"] .scanlines{display:none}
+#hero-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.45}
+
+/* ── NAV ── */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);border-bottom:1px solid var(--border);background:rgba(9,11,15,0.82);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4)}
+[data-theme="light"] .site-nav{background:rgba(240,244,248,0.88)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;gap:32px}
+.nav-logo{font-family:var(--font-mono);font-weight:600;font-size:15px;color:var(--text);text-decoration:none;letter-spacing:0.05em;white-space:nowrap;flex-shrink:0;transition:color var(--t-fast)}
+.nav-logo:hover{color:var(--accent)}
+.logo-bracket,.logo-accent{color:var(--accent)}
+.nav-links{display:flex;gap:4px;list-style:none;flex:1;flex-wrap:wrap}
+.nav-link{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--text-muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:color var(--t-fast),background var(--t-fast);letter-spacing:0.02em;cursor:pointer}
+.nav-link:hover{color:var(--accent);background:var(--accent-dim)}
+.nav-actions{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0}
+.btn-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-muted);cursor:pointer;transition:color var(--t-fast),background var(--t-fast),border-color var(--t-fast)}
+.btn-icon:hover{color:var(--accent);background:var(--accent-dim);border-color:var(--border-hover)}
+.icon-moon{display:none}
+[data-theme="light"] .icon-sun{display:none}
+[data-theme="light"] .icon-moon{display:block}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;width:36px;height:36px;align-items:center;justify-content:center}
+.nav-hamburger span{display:block;width:18px;height:1.5px;background:var(--text-muted);border-radius:2px;transition:transform var(--t-fast),opacity var(--t-fast);pointer-events:none}
+.nav-hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* ── SEARCH OVERLAY ── */
+.search-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);display:flex;align-items:flex-start;justify-content:center;padding-top:100px;opacity:0;visibility:hidden;transition:opacity var(--t-mid),visibility var(--t-mid)}
+.search-overlay.open{opacity:1;visibility:visible}
+.search-box{width:100%;max-width:620px;margin:0 20px;background:var(--bg-2);border:1px solid var(--accent-dim);border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 0 60px var(--accent-glow),0 30px 60px rgba(0,0,0,0.5)}
+.search-input-wrap{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);color:var(--text-muted)}
+#global-search-input{flex:1;background:transparent;border:none;outline:none;font-family:var(--font-mono);font-size:15px;color:var(--text);caret-color:var(--accent)}
+.search-results{max-height:400px;overflow-y:auto;padding:8px 0}
+.search-result-item{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;cursor:pointer;color:var(--text)}
+.search-result-item:hover{background:var(--accent-dim)}
+kbd{font-family:var(--font-mono);font-size:10px;background:var(--bg-3);border:1px solid var(--border);border-radius:4px;padding:2px 5px;color:var(--text)}
+
+/* ── HERO ── */
+.hero{position:relative;z-index:1;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(var(--nav-h) + 40px) 24px 80px;text-align:center;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(0,255,157,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:760px;width:100%;display:flex;flex-direction:column;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--accent-dim);border-radius:100px;font-size:11px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:32px}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+.hero-title{font-family:var(--font-display);font-weight:800;font-size:clamp(52px,9vw,110px);line-height:0.92;letter-spacing:-0.03em;margin-bottom:24px;text-align:center;width:100%}
+.title-line{display:block;color:var(--text)}
+.title-accent{display:block;color:transparent;-webkit-text-stroke:1.5px var(--accent);text-shadow:0 0 60px var(--accent-glow)}
+[data-theme="light"] .title-accent{-webkit-text-stroke:2px var(--accent)}
+.hero-subtitle{font-family:var(--font-mono);font-size:clamp(13px,2vw,17px);color:var(--text-muted);letter-spacing:0.05em;margin-bottom:20px}
+.hero-warning{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--caution);background:var(--caution-bg);border:1px solid rgba(255,179,0,0.2);border-radius:8px;padding:8px 14px;margin-bottom:36px}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.btn-primary{padding:12px 28px;background:var(--accent);color:#000;font-family:var(--font-mono);font-size:13px;font-weight:600;letter-spacing:0.04em;border:none;border-radius:8px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 0 30px var(--accent-glow);transition:transform var(--t-fast),box-shadow var(--t-fast)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 40px var(--accent-glow)}
+.btn-ghost{padding:12px 24px;background:transparent;color:var(--text-muted);font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:0.04em;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:color var(--t-fast),border-color var(--t-fast),background var(--t-fast)}
+.btn-ghost:hover{color:var(--accent);border-color:var(--border-hover);background:var(--accent-dim)}
+.hero-stats{display:flex;align-items:center;justify-content:center;gap:32px}
+.stat{display:flex;flex-direction:column;align-items:center;gap:2px}
+.stat-num{font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--accent);line-height:1}
+.stat-label{font-size:11px;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase}
+.stat-divider{width:1px;height:32px;background:var(--border)}
+
+/* ── GLOBAL CONTROLS ── */
+.global-controls{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto;padding:0 24px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ctrl-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg-3);border:1px solid var(--border);border-radius:7px;color:var(--text-muted);font-family:var(--font-mono);font-size:11px;cursor:pointer;transition:color var(--t-fast),border-color var(--t-fast),background var(--t-fast)}
+.ctrl-btn:hover{color:var(--accent);border-color:var(--border-hover);background:var(--accent-dim)}
+.ctrl-divider{width:1px;height:20px;background:var(--border);margin:0 4px}
+.ctrl-hint{font-size:11px;color:var(--text-dim);margin-left:8px}
+.inline-search{background:var(--bg-2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;width:240px;font-family:var(--font-mono);font-size:13px;color:var(--text);outline:none}
+.inline-search:focus{border-color:var(--accent)}
+
+/* ── ADVANCED CONTROLS ── */
+.advanced-controls{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto 20px;padding:0 24px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.filters-group{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filter-badge{background:var(--bg-3);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:11px;cursor:pointer;transition:all var(--t-fast);color:var(--text-muted)}
+.filter-badge.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
+select,.random-btn{background:var(--bg-3);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--text);font-family:var(--font-mono);font-size:12px;cursor:pointer}
+.random-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── SECTIONS ── */
+.resource-section{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto 8px;padding:0 24px}
+.trusted-section{margin-top:32px;border-top:1px solid var(--border);padding-top:24px}
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;user-select:none;transition:border-color var(--t-fast),background var(--t-fast);margin-bottom:2px}
+.section-header:hover{border-color:var(--border-hover);background:var(--bg-3)}
+.section-title-group{display:flex;align-items:center;gap:14px}
+.section-index{font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:0.1em;opacity:0.7}
+.section-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.01em}
+.section-badge{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);background:var(--bg-3);border:1px solid var(--border);border-radius:100px;padding:2px 8px}
+.section-toggle{background:transparent;border:none;color:var(--text-muted);cursor:pointer;padding:4px;display:flex;align-items:center;transition:color var(--t-fast)}
+.section-header:hover .section-toggle{color:var(--accent)}
+.toggle-icon{transition:transform var(--t-mid) var(--ease)}
+.section-toggle[aria-expanded="false"] .toggle-icon{transform:rotate(180deg)}
+.section-body{overflow:hidden;max-height:9999px;transition:max-height 0.5s var(--ease),opacity 0.3s;opacity:1;padding-bottom:20px}
+.section-body.collapsed{max-height:0;opacity:0;padding-bottom:0}
+
+/* ── CARDS GRID ── */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;padding-top:12px}
+.no-results{text-align:center;padding:3rem;color:var(--text-muted);display:none}
+
+/* ── TOOL CARD ── */
+.tool-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);transition:border-color var(--t-mid) var(--ease),transform var(--t-mid) var(--ease),box-shadow var(--t-mid) var(--ease);overflow:hidden}
+.tool-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--accent-dim) 0%,transparent 60%);opacity:0;transition:opacity var(--t-mid);pointer-events:none;border-radius:inherit}
+.tool-card:hover::before{opacity:1}
+.tool-card:hover{border-color:var(--border-hover);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.3),0 0 20px var(--accent-glow)}
+.card-inner{padding:18px;display:flex;flex-direction:column;gap:12px;height:100%}
+.card-logo-wrap{width:44px;height:44px;border-radius:10px;overflow:hidden;background:var(--bg-3);border:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.card-logo{width:100%;height:100%;object-fit:contain}
+.card-logo-icon{color:var(--accent)}
+.card-content{flex:1}
+.card-name{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px;letter-spacing:-0.01em}
+.card-desc{font-size:12px;color:var(--text-muted);line-height:1.55;margin-bottom:10px}
+.card-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.card-platforms{display:flex;gap:4px}
+.platform-tag{font-size:15px;opacity:0.85;cursor:default;transition:transform var(--t-fast),opacity var(--t-fast)}
+.platform-tag:hover{transform:scale(1.2);opacity:1}
+.safety-tag{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.05em;padding:3px 8px;border-radius:100px;border:1px solid transparent}
+.safety-tag.safe{color:var(--safe);background:var(--safe-bg);border-color:rgba(0,230,118,0.2)}
+.safety-tag.caution{color:var(--caution);background:var(--caution-bg);border-color:rgba(255,179,0,0.2)}
+.safety-tag.danger{color:var(--danger);background:var(--danger-bg);border-color:rgba(255,77,77,0.2)}
+.card-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:12px;border-top:1px solid var(--border);margin-top:auto;flex-wrap:wrap}
+.card-link{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--accent);text-decoration:none;letter-spacing:0.05em;padding:5px 10px;border:1px solid var(--accent-dim);border-radius:6px;background:var(--accent-dim);transition:background var(--t-fast),border-color var(--t-fast),box-shadow var(--t-fast)}
+.card-link:hover{background:rgba(0,255,157,0.18);border-color:rgba(0,255,157,0.4);box-shadow:0 0 12px var(--accent-glow)}
+.card-updated{font-size:10px;color:var(--text-dim);letter-spacing:0.05em}
+.fav-btn-card{background:transparent;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;margin-right:6px;transition:color 0.1s}
+.fav-btn-card.active{color:#f9e2af}
+.copy-btn{flex-shrink:0;background:transparent;border:none;color:var(--text-muted);cursor:pointer;padding:2px;display:flex;align-items:center;border-radius:4px;transition:color var(--t-fast),background var(--t-fast)}
+.copy-btn:hover{color:var(--accent);background:var(--accent-dim)}
+.command-block{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 10px;display:flex;align-items:center;gap:8px;font-size:10.5px;margin-top:8px}
+.ublock-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(229,77,46,0.12);border:1px solid rgba(229,77,46,0.3);border-radius:100px;padding:2px 7px 2px 4px;font-size:10px;font-weight:600;color:#e54d2e;letter-spacing:0.03em;cursor:default;white-space:nowrap}
+.ublock-badge img{width:13px;height:13px;border-radius:2px}
+
+/* ── TRUST SCORE ── */
+.card-trust-row{display:flex;align-items:center;justify-content:space-between;gap:6px;padding-top:8px;border-top:1px solid var(--border);flex-wrap:wrap}
+.card-trust-formula{font-family:var(--font-mono);font-size:9px;color:var(--text-dim);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.trust-score-badge{font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:0.04em;padding:2px 8px;border-radius:100px;border:1px solid transparent;white-space:nowrap;cursor:default;min-width:52px;text-align:center}
+.trust-score-badge.score-high{color:var(--safe);background:var(--safe-bg);border-color:rgba(0,230,118,0.2)}
+.trust-score-badge.score-mid{color:var(--caution);background:var(--caution-bg);border-color:rgba(255,179,0,0.2)}
+.trust-score-badge.score-low{color:var(--danger);background:var(--danger-bg);border-color:rgba(255,77,77,0.2)}
+
+/* ── SUBREDDITS ── */
+.subreddit-list{display:flex;flex-wrap:wrap;gap:16px;margin-top:8px}
+.subreddit-link{background:var(--bg-3);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:12px;text-decoration:none;color:var(--text-muted);transition:0.15s}
+.subreddit-link:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── VPN LEAK BANNER ── */
+.vpn-leak-banner{position:relative;z-index:10;width:100%;padding:10px 24px;display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:12px;border-bottom:1px solid var(--border);background:var(--bg-2);min-height:44px;contain:layout}
+.vpn-leak-banner.state-safe{background:var(--safe-bg);border-bottom-color:rgba(0,230,118,0.2);color:var(--safe)}
+.vpn-leak-banner.state-exposed{background:var(--danger-bg);border-bottom-color:rgba(255,77,77,0.25);color:var(--danger)}
+.vpn-leak-banner.state-caution{background:var(--caution-bg);border-bottom-color:rgba(255,179,0,0.2);color:var(--caution)}
+.vpn-leak-banner.state-checking{color:var(--text-muted)}
+.vpn-banner-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:currentColor;animation:pulse-dot 2s ease-in-out infinite}
+.vpn-banner-label{font-weight:600;white-space:nowrap}
+.vpn-banner-detail{color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
+.vpn-banner-isp{font-weight:500;color:inherit}
+.vpn-banner-dismiss{background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:16px;line-height:1;padding:2px 4px;border-radius:4px;flex-shrink:0;transition:color var(--t-fast)}
+.vpn-banner-dismiss:hover{color:var(--accent)}
+
+/* ── RSS FEED ── */
+.rss-feed-section{position:relative;z-index:2;max-width:var(--max-w);margin:0 auto 8px;padding:0 24px}
+.rss-feed-inner{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.rss-feed-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);gap:12px;flex-wrap:wrap}
+.rss-feed-title{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.rss-live-dot{width:6px;height:6px;border-radius:50%;background:var(--danger);animation:pulse-dot 1.5s ease-in-out infinite;flex-shrink:0}
+.rss-feed-meta{font-size:10px;color:var(--text-dim)}
+.rss-feed-list{list-style:none;min-height:56px;max-height:308px;overflow-y:auto}
+.rss-feed-item{display:flex;align-items:flex-start;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--text);transition:background var(--t-fast)}
+.rss-feed-item:last-child{border-bottom:none}
+.rss-feed-item:hover{background:var(--accent-dim)}
+.rss-item-index{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);padding-top:3px;flex-shrink:0;width:18px;text-align:right}
+.rss-item-body{flex:1;min-width:0}
+.rss-item-title{font-size:12px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;margin-bottom:3px}
+.rss-item-date{font-size:10px;color:var(--text-dim);white-space:nowrap}
+.rss-item-arrow{color:var(--text-dim);font-size:12px;flex-shrink:0;padding-top:2px;transition:color var(--t-fast),transform var(--t-fast)}
+.rss-feed-item:hover .rss-item-arrow{color:var(--accent);transform:translateX(3px)}
+.rss-feed-placeholder{padding:24px 18px;font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:8px}
+.rss-spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── VAULT EXPORT ── */
+.vault-export-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:0.05em;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(0,255,157,0.2);border-radius:8px;cursor:pointer;transition:background var(--t-fast),border-color var(--t-fast),box-shadow var(--t-fast);white-space:nowrap}
+.vault-export-btn:hover{background:rgba(0,255,157,0.18);border-color:rgba(0,255,157,0.4);box-shadow:0 0 16px var(--accent-glow)}
+
+/* ── BACK TO TOP ── */
+.back-to-top{position:fixed;bottom:28px;right:28px;z-index:90;width:44px;height:44px;background:var(--bg-2);border:1px solid var(--border);border-radius:10px;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transform:translateY(12px);transition:all var(--t-mid) var(--ease)}
+.back-to-top.visible{opacity:1;visibility:visible;transform:none}
+.back-to-top:hover{color:var(--accent);border-color:var(--border-hover);background:var(--accent-dim);box-shadow:0 0 20px var(--accent-glow)}
+
+/* ── FOOTER ── */
+.site-footer{position:relative;z-index:2;margin-top:64px;border-top:1px solid var(--border);background:var(--bg-2)}
+.footer-bottom{max-width:var(--max-w);margin:0 auto;padding:24px;font-size:11px;color:var(--text-dim);text-align:center}
+
+/* ══════════ RESPONSIVE ══════════ */
+@media(max-width:900px){
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;background:var(--bg-2);border-bottom:1px solid var(--border);padding:12px 16px 16px;flex-direction:column;gap:2px;transform:translateY(-100%);opacity:0;visibility:hidden;transition:transform var(--t-mid) var(--ease),opacity var(--t-mid),visibility var(--t-mid);z-index:99;will-change:transform}
+  .nav-links.mobile-open{transform:translateY(0);opacity:1;visibility:visible}
+  .nav-link{padding:10px 14px;font-size:13px;border-radius:8px}
+  .nav-hamburger{display:flex}
+  .cards-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .rss-feed-section{padding:0 16px}
+}
+@media(max-width:640px){
+  .hero-stats{gap:20px}
+  .stat-num{font-size:22px}
+  .stat-divider{display:none}
+  .cards-grid{grid-template-columns:1fr}
+  .ctrl-hint{display:none}
+  .global-controls{gap:6px}
+  .rss-feed-section{padding:0 16px}
+  .advanced-controls{flex-direction:column;align-items:stretch}
+}
+@media(max-width:430px){
+  .nav-inner{padding:0 14px;gap:12px}
+  .nav-logo{font-size:13px}
+  .vpn-leak-banner{padding:8px 14px;min-height:56px;flex-wrap:wrap;align-items:flex-start}
+  .vpn-banner-detail{width:100%;white-space:normal;overflow:visible;text-overflow:unset;font-size:11px}
+  .vpn-banner-dismiss{position:absolute;top:8px;right:12px}
+  .rss-feed-section{padding:0 12px}
+  .rss-feed-header{padding:10px 12px}
+  .rss-feed-list{max-height:240px}
+  .rss-feed-item{padding:10px 12px;gap:8px}
+  .rss-item-title{font-size:11px}
+  .rss-item-index{display:none}
+  .cards-grid{grid-template-columns:1fr;gap:8px;padding-top:10px}
+  .card-trust-row{flex-direction:column;align-items:flex-start;gap:4px}
+  .card-trust-formula{white-space:normal;word-break:break-all;overflow:visible;text-overflow:unset}
+  .section-title{font-size:15px}
+  .section-header{padding:14px}
+  .resource-section{padding:0 12px}
+  .global-controls{padding:0 12px 16px;gap:6px}
+  .inline-search{width:100%}
+  .hero-actions{flex-direction:column;align-items:center}
+  .btn-primary,.btn-ghost{width:100%;max-width:300px;justify-content:center}
+  .hero-title{letter-spacing:-0.04em}
+  .back-to-top{bottom:16px;right:14px}
+  .vault-export-btn{width:100%;justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .hero-title{animation:none;opacity:1;transform:none}
+}
+  </style>
+</head>
+<body>
+<div class="scanlines" aria-hidden="true"></div>
+<canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+<header class="site-nav" id="site-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo"><span class="logo-bracket">[</span>PIRACY<span class="logo-accent">.</span>RES<span class="logo-bracket">]</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#" class="nav-link" data-section="basics">Basics</a></li>
+      <li><a href="#" class="nav-link" data-section="security">Security</a></li>
+      <li><a href="#" class="nav-link" data-section="gaming">Gaming</a></li>
+      <li><a href="#" class="nav-link" data-section="media">Media</a></li>
+      <li><a href="#" class="nav-link" data-section="android">Android</a></li>
+      <li><a href="#" class="nav-link" data-section="os">OS</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-icon" id="search-toggle-overlay" aria-label="Global search">🔍</button>
+      <button class="btn-icon" id="theme-toggle" aria-label="Toggle theme"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <!-- Hamburger — visible below 900px via CSS -->
+      <button class="btn-icon nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="search" id="global-search-input" placeholder="Search tools..."><kbd>ESC</kbd></div>
+    <div class="search-results" id="global-search-results"></div>
+  </div>
+</div>
+
+<!-- ── VPN LEAK BANNER ──────────────────────────────────────────
+     Fixed height (min-height: 44px) prevents layout shift when
+     the ip-api.com response loads. State classes drive colour.
+     ──────────────────────────────────────────────────────────── -->
+<div class="vpn-leak-banner state-checking" id="vpn-leak-banner" role="status" aria-live="polite">
+  <span class="vpn-banner-dot" aria-hidden="true"></span>
+  <span class="vpn-banner-label" id="vpn-banner-label">Checking IP…</span>
+  <span class="vpn-banner-detail" id="vpn-banner-detail"></span>
+  <button class="vpn-banner-dismiss" id="vpn-banner-dismiss" aria-label="Dismiss VPN warning">✕</button>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="badge-dot"></span>Community Curated Resources</div>
+      <h1 class="hero-title"><span class="title-line">Piracy</span><span class="title-line title-accent">Resources</span></h1>
+      <p class="hero-subtitle">Safe & Efficient Tools + Guides</p>
+      <p class="hero-warning">⚠ Use at your own risk — <strong>VPN recommended</strong> for all downloads</p>
+      <div class="hero-actions"><a href="#basics" class="btn-primary">Explore Resources</a><button class="btn-ghost" id="expand-all-hero">Expand All</button></div>
+      <div class="hero-stats"><div class="stat"><span class="stat-num" id="stat-tools">34</span><span class="stat-label">Tools</span></div><div class="stat-divider"></div><div class="stat"><span class="stat-num">15</span><span class="stat-label">Categories</span></div></div>
+    </div>
+  </section>
+
+  <div class="advanced-controls">
+    <div class="filters-group">
+      <select id="sort-select">
+        <option value="name-asc">Sort by: Name (A–Z)</option>
+        <option value="name-desc">Sort by: Name (Z–A)</option>
+        <option value="safety">Sort by: Safety (Safe → Caution → Danger)</option>
+        <option value="updated">Sort by: Last Updated (Newest)</option>
+      </select>
+      <div id="platform-filters" class="filters-group">
+        <span class="filter-badge" data-platform="windows">🪟 Windows</span>
+        <span class="filter-badge" data-platform="macos">🍎 macOS</span>
+        <span class="filter-badge" data-platform="linux">🐧 Linux</span>
+        <span class="filter-badge" data-platform="web">🌐 Web</span>
+      </div>
+      <div id="safety-filters" class="filters-group">
+        <span class="filter-badge" data-safety="safe">● Safe</span>
+        <span class="filter-badge" data-safety="caution">● Caution</span>
+        <span class="filter-badge" data-safety="danger">● High Risk</span>
+      </div>
+      <button id="random-tool-btn" class="random-btn">🎲 Random Tool</button>
+    </div>
+  </div>
+
+  <div class="global-controls">
+    <button class="ctrl-btn" id="expand-all-btn">▾ Expand All</button>
+    <button class="ctrl-btn" id="collapse-all-btn">▴ Collapse All</button>
+    <span class="ctrl-divider"></span>
+    <input type="text" id="search-input-local" class="inline-search" placeholder="🔍 Filter tools... (Ctrl+K)" autocomplete="off">
+    <button class="ctrl-btn" id="fav-filter-btn">★ Favorites (<span id="fav-count">0</span>)</button>
+    <span class="ctrl-hint"><kbd>Ctrl+E</kbd> expand · <kbd>?</kbd> help</span>
+  </div>
+
+  <!-- ── OFFLINE VAULT EXPORT ──────────────────────────── -->
+  <div class="global-controls" style="padding-top:0;">
+    <button class="vault-export-btn" id="vault-export-btn" title="Download full resource list as JSON">
+      ⬇ Export Vault (.json)
+    </button>
+  </div>
+
+  <!-- ── LIVE RSS FEED ──────────────────────────────────
+       min-height on .rss-feed-list reserves space so the
+       section doesn't reflow when entries load.
+       ──────────────────────────────────────────────────── -->
+  <div class="rss-feed-section" id="rss-feed-section">
+    <div class="rss-feed-inner">
+      <div class="rss-feed-header">
+        <span class="rss-feed-title">
+          <span class="rss-live-dot" aria-hidden="true"></span>
+          FitGirl Repacks — Latest Releases
+        </span>
+        <span class="rss-feed-meta" id="rss-feed-meta">Loading…</span>
+      </div>
+      <ul class="rss-feed-list" id="rss-feed-list" aria-label="FitGirl Repacks latest releases">
+        <li class="rss-feed-placeholder" id="rss-placeholder">
+          <span class="rss-spinner" aria-hidden="true"></span>
+          Fetching latest repacks…
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="no-results-message" class="no-results">No matching tools — try another keyword</div>
+  <div id="sections-container"></div>
+
+  <div class="resource-section trusted-section" id="trusted">
+    <div class="section-header">
+      <div class="section-title-group">
+        <span class="section-index">⭐</span>
+        <h2 class="section-title">Trusted Uploaders & Repackers</h2>
+        <span class="section-badge">5 groups</span>
+      </div>
+      <button class="section-toggle" aria-expanded="true"><svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
+    </div>
+    <div class="section-body">
+      <div class="cards-grid" id="trusted-grid"></div>
+    </div>
+  </div>
+
+  <div class="resource-section" id="community">
+    <div class="section-header">
+      <div class="section-title-group">
+        <span class="section-index">💬</span>
+        <h2 class="section-title">Community & Resources</h2>
+        <span class="section-badge">4 subreddits</span>
+      </div>
+      <button class="section-toggle" aria-expanded="true"><svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
+    </div>
+    <div class="section-body">
+      <div class="subreddit-list" id="subreddit-list"></div>
+    </div>
+  </div>
+</main>
+
+<button class="back-to-top" id="back-to-top">↑</button>
+<footer class="site-footer"><div class="footer-bottom">© Barnacle · Last updated March 2026 · Educational purposes only · Use VPN & your brain</div></footer>
+
+<script>
+  // ---------- DATA ----------
+  const toolsData = [
+    { name: "uBlock Origin", desc: "Best ad/tracker blocker, essential first install.", platforms: "windows macos linux", safety: "safe", url: "https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/", category: "basics", tags: "browser extension adblock", icon: "https://barnacle040.github.io/what-I-use-piracy/ublock.png", updated: "2025-09" },
+    { name: "qBittorrent", desc: "Open-source torrent client, bind to VPN.", platforms: "windows macos linux", safety: "safe", url: "https://www.qbittorrent.org/download", category: "basics", tags: "torrent client", icon: "https://barnacle040.github.io/what-I-use-piracy/torrent.png", updated: "2025-09" },
+    { name: "JDownloader 2", desc: "Free download manager for hosters and direct links.", platforms: "windows macos linux", safety: "safe", url: "https://jdownloader.org/download/index", category: "basics", tags: "download manager", icon: "https://barnacle040.github.io/what-I-use-piracy/jdownloader.jpg", updated: "2025-09" },
+    { name: "yt-dlp", desc: "Download video/audio from 1000+ sites (CLI).", platforms: "windows macos linux", safety: "safe", url: "https://github.com/yt-dlp/yt-dlp", category: "basics", tags: "youtube downloader", icon: "", updated: "2025-09" },
+    { name: "7-Zip", desc: "Open-source archive tool (ZIP, RAR, 7z).", platforms: "windows linux", safety: "safe", url: "https://www.7-zip.org/download.html", category: "basics", tags: "archive", icon: "", updated: "2025-09" },
+    { name: "VPN (Mullvad/Proton)", desc: "No-log VPN, bind to qBittorrent. Mandatory for torrenting.", platforms: "windows macos linux", safety: "caution", url: "https://mullvad.net", category: "basics", tags: "vpn privacy", icon: "", updated: "2025-09" },
+    { name: "VirusTotal", desc: "Scan files with 70+ antivirus engines.", platforms: "web", safety: "safe", url: "https://www.virustotal.com/", category: "security", tags: "scan malware", icon: "", updated: "2025-09" },
+    { name: "Malwarebytes", desc: "Second-opinion malware scanner.", platforms: "windows macos", safety: "safe", url: "https://www.malwarebytes.com", category: "security", tags: "antivirus", icon: "https://barnacle040.github.io/what-I-use-piracy/malwarebytes-logo-1-3657666643.png", updated: "2025-09" },
+    { name: "HaveIBeenPwned", desc: "Check email/password breaches.", platforms: "web", safety: "safe", url: "https://haveibeenpwned.com/", category: "security", tags: "breach check", icon: "https://barnacle040.github.io/what-I-use-piracy/pwned.png", updated: "2025-09" },
+    { name: "FitGirl Repacks", desc: "Highly compressed game repacks.", platforms: "windows", safety: "caution", url: "https://fitgirl-repacks.site", category: "gaming", tags: "repack torrent", icon: "https://barnacle040.github.io/what-I-use-piracy/repacks.png", updated: "2025-09" },
+    { name: "DODI Repacks", desc: "Alternative repacker, faster installs.", platforms: "windows", safety: "caution", url: "https://dodi-repacks.site", category: "gaming", tags: "repack", icon: "", updated: "2025-09" },
+    { name: "SteamRip", desc: "Pre-installed Steam games direct download.", platforms: "windows", safety: "caution", url: "https://steamrip.com", category: "gaming", tags: "direct download", icon: "https://barnacle040.github.io/what-I-use-piracy/steamrip.png", updated: "2025-09" },
+    { name: "Myrient", desc: "Massive ROM archive (direct downloads).", platforms: "web", safety: "safe", url: "https://myrient.erista.me", category: "gaming", tags: "roms emulation", icon: "", updated: "2025-09", ublock: true },
+    { name: "Vimm's Lair", desc: "Retro ROM vault (NES to PS3).", platforms: "web", safety: "safe", url: "https://vimm.net/vault", category: "gaming", tags: "retro roms", icon: "https://barnacle040.github.io/what-I-use-piracy/vims_lair.jpg", updated: "2025-09", ublock: true },
+    { name: "RetroArch", desc: "All-in-one emulator frontend.", platforms: "windows macos linux", safety: "safe", url: "https://www.retroarch.com/", category: "gaming", tags: "emulator", icon: "https://barnacle040.github.io/what-I-use-piracy/retro_arch.png", updated: "2025-09" },
+    { name: "1337x", desc: "Torrent index for movies, TV, music.", platforms: "web", safety: "caution", url: "https://1337x.to/movie-library/1/", category: "media", tags: "torrent movies", icon: "https://barnacle040.github.io/what-I-use-piracy/1337x.png", updated: "2025-09", ublock: true },
+    { name: "RiveStream", desc: "Stream movies and TV shows (no account).", platforms: "web", safety: "caution", url: "https://rivestream.org", category: "media", tags: "streaming", icon: "https://barnacle040.github.io/what-I-use-piracy/rive.png", updated: "2025-09", ublock: true },
+    { name: "Cineby", desc: "Clean UI streaming site.", platforms: "web", safety: "caution", url: "https://www.cineby.app", category: "media", tags: "movies", icon: "https://barnacle040.github.io/what-I-use-piracy/cineby.PNG", updated: "2025-09", ublock: true },
+    { name: "HiAnime", desc: "Anime streaming (sub/dub).", platforms: "web", safety: "caution", url: "https://hianime.pe", category: "media", tags: "anime", icon: "https://barnacle040.github.io/what-I-use-piracy/hianime.png", updated: "2025-09", ublock: true },
+    { name: "SpotX", desc: "Ad-free Spotify patcher for Windows.", platforms: "windows", safety: "caution", url: "https://github.com/SpotX-Official/SpotX", category: "media", tags: "music", icon: "", updated: "2025-09" },
+    { name: "Anna's Archive", desc: "Largest shadow library (books, papers).", platforms: "web", safety: "safe", url: "https://annas-archive.org", category: "media", tags: "ebooks", icon: "", updated: "2025-09" },
+    { name: "Nicotine+", desc: "Graphical client for Soulseek P2P network, ideal for discovering and sharing music.", platforms: "windows macos linux", safety: "safe", url: "https://nicotine-plus.org/", category: "media", tags: "music soulseek p2p", icon: "", updated: "2026-03" },
+    { name: "Firefox", desc: "Recommended privacy browser, uBlock ready.", platforms: "windows macos linux", safety: "safe", url: "https://www.mozilla.org/firefox/new/", category: "browsers", tags: "browser", icon: "https://barnacle040.github.io/what-I-use-piracy/firefox.png", updated: "2025-09" },
+    { name: "Brave", desc: "Chromium with built-in adblock.", platforms: "windows macos linux", safety: "safe", url: "https://brave.com/download/", category: "browsers", tags: "browser", icon: "", updated: "2025-09" },
+    { name: "Tor Browser", desc: "Anonymity via Tor network.", platforms: "windows macos linux", safety: "safe", url: "https://www.torproject.org/download/", category: "browsers", tags: "anonymous", icon: "https://barnacle040.github.io/what-I-use-piracy/tor.png", updated: "2025-09" },
+    { name: "Linux Mint", desc: "Beginner-friendly Linux distro.", platforms: "linux", safety: "safe", url: "https://www.linuxmint.com/download.php", category: "os", tags: "linux", icon: "https://barnacle040.github.io/what-I-use-piracy/mint.png", updated: "2025-09" },
+    { name: "Rufus", desc: "Create bootable USB drives.", platforms: "windows", safety: "safe", url: "https://rufus.ie/en/", category: "os", tags: "usb", icon: "https://barnacle040.github.io/what-I-use-piracy/rufus.png", updated: "2025-09" },
+    { name: "BleachBit", desc: "Open-source deep cleaner.", platforms: "windows linux", safety: "caution", url: "https://www.bleachbit.org", category: "system", tags: "cleaner", icon: "https://barnacle040.github.io/what-I-use-piracy/bleachbit.png", updated: "2025-09" },
+    { name: "WizTree", desc: "Instant disk space analyzer.", platforms: "windows", safety: "safe", url: "https://diskanalyzer.com/download", category: "system", tags: "disk analyzer", icon: "https://barnacle040.github.io/what-I-use-piracy/wiztree.png", updated: "2025-09" },
+    { name: "CTT WinUtil", desc: "PowerShell debloat tool (run as admin).", platforms: "windows", safety: "danger", url: "https://christitus.com/win", category: "system", tags: "tweaks", icon: "", command: "iwr -useb https://christitus.com/win | iex", updated: "2025-09" },
+    // NEW: Android Tools
+    { name: "ReVanced Manager", desc: "Patch YouTube, Reddit, and other apps to remove ads and add features. Requires installing APK manually.", platforms: "android", safety: "safe", url: "https://github.com/ReVanced/revanced-manager", category: "android", tags: "youtube patcher adblock", icon: "", updated: "2026-03" },
+    { name: "Mobilism", desc: "Community-driven forum for APK mods, cracked apps, and ebooks. One of the largest Android modding communities.", platforms: "android web", safety: "caution", url: "https://forum.mobilism.org", category: "android", tags: "apk mods apps", icon: "", updated: "2026-03", ublock: true },
+    { name: "Bitwarden", desc: "Open-source password manager (cloud sync).", platforms: "web", safety: "safe", url: "https://bitwarden.com/download/", category: "misc", tags: "password", icon: "", updated: "2025-09" },
+    { name: "Wallhaven", desc: "Massive wallpaper database.", platforms: "web", safety: "safe", url: "https://wallhaven.cc", category: "misc", tags: "wallpaper", icon: "https://barnacle040.github.io/what-I-use-piracy/wallpaper.png", updated: "2025-09" },
+    // NEW SITES
+    { name: "FMHY", desc: "The largest curated free media wiki on the internet. Your first stop for everything.", platforms: "web", safety: "safe", url: "https://fmhy.net", category: "basics", tags: "wiki index megathread", icon: "", updated: "2026-04", ublock: true },
+    { name: "Stremio + Torrentio", desc: "Stream torrents directly — add the Torrentio addon for instant access to movies/TV via RealDebrid or Debrid-Link.", platforms: "windows macos linux", safety: "caution", url: "https://www.stremio.com/downloads", category: "media", tags: "streaming torrent debrid", icon: "", updated: "2026-04" },
+    { name: "Sonarr", desc: "Automatic TV show downloader. Monitors RSS feeds and grabs episodes as they release.", platforms: "windows macos linux", safety: "safe", url: "https://sonarr.tv/#download", category: "media", tags: "automation tv shows arr", icon: "", updated: "2026-04" },
+    { name: "Radarr", desc: "Automatic movie downloader — the Sonarr equivalent for films.", platforms: "windows macos linux", safety: "safe", url: "https://radarr.video/#downloads", category: "media", tags: "automation movies arr", icon: "", updated: "2026-04" },
+    { name: "Prowlarr", desc: "Indexer manager for Sonarr/Radarr. Connects all your torrent/Usenet indexers in one place.", platforms: "windows macos linux", safety: "safe", url: "https://github.com/Prowlarr/Prowlarr", category: "media", tags: "indexer arr automation", icon: "", updated: "2026-04" },
+    { name: "qBittorrent", desc: "Best open-source torrent client. No ads, no bloat, sequential downloading supported.", platforms: "windows macos linux", safety: "safe", url: "https://www.qbittorrent.org/download.php", category: "basics", tags: "torrent client download", icon: "", updated: "2026-04" },
+    { name: "ProtonVPN", desc: "Free tier available. No logs, based in Switzerland. Good for basic torrent protection.", platforms: "windows macos linux android", safety: "safe", url: "https://protonvpn.com/download", category: "security", tags: "vpn privacy", icon: "", updated: "2026-04" },
+    { name: "Redlib", desc: "Privacy-friendly Reddit frontend — no JS, no tracking. Great for r/Piracy browsing.", platforms: "web", safety: "safe", url: "https://github.com/redlib-org/redlib", category: "misc", tags: "reddit privacy frontend", icon: "", updated: "2026-04" },
+    { name: "Libgen", desc: "Library Genesis — books, textbooks, scientific papers. Millions of titles.", platforms: "web", safety: "safe", url: "https://libgen.is", category: "media", tags: "ebooks books textbooks", icon: "", updated: "2026-04", ublock: true },
+    { name: "Emudeck", desc: "All-in-one emulator setup for Steam Deck and Linux. Installs and configures everything automatically.", platforms: "linux", safety: "safe", url: "https://www.emudeck.com/#download", category: "gaming", tags: "emulator steam deck", icon: "", updated: "2026-04" },
+    { name: "Heroic Games Launcher", desc: "Open-source Epic Games & GOG launcher for Linux. Integrates with Proton for native-like gaming.", platforms: "linux macos windows", safety: "safe", url: "https://heroicgameslauncher.com/downloads", category: "gaming", tags: "epic gog linux proton", icon: "", updated: "2026-04" },
+    { name: "yt-dlp", desc: "Download videos from YouTube, Twitch, and 1000+ sites. CLI tool, highly scriptable.", platforms: "windows macos linux", safety: "safe", url: "https://github.com/yt-dlp/yt-dlp/releases", category: "media", tags: "youtube downloader video", icon: "", updated: "2026-04" },
+    { name: "Mullvad Browser", desc: "Firefox hardened by Mullvad + Tor Project. Best fingerprinting resistance without Tor network.", platforms: "windows macos linux", safety: "safe", url: "https://mullvad.net/en/browser", category: "browsers", tags: "browser privacy fingerprint", icon: "", updated: "2026-04" }
+  ];
+
+  const trustedUploaders = [
+    { name: "FitGirl Repacks", desc: "Most trusted repacker. Highly compressed games, safe if you use the official site.", platforms: "windows", safety: "caution", url: "https://fitgirl-repacks.site", icon: "https://barnacle040.github.io/what-I-use-piracy/repacks.png", ublock: true },
+    { name: "DODI Repacks", desc: "Reliable alternative to FitGirl. Often faster installs.", platforms: "windows", safety: "caution", url: "https://dodi-repacks.site", icon: "", ublock: true },
+    { name: "SteamRip", desc: "Direct downloads, no repack wait. Trusted pre-installed games.", platforms: "windows", safety: "caution", url: "https://steamrip.com", icon: "https://barnacle040.github.io/what-I-use-piracy/steamrip.png", ublock: true },
+    { name: "Masquerade", desc: "High-quality scene releases. Trusted for software and games.", platforms: "windows", safety: "caution", url: "https://masquerade.site", icon: "", ublock: true },
+    { name: "CS.RIN.RU", desc: "Community forum for cracked games, tools, and emulators. Vast knowledge base.", platforms: "web", safety: "caution", url: "https://cs.rin.ru", icon: "", ublock: true }
+  ];
+
+  const subreddits = [
+    { name: "r/Piracy", url: "https://www.reddit.com/r/Piracy/", desc: "General piracy discussion and megathread." },
+    { name: "r/FREEMEDIAHECKYEAH", url: "https://www.reddit.com/r/FREEMEDIAHECKYEAH/", desc: "Curated list of free media resources." },
+    { name: "r/OpenDirectories", url: "https://www.reddit.com/r/opendirectories/", desc: "Public file directories for direct downloads." },
+    { name: "r/CrackWatch", url: "https://www.reddit.com/r/CrackWatch/", desc: "News about game cracks and scene releases." }
+  ];
+
+  // ---------- STATE ----------
+  let favorites = new Set(JSON.parse(localStorage.getItem('piracy_favs') || '[]'));
+  let activeFavFilter = false;
+  let currentSearch = '';
+  let platformFilters = { windows: false, macos: false, linux: false, web: false, android: false };
+  let safetyFilters = { safe: false, caution: false, danger: false };
+  let sortOption = 'name-asc';
+  let sectionCollapseState = JSON.parse(localStorage.getItem('section_collapse_state') || '{}');
+
+  // ---------- HELPER FUNCTIONS ----------
+  function saveFavs() {
+    localStorage.setItem('piracy_favs', JSON.stringify([...favorites]));
+    document.getElementById('fav-count').innerText = favorites.size;
+  }
+
+  function toggleFavorite(name, btnElement) {
+    if (favorites.has(name)) favorites.delete(name);
+    else favorites.add(name);
+    saveFavs();
+    if (btnElement) btnElement.classList.toggle('active', favorites.has(name));
+    renderAll();
+  }
+
+  function filterTools(tools) {
+    if (currentSearch) {
+      tools = tools.filter(t => (t.name + ' ' + t.desc + ' ' + (t.tags || '')).toLowerCase().includes(currentSearch));
+    }
+    if (activeFavFilter) {
+      tools = tools.filter(t => favorites.has(t.name));
+    }
+    const activePlatforms = Object.entries(platformFilters).filter(([_, v]) => v).map(([k]) => k);
+    if (activePlatforms.length) {
+      tools = tools.filter(t => t.platforms.split(' ').some(p => activePlatforms.includes(p)));
+    }
+    const activeSafety = Object.entries(safetyFilters).filter(([_, v]) => v).map(([k]) => k);
+    if (activeSafety.length) {
+      tools = tools.filter(t => activeSafety.includes(t.safety));
+    }
+    return tools;
+  }
+
+  function sortTools(tools) {
+    const s = sortOption;
+    if (s === 'name-asc') return [...tools].sort((a,b) => a.name.localeCompare(b.name));
+    if (s === 'name-desc') return [...tools].sort((a,b) => b.name.localeCompare(a.name));
+    if (s === 'safety') {
+      const order = { safe: 1, caution: 2, danger: 3 };
+      return [...tools].sort((a,b) => order[a.safety] - order[b.safety]);
+    }
+    if (s === 'updated') {
+      return [...tools].sort((a,b) => (b.updated || '').localeCompare(a.updated || ''));
+    }
+    return tools;
+  }
+
+  function renderAll() {
+    const categories = { basics: 'Basics', security: 'Virus Protection', gaming: 'Gaming', media: 'Media & Streaming', browsers: 'Browsers', os: 'Operating Systems', system: 'System Utilities', android: 'Android', misc: 'Misc' };
+    let html = '';
+    for (let [key, title] of Object.entries(categories)) {
+      let filtered = toolsData.filter(t => t.category === key);
+      filtered = filterTools(filtered);
+      filtered = sortTools(filtered);
+      if (filtered.length === 0 && (activeFavFilter || currentSearch || Object.values(platformFilters).some(v=>v) || Object.values(safetyFilters).some(v=>v))) continue;
+
+      const collapsed = sectionCollapseState[key] === true;
+      html += `<section class="resource-section" id="sec-${key}"><div class="section-header" data-section="${key}"><div class="section-title-group"><span class="section-index">${Object.keys(categories).indexOf(key)+1}</span><h2 class="section-title">${title}</h2><span class="section-badge">${filtered.length} tools</span></div><button class="section-toggle" aria-expanded="${!collapsed}"><svg class="toggle-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button></div><div class="section-body ${collapsed ? 'collapsed' : ''}"><div class="cards-grid">`;
+      for (let t of filtered) {
+        const isFav = favorites.has(t.name);
+        const iconHtml = t.icon ? `<img class="card-logo" src="${t.icon}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2300ff9d%22%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%2216%22%20height%3D%2216%22%2F%3E%3C%2Fsvg%3E'">` : `<div class="card-logo-icon" style="font-size:22px;">📦</div>`;
+        const ublockBadge = t.ublock ? `<span class="ublock-badge" title="Use uBlock Origin on this site"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/uBlock0@128.png" alt="uBO"> uBlock</span>` : '';
+        // Trust Score: S = TU + (2 * V)
+        // TU = trustworthiness (safe=10, caution=5, danger=1)
+        // V  = virustotal-proxy (ublock=1 means extra verification layer, else 0)
+        const TU = t.safety === 'safe' ? 10 : t.safety === 'caution' ? 5 : 1;
+        const V  = t.ublock ? 1 : 0;
+        const S  = TU + (2 * V);
+        const scoreClass = S >= 10 ? 'score-high' : S >= 5 ? 'score-mid' : 'score-low';
+        const trustScoreHtml = `<div class="card-trust-row"><span class="card-trust-formula" title="S = TU + (2·V) where TU=${TU}, V=${V}">S&nbsp;=&nbsp;${TU}&nbsp;+&nbsp;(2·${V})&nbsp;=&nbsp;${S}</span><span class="trust-score-badge ${scoreClass}">S:&nbsp;${S}/12</span></div>`;
+        html += `<article class="tool-card" data-name="${t.name.toLowerCase()}"><div class="card-inner"><div class="card-logo-wrap">${iconHtml}</div><div class="card-content"><div class="card-name">${t.name}${ublockBadge ? ' ' + ublockBadge : ''}</div><div class="card-desc">${t.desc}</div><div class="card-meta"><div class="card-platforms">${t.platforms.split(' ').map(p => `<span class="platform-tag" title="${p}">${p === 'windows' ? '🪟' : p === 'macos' ? '🍎' : p === 'linux' ? '🐧' : p === 'android' ? '📱' : '🌐'}</span>`).join('')}</div><span class="safety-tag ${t.safety}">● ${t.safety==='safe'?'Safe':t.safety==='caution'?'Caution':'High Risk'}</span></div>${trustScoreHtml}</div><div class="card-actions"><button class="fav-btn-card ${isFav ? 'active' : ''}" data-fav="${t.name}">${isFav ? '★' : '☆'}</button>`;
+        if (t.command) {
+          html += `<div class="command-block"><code>${t.command}</code><button class="copy-btn" data-copy="${t.command}">📋 Copy</button></div>`;
+        } else {
+          html += `<a href="${t.url}" class="card-link" target="_blank" rel="noopener">Get it →</a><button class="copy-btn" data-copy="${t.url}" style="margin-left:auto;">📋 Link</button>`;
+        }
+        html += `<span class="card-updated">${t.updated || 'Mar 2026'}</span></div></div></article>`;
+      }
+      html += `</div></div></section>`;
+    }
+    document.getElementById('sections-container').innerHTML = html;
+    attachCardEventListeners();
+    document.getElementById('no-results-message').style.display = (document.querySelectorAll('.tool-card').length === 0) ? 'block' : 'none';
+    updateStats();
+  }
+
+  function renderTrusted() {
+    const grid = document.getElementById('trusted-grid');
+    if (!grid) return;
+    let html = '';
+    for (let u of trustedUploaders) {
+      const iconHtml = u.icon ? `<img class="card-logo" src="${u.icon}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2300ff9d%22%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%2216%22%20height%3D%2216%22%2F%3E%3C%2Fsvg%3E'">` : `<div class="card-logo-icon" style="font-size:22px;">⭐</div>`;
+      const ublockBadgeTrusted = u.ublock ? `<span class="ublock-badge" title="Use uBlock Origin on this site"><img src="https://raw.githubusercontent.com/gorhill/uBlock/master/src/img/uBlock0@128.png" alt="uBO"> uBlock</span>` : '';
+      html += `<article class="tool-card"><div class="card-inner"><div class="card-logo-wrap">${iconHtml}</div><div class="card-content"><div class="card-name">${u.name}${ublockBadgeTrusted ? ' ' + ublockBadgeTrusted : ''}</div><div class="card-desc">${u.desc}</div><div class="card-meta"><div class="card-platforms">${u.platforms.split(' ').map(p => `<span class="platform-tag">${p === 'windows' ? '🪟' : '🌐'}</span>`).join('')}</div><span class="safety-tag ${u.safety}">● ${u.safety==='safe'?'Safe':'Caution'}</span></div></div><div class="card-actions"><a href="${u.url}" class="card-link" target="_blank" rel="noopener">Visit →</a><button class="copy-btn" data-copy="${u.url}">📋 Link</button><span class="card-updated">Trusted</span></div></div></article>`;
+    }
+    grid.innerHTML = html;
+    document.querySelectorAll('#trusted-grid .copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => { navigator.clipboard.writeText(btn.dataset.copy); btn.textContent = '✓'; setTimeout(()=>btn.textContent='📋 Link',1200); });
+    });
+  }
+
+  function renderSubreddits() {
+    const container = document.getElementById('subreddit-list');
+    if (!container) return;
+    container.innerHTML = subreddits.map(s => `<a class="subreddit-link" href="${s.url}" target="_blank" rel="noopener">${s.name}</a>`).join('');
+  }
+
+  function attachCardEventListeners() {
+    document.querySelectorAll('.fav-btn-card').forEach(btn => {
+      const name = btn.dataset.fav;
+      btn.addEventListener('click', (e) => { e.stopPropagation(); toggleFavorite(name, btn); });
+    });
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(btn.dataset.copy);
+        const original = btn.textContent;
+        btn.textContent = '✓ Copied';
+        setTimeout(() => btn.textContent = original, 1200);
+      });
+    });
+    attachSectionToggles();
+  }
+
+  function attachSectionToggles() {
+    document.querySelectorAll('.section-header').forEach(header => {
+      const body = header.nextElementSibling;
+      const btn = header.querySelector('.section-toggle');
+      if (!btn) return;
+      const sectionId = header.dataset.section;
+      header.addEventListener('click', (e) => {
+        if (e.target.closest('.fav-btn-card') || e.target.closest('.card-link') || e.target.closest('.copy-btn')) return;
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', !expanded);
+        if (body) body.classList.toggle('collapsed', expanded);
+        if (sectionId) {
+          sectionCollapseState[sectionId] = expanded;
+          localStorage.setItem('section_collapse_state', JSON.stringify(sectionCollapseState));
+        }
+      });
+      if (sectionCollapseState[sectionId] === true) {
+        btn.setAttribute('aria-expanded', 'false');
+        if (body) body.classList.add('collapsed');
+      } else {
+        btn.setAttribute('aria-expanded', 'true');
+        if (body) body.classList.remove('collapsed');
+      }
+    });
+  }
+
+  function updateStats() {
+    document.getElementById('stat-tools').innerText = toolsData.length;
+  }
+
+  function expandAll() {
+    document.querySelectorAll('.section-body').forEach(b => b.classList.remove('collapsed'));
+    document.querySelectorAll('.section-toggle').forEach(b => b.setAttribute('aria-expanded','true'));
+    for (let key of Object.keys(sectionCollapseState)) sectionCollapseState[key] = false;
+    localStorage.setItem('section_collapse_state', JSON.stringify(sectionCollapseState));
+  }
+  function collapseAll() {
+    document.querySelectorAll('.section-body').forEach(b => b.classList.add('collapsed'));
+    document.querySelectorAll('.section-toggle').forEach(b => b.setAttribute('aria-expanded','false'));
+    for (let key of Object.keys(sectionCollapseState)) sectionCollapseState[key] = true;
+    localStorage.setItem('section_collapse_state', JSON.stringify(sectionCollapseState));
+  }
+
+  function applyFiltersAndRender() {
+    renderAll();
+  }
+
+  // ---------- EVENT LISTENERS ----------
+  document.getElementById('expand-all-btn').addEventListener('click', expandAll);
+  document.getElementById('collapse-all-btn').addEventListener('click', collapseAll);
+  document.getElementById('expand-all-hero').addEventListener('click', expandAll);
+  document.getElementById('search-input-local').addEventListener('input', (e) => {
+    currentSearch = e.target.value.toLowerCase();
+    activeFavFilter = false;
+    document.getElementById('fav-filter-btn').classList.remove('active');
+    applyFiltersAndRender();
+  });
+  document.getElementById('fav-filter-btn').addEventListener('click', () => {
+    activeFavFilter = !activeFavFilter;
+    document.getElementById('fav-filter-btn').classList.toggle('active', activeFavFilter);
+    applyFiltersAndRender();
+  });
+  document.getElementById('sort-select').addEventListener('change', (e) => {
+    sortOption = e.target.value;
+    applyFiltersAndRender();
+  });
+  document.querySelectorAll('#platform-filters .filter-badge').forEach(badge => {
+    badge.addEventListener('click', () => {
+      const platform = badge.dataset.platform;
+      platformFilters[platform] = !platformFilters[platform];
+      badge.classList.toggle('active', platformFilters[platform]);
+      applyFiltersAndRender();
+    });
+  });
+  document.querySelectorAll('#safety-filters .filter-badge').forEach(badge => {
+    badge.addEventListener('click', () => {
+      const safety = badge.dataset.safety;
+      safetyFilters[safety] = !safetyFilters[safety];
+      badge.classList.toggle('active', safetyFilters[safety]);
+      applyFiltersAndRender();
+    });
+  });
+  document.getElementById('random-tool-btn').addEventListener('click', () => {
+    const allVisible = document.querySelectorAll('.tool-card:not([style*="display: none"])');
+    if (allVisible.length) {
+      const randomIndex = Math.floor(Math.random() * allVisible.length);
+      allVisible[randomIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      allVisible[randomIndex].style.transition = '0.2s';
+      allVisible[randomIndex].style.boxShadow = '0 0 0 2px var(--accent), 0 0 20px var(--accent-glow)';
+      setTimeout(() => allVisible[randomIndex].style.boxShadow = '', 1500);
+    }
+  });
+
+  // Navigation scroll to sections
+  document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const section = link.getAttribute('data-section');
+      const target = document.getElementById(`sec-${section}`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Theme toggle, search overlay, back to top, canvas particles
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  });
+  const searchOverlay = document.getElementById('search-overlay');
+  document.getElementById('search-toggle-overlay').addEventListener('click', () => searchOverlay.classList.add('open'));
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey||e.metaKey) && e.key === 'k') { e.preventDefault(); document.getElementById('search-input-local').focus(); }
+    if (e.key === 'Escape') searchOverlay.classList.remove('open');
+  });
+  document.getElementById('global-search-input').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    const results = toolsData.filter(t => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q)).slice(0,10);
+    const resultsDiv = document.getElementById('global-search-results');
+    resultsDiv.innerHTML = results.map(r => `<div class="search-result-item" data-name="${r.name}"><span>${r.name}</span><span style="font-size:11px;">${r.category}</span></div>`).join('');
+    document.querySelectorAll('.search-result-item').forEach(el => el.addEventListener('click', () => {
+      document.getElementById(`sec-${el.dataset.name.split(' ')[0].toLowerCase()}`)?.scrollIntoView({behavior:'smooth'});
+      searchOverlay.classList.remove('open');
+    }));
+  });
+  const backTop = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => backTop.classList.toggle('visible', window.scrollY > 400));
+  backTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resizeCanvas); resizeCanvas();
+  let particles = Array(50).fill().map(() => ({ x: Math.random(), y: Math.random(), r: Math.random()*2+1, vx: (Math.random()-0.5)*0.002, vy: (Math.random()-0.5)*0.002 }));
+  function draw() { if(!ctx) return; ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = '#00ff9d'; particles.forEach(p => { p.x += p.vx; p.y += p.vy; if(p.x<0) p.x=1; if(p.x>1) p.x=0; if(p.y<0) p.y=1; if(p.y>1) p.y=0; ctx.beginPath(); ctx.arc(p.x*canvas.width, p.y*canvas.height, p.r, 0, Math.PI*2); ctx.fill(); }); requestAnimationFrame(draw); }
+  draw();
+
+  // ════════════════════════════════════════════════════════
+  // VPN / IP LEAK DETECTOR
+  // Pings ip-api.com — 3000ms timeout to avoid hanging on
+  // slow connections. Banner state classes drive all colour.
+  // ════════════════════════════════════════════════════════
+  (function initVpnBanner() {
+    const banner  = document.getElementById('vpn-leak-banner');
+    const label   = document.getElementById('vpn-banner-label');
+    const detail  = document.getElementById('vpn-banner-detail');
+    const dismiss = document.getElementById('vpn-banner-dismiss');
+
+    if (!banner) return;
+
+    // Dismiss: hide banner and store preference for session
+    dismiss.addEventListener('click', () => {
+      banner.style.display = 'none';
+      sessionStorage.setItem('vpn_banner_dismissed', '1');
+    });
+    if (sessionStorage.getItem('vpn_banner_dismissed')) {
+      banner.style.display = 'none';
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000);
+
+    fetch('https://ip-api.com/json/?fields=status,isp,org,query,proxy,hosting', {
+      signal: controller.signal
+    })
+    .then(r => r.json())
+    .then(data => {
+      clearTimeout(timeout);
+      const isVpn = data.proxy === true || data.hosting === true;
+      if (isVpn) {
+        banner.className = 'vpn-leak-banner state-safe';
+        label.textContent  = '✔ VPN / Proxy Detected';
+        detail.textContent = `IP: ${data.query} · ${data.isp || data.org || 'Unknown ISP'}`;
+      } else {
+        banner.className = 'vpn-leak-banner state-exposed';
+        label.textContent  = '⚠ ISP Exposed — No VPN Detected';
+        detail.innerHTML   = `IP: <span class="vpn-banner-isp">${data.query}</span> · ${data.isp || data.org || 'Unknown ISP'} — Enable a VPN before downloading`;
+      }
+    })
+    .catch(() => {
+      clearTimeout(timeout);
+      banner.className = 'vpn-leak-banner state-caution';
+      label.textContent  = '⚠ IP Check Failed';
+      detail.textContent = 'Could not verify VPN status — assume unprotected';
+    });
+  })();
+
+  // ════════════════════════════════════════════════════════
+  // LIVE RSS FEED — FitGirl Repacks
+  // Tries three CORS proxies in sequence. If all fail, renders
+  // a static "latest known" fallback so the section is never empty.
+  // ════════════════════════════════════════════════════════
+  (function initRssFeed() {
+    const list = document.getElementById('rss-feed-list');
+    const meta = document.getElementById('rss-feed-meta');
+    const ph   = document.getElementById('rss-placeholder');
+    if (!list) return;
+
+    const RSS_URL   = 'https://fitgirl-repacks.site/feed/';
+    const MAX_ITEMS = 8;
+
+    // Three independent CORS proxies — tried in order
+    const PROXIES = [
+      url => `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&count=${MAX_ITEMS}`,
+      url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+      url => `https://corsproxy.io/?${encodeURIComponent(url)}`
+    ];
+
+    // Static fallback entries shown if every proxy fails
+    const STATIC_FALLBACK = [
+      { title: 'F1 24 [FitGirl Repack]',                    date: 'Mar 2026', href: 'https://fitgirl-repacks.site' },
+      { title: 'Kingdom Come: Deliverance II [FitGirl]',    date: 'Feb 2026', href: 'https://fitgirl-repacks.site' },
+      { title: 'Black Myth: Wukong [FitGirl Repack]',       date: 'Jan 2026', href: 'https://fitgirl-repacks.site' },
+      { title: 'Stalker 2: Heart of Chornobyl [FitGirl]',   date: 'Dec 2025', href: 'https://fitgirl-repacks.site' },
+      { title: 'Dragon Age: The Veilguard [FitGirl]',       date: 'Nov 2025', href: 'https://fitgirl-repacks.site' },
+    ];
+
+    function renderItems(items) {
+      const fragment = document.createDocumentFragment();
+      items.forEach((item, i) => {
+        const li = document.createElement('li');
+        const a  = document.createElement('a');
+        a.className = 'rss-feed-item';
+        a.href      = item.href;
+        a.target    = '_blank';
+        a.rel       = 'noopener noreferrer';
+        a.setAttribute('aria-label', `${item.title}${item.date ? ', ' + item.date : ''}`);
+        a.innerHTML = `
+          <span class="rss-item-index" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+          <span class="rss-item-body">
+            <span class="rss-item-title">${item.title}</span>
+            ${item.date ? `<span class="rss-item-date">${item.date}</span>` : ''}
+          </span>
+          <span class="rss-item-arrow" aria-hidden="true">→</span>`;
+        li.appendChild(a);
+        fragment.appendChild(li);
+      });
+      list.innerHTML = '';
+      list.appendChild(fragment);
+    }
+
+    function showFallback() {
+      renderItems(STATIC_FALLBACK);
+      if (meta) meta.innerHTML = 'Live feed unavailable &mdash; <a href="https://fitgirl-repacks.site" target="_blank" rel="noopener" style="color:var(--accent)">visit site →</a>';
+    }
+
+    // rss2json returns structured JSON — cheapest parse path
+    function tryRss2Json() {
+      return fetch(PROXIES[0](RSS_URL), { signal: AbortSignal.timeout(6000) })
+        .then(r => { if (!r.ok) throw new Error('rss2json bad status'); return r.json(); })
+        .then(data => {
+          if (data.status !== 'ok' || !data.items?.length) throw new Error('rss2json empty');
+          const items = data.items.slice(0, MAX_ITEMS).map(it => ({
+            title: it.title || 'Untitled',
+            href:  it.link  || RSS_URL,
+            date:  it.pubDate ? new Date(it.pubDate).toLocaleDateString('en-IE', { day:'2-digit', month:'short', year:'numeric' }) : ''
+          }));
+          renderItems(items);
+          if (meta) meta.textContent = `${items.length} latest · fitgirl-repacks.site`;
+        });
+    }
+
+    // allorigins / corsproxy return raw XML — parse manually
+    function tryRawProxy(proxyFn) {
+      return fetch(proxyFn(RSS_URL), { signal: AbortSignal.timeout(6000) })
+        .then(r => { if (!r.ok) throw new Error('proxy bad status'); return r.text(); })
+        .then(text => {
+          // allorigins wraps in JSON; corsproxy returns raw — handle both
+          let xml;
+          try {
+            const json = JSON.parse(text);
+            xml = new DOMParser().parseFromString(json.contents || json, 'text/xml');
+          } catch (_) {
+            xml = new DOMParser().parseFromString(text, 'text/xml');
+          }
+          const nodes = Array.from(xml.querySelectorAll('item')).slice(0, MAX_ITEMS);
+          if (!nodes.length) throw new Error('no items');
+          const items = nodes.map(node => ({
+            title: node.querySelector('title')?.textContent?.trim() || 'Untitled',
+            href:  node.querySelector('link')?.textContent?.trim()  || RSS_URL,
+            date:  (() => { const d = node.querySelector('pubDate')?.textContent; return d ? new Date(d).toLocaleDateString('en-IE', { day:'2-digit', month:'short', year:'numeric' }) : ''; })()
+          }));
+          renderItems(items);
+          if (meta) meta.textContent = `${items.length} latest · fitgirl-repacks.site`;
+        });
+    }
+
+    // Chain: rss2json → allorigins → corsproxy → static fallback
+    tryRss2Json()
+      .catch(() => tryRawProxy(PROXIES[1]))
+      .catch(() => tryRawProxy(PROXIES[2]))
+      .catch(() => showFallback());
+  })();
+
+  // ════════════════════════════════════════════════════════
+  // OFFLINE VAULT EXPORT
+  // Serialises toolsData → downloadable .json file client-side
+  // ════════════════════════════════════════════════════════
+  document.getElementById('vault-export-btn').addEventListener('click', () => {
+    const payload  = JSON.stringify(toolsData, null, 2);
+    const blob     = new Blob([payload], { type: 'application/json' });
+    const url      = URL.createObjectURL(blob);
+    const a        = document.createElement('a');
+    a.href         = url;
+    a.download     = `piracy-vault-${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // ════════════════════════════════════════════════════════
+  // HAMBURGER NAV TOGGLE (mobile ≤900px)
+  // ════════════════════════════════════════════════════════
+  (function initHamburger() {
+    const hamburger = document.getElementById('nav-hamburger');
+    const navLinks  = document.getElementById('nav-links');
+    if (!hamburger || !navLinks) return;
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('mobile-open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close drawer when a nav link is tapped
+    navLinks.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('mobile-open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close drawer on outside tap
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.site-nav')) {
+        navLinks.classList.remove('mobile-open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+
+  // ════════════════════════════════════════════════════════
+  // LIVE CONNECTIVITY DOTS
+  // Async favicon pings with 3000ms delay — existing logic
+  // preserved; dots use conn-dot CSS classes from styles.css
+  // ════════════════════════════════════════════════════════
+  function checkConnectivity(url, dotEl) {
+    if (!dotEl) return;
+    dotEl.className = 'conn-dot pending';
+    const img = new Image();
+    const tid = setTimeout(() => {
+      dotEl.className = 'conn-dot offline';
+    }, 3000);
+    img.onload  = () => { clearTimeout(tid); dotEl.className = 'conn-dot online';  };
+    img.onerror = () => { clearTimeout(tid); dotEl.className = 'conn-dot offline'; };
+    img.src = `${url}/favicon.ico?_=${Date.now()}`;
+  }
+
+
+  // ---------- INITIAL RENDER ----------
+  renderAll();
+  renderTrusted();
+  renderSubreddits();
+  document.getElementById('fav-count').innerText = favorites.size;
+</script>
+</body>
+</html>
