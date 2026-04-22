@@ -309,7 +309,7 @@
     <hr class="divider">
 
     <div class="choice-panel">
-        <!-- MODERN (NORMAL) CARD — structured like barnacle040 tools -->
+        <!-- MODERN (NORMAL) CARD — links to Normal.html -->
         <div class="version-card modern-card" id="modernChoiceCard">
             <div class="card-icon">🖥️💿🔒</div>
             <div class="version-title modern-title">MODERN NEXUS</div>
@@ -321,10 +321,10 @@
                 • minimal bloat, max privacy<br>
                 ★彡 recommended for daily use 彡★
             </div>
-            <button class="select-btn modern-btn" id="modernBtn">⟣ ENTER MODERN ⟢</button>
+            <a href="Normal.html" class="select-btn modern-btn" id="modernLink">⟣ ENTER MODERN ⟢</a>
         </div>
 
-        <!-- RETRO NEOCITIES CARD — full barnacle.neocities & 90s chaos -->
+        <!-- RETRO NEOCITIES CARD — links to https://barnacle.neocities.org/ -->
         <div class="version-card retro-card" id="retroChoiceCard">
             <div class="card-icon">📼🕹️💾</div>
             <div class="version-title retro-title">⛧ NEOCITIES RETRO ⛧</div>
@@ -335,7 +335,7 @@
                 █ pixel fonts, neon & ascii █<br>
                 <span style="color:#ffaa55;">✧ SEED THE TORRENTS ✧</span>
             </div>
-            <button class="select-btn retro-btn" id="retroBtn">⌗ ENTER RETRO ⌗</button>
+            <a href="https://barnacle.neocities.org/" class="select-btn retro-btn" id="retroLink" target="_blank" rel="noopener noreferrer">⌗ ENTER RETRO ⌗</a>
         </div>
     </div>
 
@@ -350,198 +350,47 @@
 </div>
 
 <script>
+    // Simple redirection logic: we already use <a> tags, but also make the whole card clickable for better UX.
+    // Also ensure the retro link opens in same tab? We set target="_blank" but user might want same tab.
+    // I'll keep retro as same tab (remove _blank) for consistency unless user expects new tab. The prompt didn't specify,
+    // but to match typical site navigation, both should open in same tab. We'll adjust.
     (function() {
-        // fully immersive splash: replaces with either MODERN (normal) or RETRO neocities version
-        const splashContainer = document.querySelector('.splash-container');
+        // get elements
+        const modernCard = document.getElementById('modernChoiceCard');
+        const retroCard = document.getElementById('retroChoiceCard');
+        const modernLink = document.getElementById('modernLink');
+        const retroLink = document.getElementById('retroLink');
 
-        function showModernSite() {
-            if (splashContainer && splashContainer.parentNode) {
-                splashContainer.style.transition = "opacity 0.2s";
-                splashContainer.style.opacity = "0";
-                setTimeout(() => {
-                    if (splashContainer.parentNode) splashContainer.remove();
-                    injectModernFullSite();
-                }, 200);
-            } else {
-                injectModernFullSite();
-            }
+        // For modern: Normal.html (relative, same tab)
+        if (modernLink) {
+            modernLink.setAttribute('target', '_self');
+        }
+        // For retro: use same tab (more seamless)
+        if (retroLink) {
+            retroLink.setAttribute('target', '_self');
+            retroLink.setAttribute('href', 'https://barnacle.neocities.org/');
         }
 
-        function showRetroSite() {
-            if (splashContainer && splashContainer.parentNode) {
-                splashContainer.style.transition = "opacity 0.2s";
-                splashContainer.style.opacity = "0";
-                setTimeout(() => {
-                    if (splashContainer.parentNode) splashContainer.remove();
-                    injectRetroFullSite();
-                }, 200);
-            } else {
-                injectRetroFullSite();
-            }
+        // make entire cards clickable (but not interfering with direct link clicks)
+        if (modernCard) {
+            modernCard.style.cursor = 'pointer';
+            modernCard.addEventListener('click', (e) => {
+                // if the click target is not the link itself, trigger the link
+                if (e.target !== modernLink && !modernLink.contains(e.target)) {
+                    e.preventDefault();
+                    window.location.href = modernLink.getAttribute('href');
+                }
+            });
         }
-
-        // ********** MODERN VERSION (normal site - barnacle040 style resource grid) **********
-        function injectModernFullSite() {
-            const existingSite = document.getElementById('dynamic-site-root');
-            if (existingSite) existingSite.remove();
-
-            const modernRoot = document.createElement('div');
-            modernRoot.id = 'dynamic-site-root';
-            modernRoot.style.width = '100%';
-            modernRoot.style.minHeight = '100vh';
-            modernRoot.style.background = '#0c0f1c';
-            modernRoot.style.fontFamily = "'Inter', 'Segoe UI', system-ui, 'Courier New', monospace";
-            modernRoot.style.padding = '1.5rem';
-            modernRoot.style.animation = 'fadeModern 0.4s ease';
-
-            const styleAnim = document.createElement('style');
-            styleAnim.textContent = `
-                @keyframes fadeModern { 0% { opacity: 0; } 100% { opacity: 1; } }
-                .tool-card { background: #151e2c; border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 12px; transition: 0.1s; }
-                .tool-card:hover { background: #1e2a3a; transform: translateY(-2px); }
-                .category { color: #90cdf4; font-weight: bold; border-bottom: 1px solid #2d4a6e; }
-            `;
-            document.head.appendChild(styleAnim);
-
-            modernRoot.innerHTML = `
-                <div style="max-width: 1200px; margin: 0 auto;">
-                    <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 2rem; border-bottom: 2px solid #2c5282; padding-bottom: 1rem;">
-                        <h1 style="color:#cbd5e6; font-family: monospace;">✦ PIRACYRESOURCES / MODERN ✦</h1>
-                        <button id="resetToSplashModern" style="background:#1f2a3e; border:1px solid #4a7c9c; color:white; padding:6px 14px; font-family: monospace; cursor: pointer;">⤫ BACK TO SPLASH ⤫</button>
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.5rem;">
-                        <div class="tool-card"><span style="font-size:1.8rem;">📦</span><h3>7-Zip</h3><p>Open-source archive tool, high compression.</p><span style="color:#6bb86b;">● Safe</span></div>
-                        <div class="tool-card"><span style="font-size:1.8rem;">🐝</span><h3>qBittorrent</h3><p>Open-source, bind to VPN, no ads.</p><span style="color:#eab308;">● Caution</span></div>
-                        <div class="tool-card"><span style="font-size:1.8rem;">🛡️</span><h3>uBlock Origin</h3><p>Best ad/tracker blocker.</p><span style="color:#6bb86b;">● Safe</span></div>
-                        <div class="tool-card"><span style="font-size:1.8rem;">🎮</span><h3>FitGirl Repacks</h3><p>Highly compressed games.</p><span style="color:#eab308;">● Caution</span></div>
-                        <div class="tool-card"><span style="font-size:1.8rem;">📖</span><h3>Anna's Archive</h3><p>Shadow library, books & papers.</p><span style="color:#6bb86b;">● Safe</span></div>
-                        <div class="tool-card"><span style="font-size:1.8rem;">🎬</span><h3>Stremio + Torrentio</h3><p>Stream torrents directly.</p><span style="color:#eab308;">● Caution</span></div>
-                    </div>
-                    <div class="status-bar" style="margin-top: 2.5rem; background:#0a0f1a; padding:8px;">⚡ 47 Tools • 15 Categories • Always use VPN ⚡</div>
-                </div>
-            `;
-            document.body.innerHTML = '';
-            document.body.appendChild(modernRoot);
-            document.body.style.background = '#0c0f1c';
-            const resetBtn = modernRoot.querySelector('#resetToSplashModern');
-            if (resetBtn) resetBtn.addEventListener('click', () => resetToSplash());
+        if (retroCard) {
+            retroCard.style.cursor = 'pointer';
+            retroCard.addEventListener('click', (e) => {
+                if (e.target !== retroLink && !retroLink.contains(e.target)) {
+                    e.preventDefault();
+                    window.location.href = retroLink.getAttribute('href');
+                }
+            });
         }
-
-        // ********** RETRO NEOCITIES VERSION (barnacle.neocities & 90s style) **********
-        function injectRetroFullSite() {
-            const existingSite = document.getElementById('dynamic-site-root');
-            if (existingSite) existingSite.remove();
-
-            const retroRoot = document.createElement('div');
-            retroRoot.id = 'dynamic-site-root';
-            retroRoot.style.background = '#000000';
-            retroRoot.style.backgroundImage = 'repeating-linear-gradient(45deg, #0a2a0a 0px, #0a2a0a 2px, #001a00 2px, #001a00 8px)';
-            retroRoot.style.fontFamily = "'Courier New', 'VT323', monospace";
-            retroRoot.style.color = '#33ff33';
-            retroRoot.style.padding = '1rem';
-            retroRoot.style.border = '10px ridge #bf9b30';
-            retroRoot.style.minHeight = '100vh';
-
-            const retroHtml = `
-                <div style="max-width: 1100px; margin: 0 auto; background: #050d05; border: 3px double #7cb518; padding: 1rem;">
-                    <marquee behavior="alternate" scrollamount="2" style="background: #000; color: #ffff77; padding: 4px;">☠️☠️☠️ WELCOME TO THE NEOCITIES UNDERGROUND ☠️☠️☠️  |  SEED THE TORRENTS  |  POWERED BY HTML 2.0  |  <blink>NEW!</blink>  ANIME STREAMING  |</marquee>
-                    <div class="ascii-header" style="font-size:0.6rem; color:#77ff77;">
-                        <pre>
-  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄  ▄▄   ▄▄  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄  ▄▄▄▄▄▄   ▄▄▄▄▄▄▄ 
- █      █ █       █ █  █ █  █ █       █ █       █ █      █ █       █
- █  ▄    █ █    ▄▄▄█ █  █▄█  █ █    ▄▄▄█ █   ▄   █ █  ▄    █ █    ▄▄▄█
- █ █ █   █ █   █▄▄▄  █       █ █   █▄▄▄  █  █ █  █ █ █ █   █ █   █▄▄▄ 
- █ █▄█   █ █    ▄▄▄█ █       █ █    ▄▄▄█ █  █▄█  █ █ █▄█   █ █    ▄▄▄█
- █       █ █   █▄▄▄  █   ▄   █ █   █▄▄▄  █       █ █       █ █   █▄▄▄ 
- █▄▄▄▄▄▄▄█ █▄▄▄▄▄▄▄█ █▄▄█ █▄▄█ █▄▄▄▄▄▄▄█ █▄▄▄▄▄▄▄█ █▄▄▄▄▄▄▄█ █▄▄▄▄▄▄▄█
-                        </pre>
-                    </div>
-                    <div style="text-align: center;">
-                        <h1><blink>🔥 PIRACYRESOURCES.NEOCITIES 🔥</blink></h1>
-                        <div style="background:#111; border: 2px groove #b8860b; padding: 10px; margin: 10px 0;">
-                            <span>🎴 <img src="https://raw.githubusercontent.com/sixarm/under-construction-gif/master/under-construction.gif" width="80" alt="under construction" style="image-rendering:pixelated;"> </span>
-                            <span>📼 <img src="https://i.imgur.com/0uKzK6U.gif" width="40" alt="old computer"> </span>
-                            <span>💾 <span style="background: yellow; color:black;">BEST VIEWED WITH NETSCAPE 4.0</span> 💾</span>
-                        </div>
-                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0;">
-                            <div style="background:#1e2a0a; padding:6px 12px; border: 1px outset gold;">🎮 FITGIRL REPS</div>
-                            <div style="background:#1e2a0a; padding:6px 12px; border: 1px outset gold;">🎬 CINEBY.ST</div>
-                            <div style="background:#1e2a0a; padding:6px 12px; border: 1px outset gold;">📚 LIBGEN</div>
-                            <div style="background:#1e2a0a; padding:6px 12px; border: 1px outset gold;">⚡ QBITTORRENT</div>
-                        </div>
-                        <div style="font-size: 0.8rem; background: #000000; border-left: 6px solid #ff9933; padding: 12px; text-align: left;">
-                            <span style="color:#ffff88;">★彡 47 TOOLS • 15 CATEGORIES 彡★</span><br>
-                            ⚠️ VPN REQUIRED FOR ALL TORRENTS ⚠️ <br>
-                            <span class="blink">>>> PRIVACY IS A RIGHT <<<</span><br>
-                            <a href="#" id="retroReset" style="color:#ffaa66; text-decoration:none; border: 1px solid #ffaa66; padding: 4px 12px; display: inline-block; margin-top: 12px;">⟳ RESTART SPLASH ⟳</a>
-                        </div>
-                        <div style="margin-top: 20px; font-size: 0.7rem;">
-                            <marquee scrollamount="1" direction="up" height="30">✦ SEED THE TORRENTS ✦ SHARE THE WEALTH ✦ FIGHT THE POWER ✦</marquee>
-                        </div>
-                    </div>
-                </div>
-            `;
-            retroRoot.innerHTML = retroHtml;
-            document.body.innerHTML = '';
-            document.body.appendChild(retroRoot);
-            document.body.style.background = "#000000";
-            const resetRetro = retroRoot.querySelector('#retroReset');
-            if (resetRetro) resetRetro.addEventListener('click', (e) => { e.preventDefault(); resetToSplash(); });
-            // blink polyfill
-            const blinks = retroRoot.querySelectorAll('blink');
-            const styleBlink = document.createElement('style');
-            styleBlink.textContent = `blink { animation: blink-animation 1s step-start infinite; }`;
-            document.head.appendChild(styleBlink);
-        }
-
-        // RESET FUNCTION: brings back original splash screen
-        function resetToSplash() {
-            const dynamicRoot = document.getElementById('dynamic-site-root');
-            if (dynamicRoot) dynamicRoot.remove();
-            document.body.innerHTML = '';
-            document.body.style.background = "#000000";
-            document.body.style.margin = "";
-            document.body.className = "";
-            const newSplash = createOriginalSplash();
-            document.body.appendChild(newSplash);
-            attachEventsToSplash(newSplash);
-            document.body.style.background = "#000000";
-            document.body.style.backgroundImage = "repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0px, rgba(0,255,0,0.03) 2px, transparent 2px, transparent 4px)";
-        }
-
-        function createOriginalSplash() {
-            const container = document.createElement('div');
-            container.className = 'splash-container';
-            container.innerHTML = `
-                <div class="marquee-banner"><marquee behavior="scroll" direction="left" scrollamount="3" onmouseover="this.stop()" onmouseout="this.start()">⚡ ★彡  WELCOME TO THE GATEWAY  彡★ ⚡   ||  [ SAFE MODE ]  ||  [ RETRO DIMENSION ]  ||  PIRACYRESOURCES // NEOCITIES VIBES  ||  UNDER CONSTRUCTION ⚠️  ||  BEST VIEWED WITH NETSCAPE NAVIGATOR 4.0  ||</marquee></div>
-                <div class="ascii-header">________________________________________________________________________________<br>|  __     _   _   _   _   _     _   _   _   _     ___     ___   _   _   _   _  |<br>| / _|   / \\ | \\ | | | \\ | |   / \\ | \\ | | | \\ | |_ _|   / _ \\ | \\ | | | \\ | | |<br>| |_    / _ \\|  \\| | |  \\| |  / _ \\|  \\| | |  \\| | | |  | | | ||  \\| | |  \\| | |<br>|  _|  / ___ \\ |\\  | | |\\  | / ___ \\ |\\  | | |\\  | | |  | |_| || |\\  | | |\\  | |<br>| |   /_/   \\_\\_| \\_| |_| \\_|/_/   \\_\\_| \\_| |_| \\_||___| \\___/ |_| \\_| |_| \\_| |<br>|_______________________________________________________________________________|</div>
-                <div class="glitch-title">✦ PIRACY GATEWAY ✦</div>
-                <div style="text-align: center;"><div class="sub">>_ choose your experience . . .</div></div>
-                <hr class="divider">
-                <div class="choice-panel">
-                    <div class="version-card modern-card" id="modernChoiceCard"><div class="card-icon">🖥️💿🔒</div><div class="version-title modern-title">MODERN NEXUS</div><div class="description">[ SAFE + EFFICIENT ]<br>• sleek glassmorphic UI<br>• curated tools & resources<br>• clean, fast, responsive<br>• minimal bloat, max privacy<br>★彡 recommended for daily use 彡★</div><button class="select-btn modern-btn" id="modernBtn">⟣ ENTER MODERN ⟢</button></div>
-                    <div class="version-card retro-card" id="retroChoiceCard"><div class="card-icon">📼🕹️💾</div><div class="version-title retro-title">⛧ NEOCITIES RETRO ⛧</div><div class="description retro-desc">█ 88x31 banners █ blink tags █<br>█ tiled GIFs, marquee chaos █<br>█ under construction since '98 █<br>█ pixel fonts, neon & ascii █<br><span style="color:#ffaa55;">✧ SEED THE TORRENTS ✧</span></div><button class="select-btn retro-btn" id="retroBtn">⌗ ENTER RETRO ⌗</button></div>
-                </div>
-                <div class="status-bar"><span>✦ 47 TOOLS | 15 CATEGORIES ✦</span><span><span class="blink">⚠️</span> VPN REQUIRED FOR TORRENTS <span class="blink">⚠️</span></span><span>☠️ SAFE · CAUTION · HIGH RISK ☠️</span></div>
-                <div style="text-align: center; font-size: 0.7rem; margin-top: 0.5rem; color:#3c9e3c;">★彡  SEED THE TORRENTS · SHARE THE WEALTH · PRIVACY IS A RIGHT · FIGHT THE POWER 彡★</div>
-            `;
-            return container;
-        }
-
-        function attachEventsToSplash(splashEl) {
-            const modernBtn = splashEl.querySelector('#modernBtn');
-            const retroBtn = splashEl.querySelector('#retroBtn');
-            const modernCard = splashEl.querySelector('#modernChoiceCard');
-            const retroCard = splashEl.querySelector('#retroChoiceCard');
-            if (modernBtn) modernBtn.addEventListener('click', (e) => { e.stopPropagation(); showModernSite(); });
-            if (retroBtn) retroBtn.addEventListener('click', (e) => { e.stopPropagation(); showRetroSite(); });
-            if (modernCard) modernCard.addEventListener('click', (e) => { if(e.target !== modernBtn) showModernSite(); });
-            if (retroCard) retroCard.addEventListener('click', (e) => { if(e.target !== retroBtn) showRetroSite(); });
-        }
-
-        // initial attach
-        const initialContainer = document.querySelector('.splash-container');
-        if (initialContainer) attachEventsToSplash(initialContainer);
     })();
 </script>
 </body>
